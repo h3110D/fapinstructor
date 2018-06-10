@@ -40,4 +40,12 @@ export const setStrokeStyleOverhandGrip = async () => {
     store.game.strokeStyle = StrokeStyleEnum.OverhandGrip;
   }
 };
-setStrokeStyleOverhandGrip.label = "Overhand Grip"
+setStrokeStyleOverhandGrip.label = "Overhand Grip";
+
+export const setStrokeStyleBothHands = async () => {
+  if (store.game.strokeStyle !== StrokeStyleEnum.BothHands) {
+    createNotification(`Use both of your hands`);
+    store.game.strokeStyle = StrokeStyleEnum.BothHands;
+  }
+};
+setStrokeStyleBothHands.label = "Both Hands";

@@ -32,7 +32,8 @@ import {
   setStrokeStyleNondominant,
   setStrokeStyleHeadOnly,
   setStrokeStyleShaftOnly,
-  setStrokeStyleOverhandGrip
+  setStrokeStyleOverhandGrip,
+  setStrokeStyleBothHands
 } from "./strokeStyle";
 import eatPrecum from "./cei/eatPrecum";
 import { insertButtPlug, removeButtPlug } from "./anal/buttPlug";
@@ -71,12 +72,13 @@ const initializeActions = taskConfigs =>
     taskConfigs.cbtIce && createProbability(rubIceOnBalls, 1),
     // stroke style
     taskConfigs.gripAdjustments && createProbability(randomGripAdjustment, 30),
-    taskConfigs.dominant && createProbability(setStrokeStyleDominant, 7),
+    taskConfigs.dominant && createProbability(setStrokeStyleDominant, 10),
     taskConfigs.nondominant && createProbability(setStrokeStyleNondominant, 5),
     taskConfigs.headOnly && createProbability(setStrokeStyleHeadOnly, 1),
-    taskConfigs.shaftOnly && createProbability(setStrokeStyleShaftOnly, 5),
+    taskConfigs.shaftOnly && createProbability(setStrokeStyleShaftOnly, 3),
     taskConfigs.overhandGrip &&
       createProbability(setStrokeStyleOverhandGrip, 1),
+    taskConfigs.bothHands && createProbability(setStrokeStyleBothHands, 10),
     // anal
     taskConfigs.buttplug && createProbability(insertButtPlug, 1),
     taskConfigs.buttplug && createProbability(removeButtPlug, 1),
