@@ -14,7 +14,7 @@ import { strokerRemoteControl } from "game/loops/strokerLoop";
 
 export const shouldEdge = () => {
   const {
-    config: { minimumGameTime, maximumGameTime, actionFrequency }
+    config: { minimumGameTime, maximumGameTime, actionFrequency, edgeFrequency }
   } = store;
 
   let result = false;
@@ -26,7 +26,9 @@ export const shouldEdge = () => {
       elapsedGameTime("seconds") / (maximumGameTime * 60);
 
     // Probability Graph: https://www.desmos.com/calculator/atc32p8kof
-    result = gameCompletionPercent / actionFrequency > rand;
+    result =
+      gameCompletionPercent / actionFrequency * (1 + edgeFrequency / 100) >
+      rand;
   }
 
   return result;

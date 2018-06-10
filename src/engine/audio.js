@@ -43,19 +43,26 @@ const fetchAudioFile = async url => {
 };
 
 let tickCount = 0;
-export const playTick = () => {
+let previousRhythm = 0;
+export const playTick = rhythm => {
   if (!oscillator || !gainNode) {
     return false;
   }
-  tickCount++;
 
   let frequency;
 
-  if (tickCount % 4) {
-    frequency = 300;
-  } else {
-    frequency = 600;
+  if (previousRhythm === 0 || previousRhythm !== rhythm) {
+    tickCount = 0;
   }
+
+  if (tickCount === 3) {
+    frequency = 600;
+    tickCount = 0;
+  } else {
+    tickCount++;
+    frequency = 300;
+  }
+  previousRhythm = rhythm;
 
   var now = context.currentTime;
 

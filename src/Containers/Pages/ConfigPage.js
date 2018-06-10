@@ -169,6 +169,14 @@ class ConfigPage extends React.Component {
           }
           break;
         }
+        case "edgeFrequency": {
+          delete errors[name];
+          value = parseInt(value, 10);
+          if (isNaN(value) || value < 0) {
+            errors[name] = "Cannot be less than 0";
+          }
+          break;
+        }
         case "minimumRuinedOrgasms": {
           delete errors[name];
           value = parseInt(value, 10);
@@ -587,7 +595,26 @@ class ConfigPage extends React.Component {
                     <FormHelperText>{errors.edgeCooldown}</FormHelperText>
                   </FormControl>
                 </Grid>
-                <Grid item xs />
+                <Grid item xs={4}>
+                  <FormControl
+                    className={classes.control}
+                    error={!!errors.edgeFrequency}
+                  >
+                    <InputLabel>Increase Edge Frequency</InputLabel>
+                    <Input
+                      id="edgeFrequency"
+                      value={store.config.edgeFrequency}
+                      onChange={this.handleChange("edgeFrequency")}
+                      fullWidth
+                      type="number"
+                      inputProps={{ step: "1", min: "0" }}
+                      endAdornment={
+                        <InputAdornment position="end">%</InputAdornment>
+                      }
+                    />
+                    <FormHelperText>{errors.edgeFrequency}</FormHelperText>
+                  </FormControl>
+                </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl
                     className={classes.control}
