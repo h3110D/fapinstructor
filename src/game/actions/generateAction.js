@@ -9,6 +9,7 @@ import _ from "lodash";
 
 export const getRandomActions = (count = 0) => {
   const actions = initializeActions(store.config.tasks);
+  debugger;
   // applies the probability to each action
   let chosenActions = [];
   do {

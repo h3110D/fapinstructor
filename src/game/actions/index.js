@@ -86,6 +86,6 @@ const initializeActions = taskConfigs =>
     taskConfigs.precum && createProbability(eatPrecum, 3),
     // misc.
     taskConfigs.pickYourPoison && createProbability(pickYourPoison, 15)
-  ].filter(action => action !== null);
+  ].filter(action => !!action);
 
 export default initializeActions;

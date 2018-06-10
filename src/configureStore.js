@@ -44,6 +44,7 @@ const defaultConfig = {
     headOnly: true,
     shaftOnly: true,
     overhandGrip: true,
+    bothHands: true,
     gripAdjustments: true,
     bindCockBalls: true,
     rubberBands: true,
