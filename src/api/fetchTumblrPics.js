@@ -1,4 +1,5 @@
 import fetchJsonp from "fetch-jsonp";
+import createNotification from "engine/createNotification";
 
 /**
  * fetches images from tumblr
@@ -26,9 +27,12 @@ const fetchPics = (id, imageType, offset = 0, limit) => {
 
           return url;
         });
-	})
-	.catch((error) => console.log(error));
-};
+    })
+    .catch((error) => {
+	console.log(error));
+	createNotification(`${id} failed to retrieve and will not be included in this game.`);
+	// TODO: Remove id from store.config so we dont try to get again.
+    });
 
 /**
  * A recursive fetch to tumblr as there is a limit of 50 images per api call
