@@ -26,7 +26,8 @@ const fetchPics = (id, imageType, offset = 0, limit) => {
 
           return url;
         });
-    });
+	})
+	.catch((error) => console.log(error));
 };
 
 /**
