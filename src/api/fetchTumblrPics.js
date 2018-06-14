@@ -9,8 +9,8 @@ const fetchPics = (id, imageType, offset = 0, limit) => {
   return fetchJsonp(
     `https://${encodeURIComponent(id)}.tumblr.com/api/read/json?num=${limit}&type=photo&start=${offset}`
   )
-    .then(response => response.json())
-    .then(({ posts }) => {
+  .then(response => response.json())
+  .then(({ posts }) => {
       return [].concat
         .apply([], posts.map(post => post["photo-url-1280"]))
         .filter(url => {
@@ -28,20 +28,19 @@ const fetchPics = (id, imageType, offset = 0, limit) => {
 
           return url;
         });
-    })
-    .catch((error) => {
-		console.log(error);
-		if(id && !store.config["failedIds"].includes(id)){
-		   const { tumblrId } = store.config;
-		   let ids = tumblrId.split(",").map(id => id.trim());
+  })
+  .catch((error) => {
+      if(id && !store.config["failedIds"].includes(id)){
+         const { tumblrId } = store.config;
+         let ids = tumblrId.split(",").map(id => id.trim());
 
-		   ids.splice(ids.indexOf(id), 1);
+         ids.splice(ids.indexOf(id), 1);
 
-		   store.config["tumblrId"] = ids.join(",");
-		   store.config["failedIds"].push(id);
+         store.config["tumblrId"] = ids.join(",");
+         store.config["failedIds"].push(id);
 
-		   createNotification(`${id} failed to retrieve and will not be included in this game.`);
-		}
+         createNotification(`${id} failed to retrieve and will not be included in this game.`);
+      }
     });
 };
 
