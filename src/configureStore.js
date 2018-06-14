@@ -4,6 +4,7 @@ import { GripStrengthEnum } from "game/enums/GripStrength";
 const defaultConfig = {
   version: 2,
   tumblrId: "fapstergifs, allcowgirl, mar-cuss-blowjob-gifs",
+  failedIds: [],
   gifs: true,
   pictures: false,
   tumblrOffset: [],
