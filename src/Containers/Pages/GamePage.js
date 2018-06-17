@@ -5,11 +5,11 @@ import connect from "hoc/connect";
 import { startGame, stopGame } from "game";
 import store from "store";
 import CustomError from "utils/CustomError";
-import ImagePlayer from "components/ImagePlayer";
-import VideoPlayer from "components/VideoPlayer";
 import { CircularProgress } from "material-ui/Progress";
 import HUD from "containers/HUD";
 import EndPage from "containers/Pages/EndPage";
+import MediaPlayer from "components/MediaPlayer";
+import { nextSlide } from "game/loops/slideLoop";
 
 const styles = theme => ({
   progress: {
@@ -68,7 +68,7 @@ class GamePage extends React.Component {
   }
 
   render() {
-    if (!this.props.game || this.props.game.pictures.length === 0) {
+    if (!this.props.game || !this.props.game.mediaPlayerUrl) {
       return (
         <div className={this.props.classes.progress}>
           <CircularProgress color="secondary" size={100} thickness={2} />
@@ -77,8 +77,8 @@ class GamePage extends React.Component {
     }
 
     const {
-      game: { orgasms, activeVideo, activePicture },
-      config: { maximumOrgasms }
+      game: { orgasms, mediaPlayerUrl },
+      config: { maximumOrgasms, slideDuration }
     } = this.props;
 
     return (
@@ -88,11 +88,11 @@ class GamePage extends React.Component {
         ) : (
           <React.Fragment>
             <HUD />
-            {activeVideo ? (
-              <VideoPlayer video={activeVideo} />
-            ) : (
-              activePicture && <ImagePlayer url={activePicture} />
-            )}
+            <MediaPlayer
+              url={mediaPlayerUrl}
+              onEnded={nextSlide}
+              duration={slideDuration}
+            />
           </React.Fragment>
         )}
       </div>

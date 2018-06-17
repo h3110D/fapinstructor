@@ -3,13 +3,19 @@ import fetchJsonp from "fetch-jsonp";
 /**
  * fetches images from tumblr
  */
-const fetchPics = (id, imageType, offset = 0, limit) => {
+const limit = 50;
+let offset = 0;
+const fetchTumblrPics = (tumblrId, imageType) => {
   return fetchJsonp(
-    `https://${encodeURIComponent(id)}.tumblr.com/api/read/json?num=${limit}&type=photo&start=${offset}`
+    `https://${encodeURIComponent(
+      tumblrId
+    )}.tumblr.com/api/read/json?num=${limit}&type=photo&start=${offset}`
   )
     .then(response => response.json())
     .then(({ posts }) => {
-      return [].concat
+      offset += 50;
+
+      const images = [].concat
         .apply([], posts.map(post => post["photo-url-1280"]))
         .filter(url => {
           if (imageType.pictures && imageType.gifs) {
@@ -26,21 +32,10 @@ const fetchPics = (id, imageType, offset = 0, limit) => {
 
           return url;
         });
-	})
-	.catch((error) => console.log(error));
+
+      return images;
+    })
+    .catch(error => console.error(error));
 };
 
-/**
- * A recursive fetch to tumblr as there is a limit of 50 images per api call
- */
-const limit = 50;
-const fetchManyPics = (id, imageType, offset = 0, images = [], recursiveCounter = 1) => {
-  return fetchPics(id, imageType, offset, limit).then(urls => {
-    images = images.concat(urls);
-    return recursiveCounter === 0
-      ? { images, offset }
-      : fetchManyPics(id, imageType, offset + limit, images, --recursiveCounter);
-  });
-};
-
-export default fetchManyPics;
+export default fetchTumblrPics;

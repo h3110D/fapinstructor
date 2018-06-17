@@ -46,7 +46,6 @@ export const shouldRuin = () => {
 
 export const ruinedOrgasm = async () => {
   store.game.ruins++;
-  store.game.activeVideo = null;
 
   if (store.config.enableVoice) {
     play(getRandomAudioVariation("Ruined"));

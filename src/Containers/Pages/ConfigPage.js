@@ -84,13 +84,13 @@ class ConfigPage extends React.Component {
     for (let name in store.config) {
       let value = store.config[name];
       switch (name) {
-        case "tumblrId": {
-          delete errors[name];
-          if (!value) {
-            errors[name] = "Tumblrs is a required field";
-          }
-          break;
-        }
+        // case "tumblrId": {
+        //   delete errors[name];
+        //   if (!value) {
+        //     errors[name] = "Tumblrs is a required field";
+        //   }
+        //   break;
+        // }
         case "gifs":
         case "pictures": {
           delete errors.imageType;
@@ -291,7 +291,7 @@ class ConfigPage extends React.Component {
         </div>
         <div className={classes.formContainer}>
           <Paper className={classes.form}>
-            <Group title="Tumblr">
+            <Group title="Media">
               <Grid container>
                 <Grid item xs={12}>
                   <FormControl
@@ -311,6 +311,29 @@ class ConfigPage extends React.Component {
                     ) : (
                       <FormHelperText>
                         You can add multiple tumblrs each seperated by a comma
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl
+                    className={classes.control}
+                    required
+                    error={!!errors.subReddits}
+                  >
+                    <InputLabel>Subreddits</InputLabel>
+                    <Input
+                      id="redditId"
+                      required
+                      value={store.config.redditId}
+                      onChange={this.handleChange("redditId")}
+                    />
+                    {errors.redditId ? (
+                      <FormHelperText>{errors.redditId}</FormHelperText>
+                    ) : (
+                      <FormHelperText>
+                        You can add multiple subreddits each seperated by a
+                        comma
                       </FormHelperText>
                     )}
                   </FormControl>
@@ -362,6 +385,16 @@ class ConfigPage extends React.Component {
                           />
                         }
                         label="Pictures"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={store.config.webm}
+                            onChange={this.handleCheckChange("webm")}
+                            value="webm"
+                          />
+                        }
+                        label="Webm"
                       />
                     </FormGroup>
                     <FormHelperText>{errors.imageType}</FormHelperText>

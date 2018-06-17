@@ -1,29 +1,31 @@
 This project was created by TheFapInstructor
 
 # Installing
+
 ```
 npm install || yarn
 npm start
 ```
 
 ## Adding a New Task
-Below is a mini tutorial on how to add a new action called `testAction`.  This action will display a simple notification and will wait for the user to click the button labeled `Done` before dismissing it.
 
-1. First we will create a new file called `testAction.js` and that will reside within the foloder `game/actions/`.  All actions are present within this folder, nested folders to organize actions types can be used.
+Below is a mini tutorial on how to add a new action called `testAction`. This action will display a simple notification and will wait for the user to click the button labeled `Done` before dismissing it.
 
-2. Within this file we will place the following code.
+1.  First we will create a new file called `testAction.js` and that will reside within the foloder `game/actions/`. All actions are present within this folder, nested folders to organize actions types can be used.
+
+2.  Within this file we will place the following code.
+
 ```js
-import createNotification, { dismissNotification } from "engine/createNotification";
+import createNotification, {
+  dismissNotification
+} from "engine/createNotification";
 
 // A promise must be returned in this case async for actions that need to 'wait' for user input
 const testAction = async () => {
   // This code will be immediately executed when the action is used.
-  const notificationId = createNotification(
-    "Test Action",
-    {
-      autoDismiss: false
-    }
-  );
+  const notificationId = createNotification("Test Action", {
+    autoDismiss: false
+  });
 
   // We create a response function that returns a promise to handle what happens after the user clicks the button
   const done = async () => {
@@ -41,8 +43,8 @@ testAction.label = "Test Action";
 export default testAction;
 ```
 
-3. You will now have to add your newly created action to the action index for it to be actionable within the game.  
-Within `game/actions/index.js` make the following changes.
+3.  You will now have to add your newly created action to the action index for it to be actionable within the game.
+    Within `game/actions/index.js` make the following changes.
 
 ```js
 // import your new action
@@ -58,7 +60,7 @@ const initializeActions = taskConfigs =>
   ].filter(action => action !== null);
 ```
 
-4. Now you must configure your new action by specifiying it's default disabled value within `src/configureStore.js`
+4.  Now you must configure your new action by specifiying it's default disabled value within `src/configureStore.js`
 
 ```js
 import store from "store";
@@ -69,22 +71,22 @@ const defaultConfig = {
     testAction: true
     // other actions
   }
-}
+};
 ```
 
-5. You must add the ability for the user to enable or disable the action.  This is done within the `containers/Pages/ConfigPage.js`
+5.  You must add the ability for the user to enable or disable the action. This is done within the `containers/Pages/ConfigPage.js`
 
 ```js
 <TaskList
-    title="Speed"
-    tasks={{
-      // other actions
-      testAction: "Test Action"
-    }}
+  title="Speed"
+  tasks={{
+    // other actions
+    testAction: "Test Action"
+  }}
 />
 ```
 
-6. To test your new action, I like to set it's probability to 100 within the `actions/index.js` file, disable all other actions on the `ConfigPage` after launching the application.  Your action should be triggered within a few seconds.
+6.  To test your new action, I like to set it's probability to 100 within the `actions/index.js` file, disable all other actions on the `ConfigPage` after launching the application. Your action should be triggered within a few seconds.
 
 # Other Stuff
 
@@ -139,3 +141,4 @@ DEEP Throat Cards
     Hold dildo in throat for 20 seconds, keep spit in mouth.
     Rotate dildo 2 times then hold 10 seconds in, keep spit in mouth.
 
+when ruin and cbt instruction should skip tutorial

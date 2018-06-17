@@ -51,7 +51,7 @@ export const playTick = rhythm => {
 
   let frequency;
 
-  if (previousRhythm === 0 || previousRhythm !== rhythm || rhythm >= 3) {
+  if (previousRhythm === 0 || previousRhythm !== rhythm || rhythm < 3) {
     tickCount = 0;
   }
 
