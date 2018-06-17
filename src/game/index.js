@@ -3,6 +3,7 @@
  */
 import { subscribe, unsubscribe } from "engine/loop";
 import interrupt from "engine/interrupt";
+import { createAudioContext } from "engine/audio";
 import configureStore from "./configureStore";
 import actionLoop from "./loops/actionLoop";
 import strokerLoop from "./loops/strokerLoop";
@@ -19,6 +20,7 @@ const addLoops = (...newLoops) => {
 
 const startGame = () => {
   configureStore();
+  createAudioContext();
   nextSlide();
   addLoops(actionLoop, strokerLoop, moanLoop);
 };

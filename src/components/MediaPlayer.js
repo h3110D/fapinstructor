@@ -197,7 +197,6 @@ class MediaPlayer extends React.Component {
             pointerEvents: `none`
           }}
           autoPlay
-          muted
           onError={onEnded}
           onEnded={onEnded}
         />

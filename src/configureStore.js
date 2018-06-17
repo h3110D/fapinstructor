@@ -5,9 +5,9 @@ const defaultConfig = {
   version: 2,
   tumblrId: "fapstergifs, allcowgirl, mar-cuss-blowjob-gifs",
   redditId: "60fpsporn, porninaminute",
-  gifs: true,
+  gifs: false,
   pictures: false,
-  video: true,
+  videos: true,
   slideDuration: 10, // sec
   enableVoice: true,
   enableMoans: true,

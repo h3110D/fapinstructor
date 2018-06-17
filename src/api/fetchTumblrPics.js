@@ -1,19 +1,19 @@
 import fetchJsonp from "fetch-jsonp";
+import store from "store";
 
-/**
- * fetches images from tumblr
- */
 const limit = 50;
-let offset = 0;
-const fetchTumblrPics = (tumblrId, imageType) => {
+let offset = {};
+const fetchTumblrPics = tumblrId => {
+  const { pictures, gifs, videos } = store.config;
+
   return fetchJsonp(
     `https://${encodeURIComponent(
       tumblrId
-    )}.tumblr.com/api/read/json?num=${limit}&start=${offset}`
+    )}.tumblr.com/api/read/json?num=${limit}&start=${offset[tumblrId]}`
   )
     .then(response => response.json())
     .then(({ posts }) => {
-      offset += 50;
+      offset[tumblrId] += 50;
 
       const images = posts
         .map(post => {
@@ -21,16 +21,26 @@ const fetchTumblrPics = (tumblrId, imageType) => {
 
           switch (post.type) {
             case "video":
-              const src = /src="([^"]+)/.exec(post["video-player-500"])[1];
-              const extension = /type="([^"]+)/
-                .exec(post["video-player-500"])[1]
-                .split("/")
-                .pop();
+              if (videos) {
+                const src = /src="([^"]+)/.exec(post["video-player-500"])[1];
+                const extension = /type="([^"]+)/
+                  .exec(post["video-player-500"])[1]
+                  .split("/")
+                  .pop();
 
-              result = `${src}.${extension}`;
+                result = `${src}.${extension}`;
+              }
               break;
             case "photo":
-              result = post["photo-url-1280"];
+              const url = post["photo-url-1280"];
+
+              if (url.endsWith(".gif")) {
+                if (gifs) {
+                  result = url;
+                }
+              } else if (pictures) {
+                result = url;
+              }
               break;
             default:
               result = null;
@@ -40,7 +50,6 @@ const fetchTumblrPics = (tumblrId, imageType) => {
         })
         .filter(image => !!image);
 
-      debugger;
       return images;
     })
     .catch(error => console.error(error));

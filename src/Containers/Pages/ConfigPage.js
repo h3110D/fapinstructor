@@ -97,7 +97,7 @@ class ConfigPage extends React.Component {
           if (
             !store.config.gifs &&
             !store.config.pictures &&
-            !store.config.video
+            !store.config.videos
           ) {
             errors.imageType = "Must select at least one value";
           }
@@ -399,12 +399,12 @@ class ConfigPage extends React.Component {
                       <FormControlLabel
                         control={
                           <Switch
-                            checked={store.config.video}
-                            onChange={this.handleCheckChange("video")}
-                            value="video"
+                            checked={store.config.videos}
+                            onChange={this.handleCheckChange("videos")}
+                            value="videos"
                           />
                         }
-                        label="Video"
+                        label="Videos"
                       />
                     </FormGroup>
                     <FormHelperText>{errors.imageType}</FormHelperText>

@@ -10,6 +10,7 @@ export default () => {
     pictureIndex: -1,
     mediaPlayerUrl: null,
     strokeSpeed: randomStrokeSpeed(),
+    bookmarks: [],
     gripStrength: store.config.initialGripStrength,
     rubberBands: 0,
     clothespins: 0,

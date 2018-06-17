@@ -33,29 +33,11 @@ const fetchPictures = () => {
     redditId.length > 0 && redditId.split(",").map(id => id.trim());
 
   let fetches = [];
-
   if (tumblrIds) {
-    // make a fetch to tumblr for each tumblr id
-    const tumblrFetches = tumblrIds.map((id, index) =>
-      fetchTumblrPics(id, {
-        pictures: store.config.pictures,
-        gifs: store.config.gifs,
-        video: store.config.video
-      })
-    );
-    fetches = fetches.concat(tumblrFetches);
+    fetches = fetches.concat(tumblrIds.map((id, index) => fetchTumblrPics(id)));
   }
-
   if (redditIds) {
-    // make a fetch to tumblr for each tumblr id
-    const redditFetches = redditIds.map((id, index) =>
-      fetchRedditPics(id, {
-        pictures: store.config.pictures,
-        gifs: store.config.gifs,
-        video: store.config.video
-      })
-    );
-    fetches = fetches.concat(redditFetches);
+    fetches = fetches.concat(redditIds.map((id, index) => fetchRedditPics(id)));
   }
 
   // execute the array of promises and append the randomized pictures to the global array

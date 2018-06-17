@@ -6,10 +6,12 @@ import { startGame, stopGame } from "game";
 import store from "store";
 import CustomError from "utils/CustomError";
 import { CircularProgress } from "material-ui/Progress";
+import Button from "material-ui/Button";
 import HUD from "containers/HUD";
 import EndPage from "containers/Pages/EndPage";
 import MediaPlayer from "components/MediaPlayer";
 import { nextSlide } from "game/loops/slideLoop";
+import BackgroundImage from "images/background.jpg";
 
 const styles = theme => ({
   progress: {
@@ -19,10 +21,28 @@ const styles = theme => ({
     alignItems: "center",
     width: "100vw",
     height: "100vh"
+  },
+  container: {
+    height: "100vh",
+    width: "100vw"
+  },
+  startgame: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    background: `url(${BackgroundImage})`,
+    backgroundSize: "cover",
+    backgroundAttachment: "fixed"
   }
 });
 
 class GamePage extends React.Component {
+  state = {
+    gameStarted: false
+  };
+
   constructor(props) {
     super(props);
 
@@ -59,15 +79,28 @@ class GamePage extends React.Component {
     }
   }
 
-  componentDidMount() {
-    startGame();
-  }
-
   componentWillUnmount() {
     stopGame();
   }
 
   render() {
+    if (!this.state.gameStarted) {
+      return (
+        <div className={this.props.classes.startgame}>
+          <Button
+            onClick={() => {
+              startGame();
+              this.setState({ gameStarted: true });
+            }}
+            variant="raised"
+            color="secondary"
+          >
+            Start Game
+          </Button>
+        </div>
+      );
+    }
+
     if (!this.props.game || !this.props.game.mediaPlayerUrl) {
       return (
         <div className={this.props.classes.progress}>
@@ -82,7 +115,7 @@ class GamePage extends React.Component {
     } = this.props;
 
     return (
-      <div style={{ height: "100vh", width: "100vw" }}>
+      <div className={this.props.classes.container}>
         {maximumOrgasms === orgasms ? (
           <EndPage />
         ) : (

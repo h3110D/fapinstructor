@@ -1,14 +1,14 @@
-let after = "";
+let after = {};
 
 const fetchRedditPics = id => {
   return fetch(
-    `https://www.reddit.com/r/${encodeURIComponent(
-      id
-    )}/hot/.json?after=${after}`
+    `https://www.reddit.com/r/${encodeURIComponent(id)}/hot/.json?after=${
+      after[id]
+    }`
   )
     .then(response => response.json())
     .then(({ data }) => {
-      after = data.after;
+      after[id] = data.after;
 
       const posts = data.children.filter(
         ({ data: post }) => post.domain === "gfycat.com"

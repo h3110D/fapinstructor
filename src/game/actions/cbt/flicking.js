@@ -29,7 +29,6 @@ export const flickCockHead = async () => {
 };
 flickCockHead.label = "Flick Cock Head";
 
-
 export const flickNipples = async () => {
   const flickCount = getRandomInclusiveInteger(3, 6);
   const delayTime = 2;
@@ -54,4 +53,4 @@ export const flickNipples = async () => {
 
   setStrokeSpeed(randomStrokeSpeed());
 };
-flickCockHead.label = "Flick Nipples";
+flickNipples.label = "Flick Nipples";
