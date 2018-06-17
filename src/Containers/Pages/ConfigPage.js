@@ -94,7 +94,11 @@ class ConfigPage extends React.Component {
         case "gifs":
         case "pictures": {
           delete errors.imageType;
-          if (!store.config.gifs && !store.config.pictures) {
+          if (
+            !store.config.gifs &&
+            !store.config.pictures &&
+            !store.config.video
+          ) {
             errors.imageType = "Must select at least one value";
           }
           break;
@@ -355,7 +359,13 @@ class ConfigPage extends React.Component {
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
                     />
-                    <FormHelperText>{errors.slideDuration}</FormHelperText>
+                    {errors.slideDuration ? (
+                      <FormHelperText>{errors.slideDuration}</FormHelperText>
+                    ) : (
+                      <FormHelperText>
+                        Applies to static images and gifs
+                      </FormHelperText>
+                    )}
                   </FormControl>
                 </Grid>
                 <Grid item xs={12}>
@@ -364,7 +374,7 @@ class ConfigPage extends React.Component {
                     required
                     error={!!errors.imageType}
                   >
-                    <FormLabel component="legend">Image Type</FormLabel>
+                    <FormLabel component="legend">Media Type</FormLabel>
                     <FormGroup>
                       <FormControlLabel
                         control={
@@ -389,12 +399,12 @@ class ConfigPage extends React.Component {
                       <FormControlLabel
                         control={
                           <Switch
-                            checked={store.config.webm}
-                            onChange={this.handleCheckChange("webm")}
-                            value="webm"
+                            checked={store.config.video}
+                            onChange={this.handleCheckChange("video")}
+                            value="video"
                           />
                         }
-                        label="Webm"
+                        label="Video"
                       />
                     </FormGroup>
                     <FormHelperText>{errors.imageType}</FormHelperText>

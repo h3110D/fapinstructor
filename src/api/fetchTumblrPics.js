@@ -9,30 +9,38 @@ const fetchTumblrPics = (tumblrId, imageType) => {
   return fetchJsonp(
     `https://${encodeURIComponent(
       tumblrId
-    )}.tumblr.com/api/read/json?num=${limit}&type=photo&start=${offset}`
+    )}.tumblr.com/api/read/json?num=${limit}&start=${offset}`
   )
     .then(response => response.json())
     .then(({ posts }) => {
       offset += 50;
 
-      const images = [].concat
-        .apply([], posts.map(post => post["photo-url-1280"]))
-        .filter(url => {
-          if (imageType.pictures && imageType.gifs) {
-            return url;
+      const images = posts
+        .map(post => {
+          let result;
+
+          switch (post.type) {
+            case "video":
+              const src = /src="([^"]+)/.exec(post["video-player-500"])[1];
+              const extension = /type="([^"]+)/
+                .exec(post["video-player-500"])[1]
+                .split("/")
+                .pop();
+
+              result = `${src}.${extension}`;
+              break;
+            case "photo":
+              result = post["photo-url-1280"];
+              break;
+            default:
+              result = null;
           }
 
-          if (imageType.pictures) {
-            return !url.endsWith(".gif");
-          }
+          return result;
+        })
+        .filter(image => !!image);
 
-          if (imageType.gifs) {
-            return url.endsWith(".gif");
-          }
-
-          return url;
-        });
-
+      debugger;
       return images;
     })
     .catch(error => console.error(error));

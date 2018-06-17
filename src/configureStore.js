@@ -4,10 +4,10 @@ import { GripStrengthEnum } from "game/enums/GripStrength";
 const defaultConfig = {
   version: 2,
   tumblrId: "fapstergifs, allcowgirl, mar-cuss-blowjob-gifs",
-  redditId: "60fpsporn",
+  redditId: "60fpsporn, porninaminute",
   gifs: true,
   pictures: false,
-  webm: true,
+  video: true,
   slideDuration: 10, // sec
   enableVoice: true,
   enableMoans: true,
@@ -21,7 +21,7 @@ const defaultConfig = {
   minimumRuinedOrgasms: 0,
   maximumRuinedOrgasms: 0,
   maximumOrgasms: 1,
-  postOrgasmTorture: true,
+  postOrgasmTorture: false,
   postOrgasmTortureMinimumTime: 10,
   postOrgasmTortureMaximumTime: 90,
   edgeCooldown: 5, // sec

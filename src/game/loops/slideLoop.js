@@ -40,7 +40,7 @@ const fetchPictures = () => {
       fetchTumblrPics(id, {
         pictures: store.config.pictures,
         gifs: store.config.gifs,
-        webm: store.config.webm
+        video: store.config.video
       })
     );
     fetches = fetches.concat(tumblrFetches);
@@ -52,7 +52,7 @@ const fetchPictures = () => {
       fetchRedditPics(id, {
         pictures: store.config.pictures,
         gifs: store.config.gifs,
-        webm: store.config.webm
+        video: store.config.video
       })
     );
     fetches = fetches.concat(redditFetches);

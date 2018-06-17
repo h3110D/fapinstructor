@@ -198,6 +198,7 @@ class MediaPlayer extends React.Component {
           }}
           autoPlay
           muted
+          onError={onEnded}
           onEnded={onEnded}
         />
       );

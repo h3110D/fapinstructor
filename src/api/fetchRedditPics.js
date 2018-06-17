@@ -1,8 +1,5 @@
 let after = "";
 
-/**
- * fetches images from reddit
- */
 const fetchRedditPics = id => {
   return fetch(
     `https://www.reddit.com/r/${encodeURIComponent(
