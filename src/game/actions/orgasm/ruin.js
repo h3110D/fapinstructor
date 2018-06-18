@@ -8,6 +8,7 @@ import play from "engine/audio";
 import audioLibrary, { getRandomAudioVariation } from "audio";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
 import elapsedGameTime from "game/utils/elapsedGameTime";
+import { nextSlide } from "game/utils/fetchPictures";
 
 export const shouldRuin = () => {
   const {
@@ -45,6 +46,10 @@ export const shouldRuin = () => {
 };
 
 export const ruinedOrgasm = async () => {
+  if (store.game.mediaFrozen) {
+    store.game.mediaFrozen = false;
+    nextSlide();
+  }
   store.game.ruins++;
 
   if (store.config.enableVoice) {

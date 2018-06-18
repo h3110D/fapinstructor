@@ -84,13 +84,17 @@ class ConfigPage extends React.Component {
     for (let name in store.config) {
       let value = store.config[name];
       switch (name) {
-        // case "tumblrId": {
-        //   delete errors[name];
-        //   if (!value) {
-        //     errors[name] = "Tumblrs is a required field";
-        //   }
-        //   break;
-        // }
+        case "tumblrId":
+        case "redditId": {
+          delete errors.mediaSource;
+          if (
+            store.config.tumblrId.length === 0 &&
+            store.config.redditId.length === 0
+          ) {
+            errors.mediaSource = "Must have at least one media source";
+          }
+          break;
+        }
         case "gifs":
         case "pictures": {
           delete errors.imageType;
@@ -301,7 +305,7 @@ class ConfigPage extends React.Component {
                   <FormControl
                     className={classes.control}
                     required
-                    error={!!errors.tumblrId}
+                    error={!!errors.mediaSource}
                   >
                     <InputLabel>Tumblrs</InputLabel>
                     <Input
@@ -310,8 +314,8 @@ class ConfigPage extends React.Component {
                       value={store.config.tumblrId}
                       onChange={this.handleChange("tumblrId")}
                     />
-                    {errors.tumblrId ? (
-                      <FormHelperText>{errors.tumblrId}</FormHelperText>
+                    {errors.mediaSource ? (
+                      <FormHelperText>{errors.mediaSource}</FormHelperText>
                     ) : (
                       <FormHelperText>
                         You can add multiple tumblrs each seperated by a comma
@@ -323,7 +327,7 @@ class ConfigPage extends React.Component {
                   <FormControl
                     className={classes.control}
                     required
-                    error={!!errors.subReddits}
+                    error={!!errors.mediaSource}
                   >
                     <InputLabel>Subreddits</InputLabel>
                     <Input
@@ -332,8 +336,8 @@ class ConfigPage extends React.Component {
                       value={store.config.redditId}
                       onChange={this.handleChange("redditId")}
                     />
-                    {errors.redditId ? (
-                      <FormHelperText>{errors.redditId}</FormHelperText>
+                    {errors.mediaSource ? (
+                      <FormHelperText>{errors.mediaSource}</FormHelperText>
                     ) : (
                       <FormHelperText>
                         You can add multiple subreddits each seperated by a

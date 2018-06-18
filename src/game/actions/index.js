@@ -43,49 +43,49 @@ import acceleration from "./speed/acceleration";
 const initializeActions = taskConfigs =>
   [
     // speed
-    taskConfigs.halvedStrokes && createProbability(halvedStrokes, 5),
-    taskConfigs.doubleStrokes && createProbability(doubleStrokes, 15),
-    taskConfigs.teasingStrokes && createProbability(teasingStrokes, 10),
-    taskConfigs.randomBeat && createProbability(randomBeat, 10),
-    taskConfigs.randomStrokeSpeed && createProbability(randomStrokeSpeed, 20),
-    taskConfigs.accelerationCycles && createProbability(acceleration, 7),
-    taskConfigs.redLightGreenLight && createProbability(redLightGreenLight, 7),
-    taskConfigs.clusterStrokes && createProbability(clusterStrokes, 7),
-    // cbt
-    taskConfigs.rubberBands && createProbability(addRubberBand, 2),
-    taskConfigs.rubberBands && createProbability(removeRubberBand, 1),
-    taskConfigs.clothespins && createProbability(addClothespin, 3),
-    taskConfigs.clothespins && createProbability(removeClothespin, 1),
-    taskConfigs.icyHot && createProbability(applyIcyHot, 1),
-    taskConfigs.toothpaste && createProbability(applyToothpaste, 1),
-    taskConfigs.ballSlaps && createProbability(ballslaps, 4),
-    taskConfigs.squeezeBalls && createProbability(squeezeBalls, 4),
-    taskConfigs.headPalming && createProbability(headPalming, 1),
-    taskConfigs.bindCockBalls && createProbability(bindCockAndBalls, 1),
-    taskConfigs.rubberBands && createProbability(snapRubberBand, 1),
-    taskConfigs.breathPlay && createProbability(holdBreath, 1),
-    taskConfigs.scratching && createProbability(scratchChest, 1),
-    taskConfigs.scratching && createProbability(scratchThighs, 1),
-    taskConfigs.scratching && createProbability(scratchShoulders, 1),
-    taskConfigs.flicking && createProbability(flickCockHead, 1),
-    taskConfigs.flicking && createProbability(flickNipples, 1),
-    taskConfigs.cbtIce && createProbability(rubIceOnBalls, 1),
-    // stroke style
-    taskConfigs.gripAdjustments && createProbability(randomGripAdjustment, 30),
-    taskConfigs.dominant && createProbability(setStrokeStyleDominant, 10),
-    taskConfigs.nondominant && createProbability(setStrokeStyleNondominant, 5),
-    taskConfigs.headOnly && createProbability(setStrokeStyleHeadOnly, 1),
-    taskConfigs.shaftOnly && createProbability(setStrokeStyleShaftOnly, 3),
-    taskConfigs.overhandGrip &&
-      createProbability(setStrokeStyleOverhandGrip, 1),
-    taskConfigs.bothHands && createProbability(setStrokeStyleBothHands, 10),
-    // anal
-    taskConfigs.buttplug && createProbability(insertButtPlug, 1),
-    taskConfigs.buttplug && createProbability(removeButtPlug, 1),
-    // cei
-    taskConfigs.precum && createProbability(eatPrecum, 3),
-    // misc.
-    taskConfigs.pickYourPoison && createProbability(pickYourPoison, 15)
+    // taskConfigs.halvedStrokes && createProbability(halvedStrokes, 5),
+    // taskConfigs.doubleStrokes && createProbability(doubleStrokes, 15),
+    // taskConfigs.teasingStrokes && createProbability(teasingStrokes, 10),
+    // taskConfigs.randomBeat && createProbability(randomBeat, 10),
+    // taskConfigs.randomStrokeSpeed && createProbability(randomStrokeSpeed, 20),
+    // taskConfigs.accelerationCycles && createProbability(acceleration, 7),
+    // taskConfigs.redLightGreenLight && createProbability(redLightGreenLight, 7),
+    // taskConfigs.clusterStrokes && createProbability(clusterStrokes, 7),
+    // // cbt
+    // taskConfigs.rubberBands && createProbability(addRubberBand, 2),
+    // taskConfigs.rubberBands && createProbability(removeRubberBand, 1),
+    // taskConfigs.clothespins && createProbability(addClothespin, 3),
+    // taskConfigs.clothespins && createProbability(removeClothespin, 1),
+    // taskConfigs.icyHot && createProbability(applyIcyHot, 1),
+    // taskConfigs.toothpaste && createProbability(applyToothpaste, 1),
+    // taskConfigs.ballSlaps && createProbability(ballslaps, 4),
+    // taskConfigs.squeezeBalls && createProbability(squeezeBalls, 4),
+    // taskConfigs.headPalming && createProbability(headPalming, 1),
+    taskConfigs.bindCockBalls && createProbability(bindCockAndBalls, 100)
+    // taskConfigs.rubberBands && createProbability(snapRubberBand, 1),
+    // taskConfigs.breathPlay && createProbability(holdBreath, 1),
+    // taskConfigs.scratching && createProbability(scratchChest, 1),
+    // taskConfigs.scratching && createProbability(scratchThighs, 1),
+    // taskConfigs.scratching && createProbability(scratchShoulders, 1),
+    // taskConfigs.flicking && createProbability(flickCockHead, 1),
+    // taskConfigs.flicking && createProbability(flickNipples, 1),
+    // taskConfigs.cbtIce && createProbability(rubIceOnBalls, 1),
+    // // stroke style
+    // taskConfigs.gripAdjustments && createProbability(randomGripAdjustment, 30),
+    // taskConfigs.dominant && createProbability(setStrokeStyleDominant, 10),
+    // taskConfigs.nondominant && createProbability(setStrokeStyleNondominant, 5),
+    // taskConfigs.headOnly && createProbability(setStrokeStyleHeadOnly, 1),
+    // taskConfigs.shaftOnly && createProbability(setStrokeStyleShaftOnly, 3),
+    // taskConfigs.overhandGrip &&
+    //   createProbability(setStrokeStyleOverhandGrip, 1),
+    // taskConfigs.bothHands && createProbability(setStrokeStyleBothHands, 10),
+    // // anal
+    // taskConfigs.buttplug && createProbability(insertButtPlug, 1),
+    // taskConfigs.buttplug && createProbability(removeButtPlug, 1),
+    // // cei
+    // taskConfigs.precum && createProbability(eatPrecum, 3),
+    // // misc.
+    // taskConfigs.pickYourPoison && createProbability(pickYourPoison, 15)
   ].filter(action => !!action);
 
 export default initializeActions;

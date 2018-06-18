@@ -3,11 +3,12 @@ import uniq from "lodash.uniq";
 import store from "store";
 import fetchTumblrPics from "api/fetchTumblrPics";
 import fetchRedditPics from "api/fetchRedditPics";
-import remoteControl from "./remoteControl";
-
-export const slideRemoteControl = Object.create(remoteControl);
 
 export const nextSlide = async () => {
+  if (store.game.mediaFrozen) {
+    return;
+  }
+
   // load more pictures when close to running out
   if (5 > store.game.pictures.length - store.game.pictureIndex) {
     await fetchPictures();
@@ -56,23 +57,4 @@ const fetchPictures = () => {
   });
 };
 
-let lastSlideChange = -1;
-const slideLoop = progress => {
-  if (!slideRemoteControl.paused) {
-    if (
-      lastSlideChange >= store.config.slideDuration * 1000 ||
-      lastSlideChange === -1
-    ) {
-      nextSlide();
-      lastSlideChange = 0;
-    } else {
-      lastSlideChange += progress;
-    }
-  }
-};
-
-slideLoop.onSubscribe = () => {
-  lastSlideChange = -1;
-};
-
-export default slideLoop;
+export default fetchPictures;

@@ -11,6 +11,7 @@ const defaultConfig = {
   slideDuration: 10, // sec
   enableVoice: true,
   enableMoans: true,
+  videoMuted: false,
   finalOrgasmAllowed: true,
   finalOrgasmDenied: false,
   finalOrgasmRuined: false,

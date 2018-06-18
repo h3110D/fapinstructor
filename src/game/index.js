@@ -7,7 +7,7 @@ import { createAudioContext } from "engine/audio";
 import configureStore from "./configureStore";
 import actionLoop from "./loops/actionLoop";
 import strokerLoop from "./loops/strokerLoop";
-import { nextSlide } from "./loops/slideLoop";
+import { nextSlide } from "./utils/fetchPictures";
 import moanLoop from "./loops/moanLoop";
 
 let loops = [];

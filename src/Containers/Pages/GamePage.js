@@ -10,7 +10,7 @@ import Button from "material-ui/Button";
 import HUD from "containers/HUD";
 import EndPage from "containers/Pages/EndPage";
 import MediaPlayer from "components/MediaPlayer";
-import { nextSlide } from "game/loops/slideLoop";
+import { nextSlide } from "game/utils/fetchPictures";
 import BackgroundImage from "images/background.jpg";
 
 const styles = theme => ({
@@ -72,6 +72,13 @@ class GamePage extends React.Component {
     } catch (e) {
       // local storage may not be supported on some devices
     }
+    try {
+      store.config.videoMuted = localStorage.getItem("videoMuted")
+        ? localStorage.getItem("videoMuted") === "true"
+        : false;
+    } catch (e) {
+      // local storage may not be supported on some devices
+    }
 
     if (!store.config.version || store.config.version < 2) {
       debugger;
@@ -95,7 +102,7 @@ class GamePage extends React.Component {
             variant="raised"
             color="secondary"
           >
-            Start Game
+            start game
           </Button>
         </div>
       );
@@ -111,7 +118,7 @@ class GamePage extends React.Component {
 
     const {
       game: { orgasms, mediaPlayerUrl },
-      config: { maximumOrgasms, slideDuration }
+      config: { maximumOrgasms, slideDuration, videoMuted }
     } = this.props;
 
     return (
@@ -125,6 +132,7 @@ class GamePage extends React.Component {
               url={mediaPlayerUrl}
               onEnded={nextSlide}
               duration={slideDuration}
+              muted={videoMuted}
             />
           </React.Fragment>
         )}

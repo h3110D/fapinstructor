@@ -9,6 +9,7 @@ export default () => {
     pictures: [],
     pictureIndex: -1,
     mediaPlayerUrl: null,
+    mediaFrozen: false,
     strokeSpeed: randomStrokeSpeed(),
     bookmarks: [],
     gripStrength: store.config.initialGripStrength,

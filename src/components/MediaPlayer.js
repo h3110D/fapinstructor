@@ -16,7 +16,7 @@ const styles = theme => ({
   },
   youtube: {
     width: "99%",
-    height: "99%"
+    height: "90%"
   }
 });
 
@@ -173,7 +173,7 @@ const isVideo = url =>
       .toUpperCase()
   );
 
-const isYouTube = url => url.include("www.youtube-nocookie.com");
+const isYouTube = url => url.includes("www.youtube-nocookie.com");
 
 class MediaPlayer extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -186,7 +186,7 @@ class MediaPlayer extends React.Component {
   }
 
   render() {
-    const { classes, url, onEnded } = this.props;
+    const { classes, url, onEnded, muted } = this.props;
 
     if (isVideo(url)) {
       return (
@@ -197,6 +197,7 @@ class MediaPlayer extends React.Component {
             pointerEvents: `none`
           }}
           autoPlay
+          muted={muted}
           onError={onEnded}
           onEnded={onEnded}
         />
@@ -226,10 +227,15 @@ class MediaPlayer extends React.Component {
   }
 }
 
+MediaPlayer.defaultProps = {
+  muted: false
+};
+
 MediaPlayer.propTypes = {
   url: PropTypes.string.isRequired,
   onEnded: PropTypes.func.isRequired,
-  duration: PropTypes.number
+  duration: PropTypes.number,
+  muted: PropTypes.bool
 };
 
 export default withStyles(styles)(MediaPlayer);

@@ -142,3 +142,4 @@ DEEP Throat Cards
     Rotate dildo 2 times then hold 10 seconds in, keep spit in mouth.
 
 when ruin and cbt instruction should skip tutorial
+cbt instructions

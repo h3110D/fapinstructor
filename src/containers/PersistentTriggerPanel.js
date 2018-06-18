@@ -8,7 +8,7 @@ import executeAction from "engine/executeAction";
 import { ruinedOrgasm } from "game/actions/orgasm/ruin";
 import ThumbUp from "material-ui-icons/ThumbUp";
 import ThumbDown from "material-ui-icons/ThumbDown";
-import { nextSlide } from "game/loops/slideLoop";
+import { nextSlide } from "game/utils/fetchPictures";
 
 const styles = theme => ({
   root: {
