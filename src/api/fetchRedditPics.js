@@ -1,25 +1,35 @@
+// import fetchErome from "./fetchErome";
+import fetchGfycat from "./fetchGfycat"
+
 let after = {};
 
 const fetchRedditPics = id => {
   return fetch(
     `https://www.reddit.com/r/${encodeURIComponent(id)}/hot/.json?after=${
-      after[id]
+      after[id] || ""
     }`
   )
     .then(response => response.json())
     .then(({ data }) => {
       after[id] = data.after;
 
-      const posts = data.children.filter(
-        ({ data: post }) => post.domain === "gfycat.com"
+      const images = data.children.map(
+        ({ data: post }) => {
+          switch (post.domain){
+            case "gfycat.com": {
+               return fetchGfycat(post.url);
+            }
+            case "erome.com": {
+              return null; // fetchErome(post.url)
+            }
+            default: {
+              return null;
+            }
+          }
+        }
       );
 
-      const images = posts.map(
-        ({ data: post }) =>
-          post.url.replace("gfycat.com", "giant.gfycat.com") + ".webm"
-      );
-
-      return images;
+      return Promise.all(images.filter(image => !!image));
     })
     .catch(error => console.error(error));
 };

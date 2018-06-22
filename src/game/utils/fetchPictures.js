@@ -16,16 +16,11 @@ export const nextSlide = async () => {
 
   store.game.pictureIndex++;
 
-  // cache the next image
-  if (store.game.pictureIndex + 1 < store.game.pictures.length) {
-    new Image().src = store.game.pictures[store.game.pictureIndex + 1];
-  }
-
   // set the active picture to a fetched image
   store.game.mediaPlayerUrl = store.game.pictures[store.game.pictureIndex];
 };
 
-const fetchPictures = () => {
+const fetchPictures = async () => {
   const { tumblrId, redditId } = store.config;
 
   const tumblrIds =
@@ -34,11 +29,14 @@ const fetchPictures = () => {
     redditId.length > 0 && redditId.split(",").map(id => id.trim());
 
   let fetches = [];
+
   if (tumblrIds) {
     fetches = fetches.concat(tumblrIds.map((id, index) => fetchTumblrPics(id)));
   }
   if (redditIds) {
-    fetches = fetches.concat(redditIds.map((id, index) => fetchRedditPics(id)));
+    fetches = fetches.concat(
+      redditIds.map((id, index) => fetchRedditPics(redditIds[0]))
+    );
   }
 
   // execute the array of promises and append the randomized pictures to the global array
@@ -48,7 +46,6 @@ const fetchPictures = () => {
     results.forEach(images => {
       newImages = newImages.concat(images);
     });
-
     store.game.pictures = [...store.game.pictures, ...uniq(shuffle(newImages))];
 
     if (newImages.length === 0) {

@@ -9,7 +9,7 @@ const fetchTumblrPics = tumblrId => {
   return fetchJsonp(
     `https://${encodeURIComponent(
       tumblrId
-    )}.tumblr.com/api/read/json?num=${limit}&start=${offset[tumblrId]}`
+    )}.tumblr.com/api/read/json?num=${limit}&start=${offset[tumblrId] || ""}`
   )
     .then(response => response.json())
     .then(({ posts }) => {

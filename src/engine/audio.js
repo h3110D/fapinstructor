@@ -5,7 +5,7 @@ let gainNode;
 let contextCreated = false;
 const createAudioContext = () => {
   const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if (window.AudioContext) {
+  if (window.context) {
     context = new AudioContext();
     window.context = context;
 
