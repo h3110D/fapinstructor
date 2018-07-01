@@ -26,7 +26,7 @@ const createAudioContext = () => {
 
 const fetchAudioFile = async url => {
   if (!contextCreated) {
-    return;
+    createAudioContext();
   }
 
   let buffer;
@@ -54,7 +54,7 @@ let tickCount = 0;
 let previousRhythm = 0;
 const playTick = rhythm => {
   if (!contextCreated) {
-    return;
+    createAudioContext();
   }
 
   if (!oscillator || !gainNode) {
@@ -94,7 +94,7 @@ const playTick = rhythm => {
 
 const play = async file => {
   if (!contextCreated) {
-    return;
+    createAudioContext();
   }
 
   const buffer = await file;
