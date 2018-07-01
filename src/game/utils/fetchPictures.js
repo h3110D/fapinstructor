@@ -35,7 +35,7 @@ const fetchPictures = async () => {
   }
   if (redditIds) {
     fetches = fetches.concat(
-      redditIds.map((id, index) => fetchRedditPics(redditIds[0]))
+      redditIds.map((id, index) => fetchRedditPics(id))
     );
   }
 
