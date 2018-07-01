@@ -1,5 +1,7 @@
 // import fetchErome from "./fetchErome";
 import fetchGfycat from "./fetchGfycat"
+import store from "store";
+import createNotification from "engine/createNotification";
 
 let after = {};
 
@@ -31,7 +33,19 @@ const fetchRedditPics = id => {
 
       return Promise.all(images.filter(image => !!image));
     })
-    .catch(error => console.error(error));
+    .catch((error) => {
+      if(id && !store.config["failedIds"].includes(id)){
+         const redditIds = store.config["redditId"];
+         let ids = redditIds.split(",").map(id => id.trim());
+
+         ids.splice(ids.indexOf(id), 1);
+
+         store.config["redditId"] = ids.join(",");
+         store.config["failedIds"].push(id);
+
+         createNotification(`${id} failed to retrieve and will not be included in this game.`, {}, false);
+      }
+    });
 };
 
 export default fetchRedditPics;

@@ -1,5 +1,6 @@
 import fetchJsonp from "fetch-jsonp";
 import store from "store";
+import createNotification from "engine/createNotification";
 
 const limit = 50;
 let offset = {};
@@ -52,7 +53,19 @@ const fetchTumblrPics = tumblrId => {
 
       return images;
     })
-    .catch(error => console.error(error));
+    .catch((error) => {
+      if(tumblrId && !store.config["failedIds"].includes(tumblrId)){
+         const tumblrIds = store.config["tumblrId"];
+         let ids = tumblrIds.split(",").map(id => id.trim());
+
+         ids.splice(ids.indexOf(tumblrId), 1);
+
+         store.config["tumblrId"] = ids.join(",");
+         store.config["failedIds"].push(tumblrId);
+
+         createNotification(`${tumblrId} failed to retrieve and will not be included in this game.`, {}, false);
+      }
+    });
 };
 
 export default fetchTumblrPics;
