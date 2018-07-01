@@ -84,17 +84,25 @@ class ConfigPage extends React.Component {
     for (let name in store.config) {
       let value = store.config[name];
       switch (name) {
-        case "tumblrId": {
-          delete errors[name];
-          if (!value) {
-            errors[name] = "Tumblrs is a required field";
+        case "tumblrId":
+        case "redditId": {
+          delete errors.mediaSource;
+          if (
+            store.config.tumblrId.length === 0 &&
+            store.config.redditId.length === 0
+          ) {
+            errors.mediaSource = "Must have at least one media source";
           }
           break;
         }
         case "gifs":
         case "pictures": {
           delete errors.imageType;
-          if (!store.config.gifs && !store.config.pictures) {
+          if (
+            !store.config.gifs &&
+            !store.config.pictures &&
+            !store.config.videos
+          ) {
             errors.imageType = "Must select at least one value";
           }
           break;
@@ -291,13 +299,13 @@ class ConfigPage extends React.Component {
         </div>
         <div className={classes.formContainer}>
           <Paper className={classes.form}>
-            <Group title="Tumblr">
+            <Group title="Media">
               <Grid container>
                 <Grid item xs={12}>
                   <FormControl
                     className={classes.control}
                     required
-                    error={!!errors.tumblrId}
+                    error={!!errors.mediaSource}
                   >
                     <InputLabel>Tumblrs</InputLabel>
                     <Input
@@ -306,11 +314,34 @@ class ConfigPage extends React.Component {
                       value={store.config.tumblrId}
                       onChange={this.handleChange("tumblrId")}
                     />
-                    {errors.tumblrId ? (
-                      <FormHelperText>{errors.tumblrId}</FormHelperText>
+                    {errors.mediaSource ? (
+                      <FormHelperText>{errors.mediaSource}</FormHelperText>
                     ) : (
                       <FormHelperText>
                         You can add multiple tumblrs each seperated by a comma
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl
+                    className={classes.control}
+                    required
+                    error={!!errors.mediaSource}
+                  >
+                    <InputLabel>Subreddits</InputLabel>
+                    <Input
+                      id="redditId"
+                      required
+                      value={store.config.redditId}
+                      onChange={this.handleChange("redditId")}
+                    />
+                    {errors.mediaSource ? (
+                      <FormHelperText>{errors.mediaSource}</FormHelperText>
+                    ) : (
+                      <FormHelperText>
+                        You can add multiple subreddits each seperated by a
+                        comma
                       </FormHelperText>
                     )}
                   </FormControl>
@@ -332,7 +363,13 @@ class ConfigPage extends React.Component {
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
                     />
-                    <FormHelperText>{errors.slideDuration}</FormHelperText>
+                    {errors.slideDuration ? (
+                      <FormHelperText>{errors.slideDuration}</FormHelperText>
+                    ) : (
+                      <FormHelperText>
+                        Applies to static images and gifs
+                      </FormHelperText>
+                    )}
                   </FormControl>
                 </Grid>
                 <Grid item xs={12}>
@@ -341,7 +378,7 @@ class ConfigPage extends React.Component {
                     required
                     error={!!errors.imageType}
                   >
-                    <FormLabel component="legend">Image Type</FormLabel>
+                    <FormLabel component="legend">Media Type</FormLabel>
                     <FormGroup>
                       <FormControlLabel
                         control={
@@ -362,6 +399,16 @@ class ConfigPage extends React.Component {
                           />
                         }
                         label="Pictures"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={store.config.videos}
+                            onChange={this.handleCheckChange("videos")}
+                            value="videos"
+                          />
+                        }
+                        label="Videos"
                       />
                     </FormGroup>
                     <FormHelperText>{errors.imageType}</FormHelperText>

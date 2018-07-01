@@ -1,14 +1,22 @@
 import fetchJsonp from "fetch-jsonp";
+<<<<<<< HEAD
 import createNotification from "engine/createNotification";
 import store from "store";
+=======
+import store from "store";
 
-/**
- * fetches images from tumblr
- */
-const fetchPics = (id, imageType, offset = 0, limit) => {
+const limit = 50;
+let offset = {};
+const fetchTumblrPics = tumblrId => {
+  const { pictures, gifs, videos } = store.config;
+>>>>>>> cbcdcf1adb5e6e6870279450fef42710c1ae755b
+
   return fetchJsonp(
-    `https://${encodeURIComponent(id)}.tumblr.com/api/read/json?num=${limit}&type=photo&start=${offset}`
+    `https://${encodeURIComponent(
+      tumblrId
+    )}.tumblr.com/api/read/json?num=${limit}&start=${offset[tumblrId] || ""}`
   )
+<<<<<<< HEAD
   .then(response => response.json())
   .then(({ posts }) => {
       return [].concat
@@ -17,15 +25,44 @@ const fetchPics = (id, imageType, offset = 0, limit) => {
           if (imageType.pictures && imageType.gifs) {
             return url;
           }
+=======
+    .then(response => response.json())
+    .then(({ posts }) => {
+      offset[tumblrId] += 50;
+>>>>>>> cbcdcf1adb5e6e6870279450fef42710c1ae755b
 
-          if (imageType.pictures) {
-            return !url.endsWith(".gif");
+      const images = posts
+        .map(post => {
+          let result;
+
+          switch (post.type) {
+            case "video":
+              if (videos) {
+                const src = /src="([^"]+)/.exec(post["video-player-500"])[1];
+                const extension = /type="([^"]+)/
+                  .exec(post["video-player-500"])[1]
+                  .split("/")
+                  .pop();
+
+                result = `${src}.${extension}`;
+              }
+              break;
+            case "photo":
+              const url = post["photo-url-1280"];
+
+              if (url.endsWith(".gif")) {
+                if (gifs) {
+                  result = url;
+                }
+              } else if (pictures) {
+                result = url;
+              }
+              break;
+            default:
+              result = null;
           }
 
-          if (imageType.gifs) {
-            return url.endsWith(".gif");
-          }
-
+<<<<<<< HEAD
           return url;
         });
   })
@@ -43,18 +80,15 @@ const fetchPics = (id, imageType, offset = 0, limit) => {
       }
     });
 };
+=======
+          return result;
+        })
+        .filter(image => !!image);
+>>>>>>> cbcdcf1adb5e6e6870279450fef42710c1ae755b
 
-/**
- * A recursive fetch to tumblr as there is a limit of 50 images per api call
- */
-const limit = 50;
-const fetchManyPics = (id, imageType, offset = 0, images = [], recursiveCounter = 1) => {
-  return fetchPics(id, imageType, offset, limit).then(urls => {
-    images = images.concat(urls);
-    return recursiveCounter === 0
-      ? { images, offset }
-      : fetchManyPics(id, imageType, offset + limit, images, --recursiveCounter);
-  });
+      return images;
+    })
+    .catch(error => console.error(error));
 };
 
-export default fetchManyPics;
+export default fetchTumblrPics;

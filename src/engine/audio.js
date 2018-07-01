@@ -2,25 +2,33 @@ let context;
 let oscillator;
 let gainNode;
 
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-if (window.AudioContext) {
-  context = new AudioContext();
-  window.context = context;
+let contextCreated = false;
+const createAudioContext = () => {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (window.context) {
+    context = new AudioContext();
+    window.context = context;
 
-  try {
-    gainNode = context.createGain();
-    gainNode.gain.value = 0;
+    try {
+      gainNode = context.createGain();
+      gainNode.gain.value = 0;
 
-    oscillator = context.createOscillator();
-    oscillator.connect(gainNode);
-    gainNode.connect(context.destination);
-    oscillator.start(0);
-  } catch (e) {
-    console.log(e);
+      oscillator = context.createOscillator();
+      oscillator.connect(gainNode);
+      gainNode.connect(context.destination);
+      oscillator.start(0);
+    } catch (e) {
+      console.log(e);
+    }
   }
-}
+  contextCreated = true;
+};
 
 const fetchAudioFile = async url => {
+  if (!contextCreated) {
+    return;
+  }
+
   let buffer;
 
   if (context && context.decodeAudioData) {
@@ -44,14 +52,18 @@ const fetchAudioFile = async url => {
 
 let tickCount = 0;
 let previousRhythm = 0;
-export const playTick = rhythm => {
+const playTick = rhythm => {
+  if (!contextCreated) {
+    return;
+  }
+
   if (!oscillator || !gainNode) {
     return false;
   }
 
   let frequency;
 
-  if (previousRhythm === 0 || previousRhythm !== rhythm || rhythm >= 3) {
+  if (previousRhythm === 0 || previousRhythm !== rhythm || rhythm < 3) {
     tickCount = 0;
   }
 
@@ -81,6 +93,10 @@ export const playTick = rhythm => {
 };
 
 const play = async file => {
+  if (!contextCreated) {
+    return;
+  }
+
   const buffer = await file;
 
   if (context) {
@@ -100,5 +116,5 @@ const play = async file => {
   }
 };
 
-export { fetchAudioFile };
+export { fetchAudioFile, createAudioContext, playTick };
 export default play;

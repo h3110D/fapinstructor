@@ -176,39 +176,21 @@ class StatusPanel extends React.Component {
                 }}
                 label="Moans"
               />
-              {/**window.context && (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    padding: 10
+              <div>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={store.config.videoMuted}
+                      onChange={this.handleCheckChange("videoMuted")}
+                      value="videoMuted"
+                    />
+                  }
+                  classes={{
+                    label: classes.toggle
                   }}
-                >
-                  <Button
-                    style={{ marginRight: 10 }}
-                    mini
-                    variant="fab"
-                    color="secondary"
-                    disabled={window.context.state === "running"}
-                    onClick={() => {
-                      window.context.resume();
-                    }}
-                  >
-                    <VolumeOnIcon />
-                  </Button>
-                  <Button
-                    mini
-                    variant="fab"
-                    color="secondary"
-                    disabled={window.context.state !== "running"}
-                    onClick={() => {
-                      window.context.suspend();
-                    }}
-                  >
-                    <VolumeOffIcon />
-                  </Button>
-                </div>
-              )*/}
+                  label="Mute Videos"
+                />
+              </div>
             </div>
           </div>
         )}
