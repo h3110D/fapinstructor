@@ -63,7 +63,7 @@ const fetchTumblrPics = tumblrId => {
          store.config["tumblrId"] = ids.join(",");
          store.config["failedIds"].push(tumblrId);
 
-         createNotification(`${tumblrId} failed to retrieve and will not be included in this game.`);
+         createNotification(`${tumblrId} failed to retrieve and will not be included in this game.`, {}, false);
       }
     });
 };

@@ -43,7 +43,7 @@ const fetchRedditPics = id => {
          store.config["redditId"] = ids.join(",");
          store.config["failedIds"].push(id);
 
-         createNotification(`${id} failed to retrieve and will not be included in this game.`);
+         createNotification(`${id} failed to retrieve and will not be included in this game.`, {}, false);
       }
     });
 };
