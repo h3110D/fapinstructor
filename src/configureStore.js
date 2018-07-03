@@ -1,13 +1,12 @@
 import store from "store";
-import { GripStrengthEnum } from "game/enums/GripStrength";
+import {GripStrengthEnum} from "game/enums/GripStrength";
 
 const defaultConfig = {
   version: 2,
   tumblrId: "fapstergifs, allcowgirl, mar-cuss-blowjob-gifs",
   failedIds: [],
+    redditId: "60fpsporn, porninaminute",
   gifs: true,
-  redditId: "60fpsporn, porninaminute",
-  gifs: false,
   pictures: false,
   videos: true,
   slideDuration: 10, // sec
@@ -35,6 +34,7 @@ const defaultConfig = {
   initialGripStrength: GripStrengthEnum.Normal,
   actionFrequency: 5, // sec
   tasks: {
+      rubNipples: true, //TODO: REMOVE DEBUG
     doubleStrokes: true,
     halvedStrokes: true,
     teasingStrokes: true,

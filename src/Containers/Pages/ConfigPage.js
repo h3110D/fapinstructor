@@ -1,41 +1,24 @@
 import React from "react";
-import { Base64 } from "js-base64";
-import { withRouter } from "react-router-dom";
+import {Base64} from "js-base64";
+import {withRouter} from "react-router-dom";
 // mui
-import {
-  TextField,
-  Switch,
-  Grid,
-  Select,
-  Button,
-  Paper,
-  Tooltip
-} from "material-ui";
+import {Button, Grid, Paper, Select, Switch, TextField, Tooltip} from "material-ui";
 import Typography from "material-ui/Typography";
-import { withStyles } from "material-ui/styles";
-import Input, { InputLabel, InputAdornment } from "material-ui/Input";
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  FormGroup,
-  FormHelperText
-} from "material-ui/Form";
-import { MenuItem } from "material-ui/Menu";
-import ExpansionPanel, {
-  ExpansionPanelSummary,
-  ExpansionPanelDetails
-} from "material-ui/ExpansionPanel";
+import {withStyles} from "material-ui/styles";
+import Input, {InputAdornment, InputLabel} from "material-ui/Input";
+import {FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel} from "material-ui/Form";
+import {MenuItem} from "material-ui/Menu";
+import ExpansionPanel, {ExpansionPanelDetails, ExpansionPanelSummary} from "material-ui/ExpansionPanel";
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
 // internal
 import store from "store";
 import Feedback from "components/Feedback";
 import BackgroundImage from "images/background.jpg";
 import ForkMe from "components/ForkMe";
-import { getRandomBoolean } from "utils/math";
+import {getRandomBoolean} from "utils/math";
 import Group from "components/Group";
 import TaskList from "containers/TaskList";
-import { GripStrengthString, GripStrengthEnum } from "game/enums/GripStrength";
+import {GripStrengthEnum, GripStrengthString} from "game/enums/GripStrength";
 import copyToClipboard from "utils/copyToClipboard";
 import connect from "hoc/connect";
 
@@ -863,7 +846,9 @@ class ConfigPage extends React.Component {
                       <TaskList
                         title="Misc."
                         tasks={{
-                          pickYourPoison: "Pick your Poison"
+                            pickYourPoison: "Pick your Poison",
+                            rubNipples: "Rub Nipples"
+
                         }}
                       />
                     </Grid>
