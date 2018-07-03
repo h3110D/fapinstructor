@@ -1,6 +1,6 @@
 import store from "store";
 import createNotification from "engine/createNotification";
-import { StrokeStyleEnum } from "game/enums/StrokeStyle";
+import {StrokeStyleEnum} from "game/enums/StrokeStyle";
 
 export const setStrokeStyleDominant = async () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.Dominant) {
@@ -49,3 +49,11 @@ export const setStrokeStyleBothHands = async () => {
   }
 };
 setStrokeStyleBothHands.label = "Both Hands";
+
+export const setStrokeStyleHandsOff = async () => {
+    if (store.game.strokeStyle !== StrokeStyleEnum.HandsOff) {
+        createNotification(`Hands off your cock!`);
+        store.game.strokeStyle = StrokeStyleEnum.HandsOff;
+    }
+};
+setStrokeStyleHandsOff.label = "HANDS OFF!!";

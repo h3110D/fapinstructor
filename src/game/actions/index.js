@@ -22,6 +22,7 @@ import {rubIceOnBalls} from "./cbt/ice";
 import {
     setStrokeStyleBothHands,
     setStrokeStyleDominant,
+    setStrokeStyleHandsOff,
     setStrokeStyleHeadOnly,
     setStrokeStyleNondominant,
     setStrokeStyleOverhandGrip,
@@ -74,6 +75,7 @@ const initializeActions = taskConfigs =>
     taskConfigs.overhandGrip &&
       createProbability(setStrokeStyleOverhandGrip, 1),
     taskConfigs.bothHands && createProbability(setStrokeStyleBothHands, 10),
+      taskConfigs.bothHands && createProbability(setStrokeStyleHandsOff, 1),
     // anal
     taskConfigs.buttplug && createProbability(insertButtPlug, 1),
     taskConfigs.buttplug && createProbability(removeButtPlug, 1),
