@@ -44,7 +44,7 @@ const fetchPictures = async () => {
     let newImages = [];
 
     results.forEach(images => {
-	  if(!images) { return; }
+      if(!images) { return; }
       newImages = newImages.concat(images);
     });
     store.game.pictures = [...store.game.pictures, ...uniq(shuffle(newImages))];
