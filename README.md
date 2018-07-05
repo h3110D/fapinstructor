@@ -43,12 +43,14 @@ testAction.label = "Test Action";
 export default testAction;
 ```
 
-3.  You will now have to add your newly created action to the action index for it to be actionable within the game.
-    Within `game/actions/index.js` make the following changes.
+3.  You will now have to add your newly created `testAction` to the action index for it to be actionable within the game.
+    Within **`game/actions/index.js`** make the following changes. (Do not use `game/index.js`)
 
 ```js
 // import your new action
 import testAction from "./testAction";
+// required additionally:
+import createProbability from "./utils/createProbability";
 
 ...
 const initializeActions = taskConfigs =>
@@ -57,19 +59,21 @@ const initializeActions = taskConfigs =>
     // createProbability takes your action and the probability percentage the action will be invoked
     taskConfigs.testAction && createProbability(testAction, 5),
     // other actions
-  ].filter(action => action !== null);
+  ].filter(action => !!action);
 ```
 
-4.  Now you must configure your new action by specifiying it's default disabled value within `src/configureStore.js`
+4.  Now you must configure your new `testAction` by specifiying it's default disabled value within `src/configureStore.js`
 
 ```js
 import store from "store";
 import { GripStrengthEnum } from "game/enums/GripStrength";
 
 const defaultConfig = {
+  ...
   tasks: {
     testAction: true
     // other actions
+    ...
   }
 };
 ```
@@ -78,15 +82,19 @@ const defaultConfig = {
 
 ```js
 <TaskList
-  title="Speed"
+  title="Misc."
   tasks={{
     // other actions
+    ...
+    otherAction: "other Action" ,
     testAction: "Test Action"
   }}
 />
 ```
 
 6.  To test your new action, I like to set it's probability to 100 within the `actions/index.js` file, disable all other actions on the `ConfigPage` after launching the application. Your action should be triggered within a few seconds.
+
+##
 
 # Other Stuff
 
