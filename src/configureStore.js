@@ -34,7 +34,7 @@ const defaultConfig = {
   initialGripStrength: GripStrengthEnum.Normal,
   actionFrequency: 5, // sec
   tasks: {
-      rubNipples: true, //TODO: REMOVE DEBUG
+    rubNipples: true, //newly added task
     doubleStrokes: true,
     halvedStrokes: true,
     teasingStrokes: true,

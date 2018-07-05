@@ -72,8 +72,7 @@ const initializeActions = taskConfigs =>
     taskConfigs.nondominant && createProbability(setStrokeStyleNondominant, 5),
     taskConfigs.headOnly && createProbability(setStrokeStyleHeadOnly, 1),
     taskConfigs.shaftOnly && createProbability(setStrokeStyleShaftOnly, 3),
-    taskConfigs.overhandGrip &&
-      createProbability(setStrokeStyleOverhandGrip, 1),
+    taskConfigs.overhandGrip && createProbability(setStrokeStyleOverhandGrip, 1),
     taskConfigs.bothHands && createProbability(setStrokeStyleBothHands, 10),
     taskConfigs.bothHands && createProbability(setStrokeStyleHandsOff, 1),
     // anal
@@ -83,8 +82,8 @@ const initializeActions = taskConfigs =>
     taskConfigs.precum && createProbability(eatPrecum, 3),
     // misc.
     taskConfigs.pickYourPoison && createProbability(pickYourPoison, 15),
-    //TODO: DEBUG 100
-    taskConfigs.rubNipples && createProbability(rubNipples, 100),
+    //TODO: assign category, maybe create a new one
+    taskConfigs.rubNipples && createProbability(rubNipples, 15),
   ].filter(action => !!action);
 
 export default initializeActions;
