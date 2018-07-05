@@ -45,6 +45,7 @@ const fetchRedditPics = id => {
 
          createNotification(`${id} failed to retrieve and will not be included in this game.`, {}, false);
       }
+      return [];
     });
 };
 
