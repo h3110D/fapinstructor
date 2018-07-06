@@ -8,7 +8,7 @@ import redLightGreenLight from "./speed/redLightGreenLight";
 import clusterStrokes from "./speed/clusterStrokes";
 import randomGripAdjustment from "./grip";
 import {addRubberBand, removeRubberBand, snapRubberBand} from "./cbt/rubberband";
-import {addClothespin, removeClothespin} from "./cbt/clothespin";
+import {addClothespin, removeClothespin} from "./nipple/clothespin";
 import applyIcyHot from "./cbt/icyhot";
 import applyToothpaste from "./cbt/toothpaste";
 import ballslaps from "./cbt/ballslaps";
