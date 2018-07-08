@@ -848,7 +848,8 @@ class ConfigPage extends React.Component {
                         title="Misc."
                         tasks={{
                             pickYourPoison: "Pick your Poison",
-                            rubNipples: "Rub Nipples"
+                            rubNipples: "Rub Nipples",
+                            nipplesAndStroke: "Nipples and Stroking"
 
                         }}
                       />
