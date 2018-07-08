@@ -1,6 +1,25 @@
 import store from "store";
 import createNotification from "engine/createNotification";
 import {StrokeStyleEnum} from "game/enums/StrokeStyle";
+import {getRandomInclusiveInteger} from "utils/math";
+
+export const setRandomStrokeStyle = async () => {
+  const { slowestStrokeSpeed, fastestStrokeSpeed } = store.config;
+  const tasks = store.const.tasks;
+  const newStrokeStyleIndex = getRandomInclusiveInteger(0, StrokeStyleEnum.length-1);
+
+  // TODO: Write algorithm that is independent of the number of the Stroke tasks,
+  // in order to be independent of future changes
+
+  // TODO: store.game.strokeStyle = ... ;
+
+  // TODO: Remove TEMPORARY SOLUTION:
+  setStrokeStyleDominant();
+
+};
+
+export const getStrokeStyle = () =>
+  store.game.strokeStyle;
 
 export const setStrokeStyleDominant = async () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.Dominant) {
