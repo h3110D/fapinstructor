@@ -5,6 +5,15 @@ import {getRandomInclusiveInteger} from "utils/math";
 import delay from "utils/delay";
 import {setStrokeStyleDominant, setStrokeStyleHandsOff} from "../strokeStyle";
 
+/**
+ * Task to rub ones nipples while not touching ones cock.
+ *
+ * @since       06.07.2018
+ * @author      the1nstructor
+ *
+ * @alias       rubNipples
+ * @memberof    actions
+ */
 const rubNipples = async () => {
     // set intensity
     const intensity = getRandomInclusiveInteger(0, 4);
