@@ -18,6 +18,20 @@ export const setRandomStrokeStyle = async () => {
 
 };
 
+export const setRandomStrokeStyle_OneHand = async () => {
+  const {slowestStrokeSpeed, fastestStrokeSpeed} = store.config;
+  const tasks = store.const.tasks;
+  const newStrokeStyleIndex = getRandomInclusiveInteger(0, StrokeStyleEnum.length - 1);
+
+  // TODO: Write algorithm that is independent of the number of the Stroke tasks,
+  // in order to be independent of future changes
+
+  // TODO: store.game.strokeStyle = ... ;
+
+  // TODO: Remove TEMPORARY SOLUTION:
+  setStrokeStyleNondominant();
+};
+
 export const getStrokeStyle = () =>
   store.game.strokeStyle;
 
