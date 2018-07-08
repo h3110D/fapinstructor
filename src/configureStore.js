@@ -76,6 +76,7 @@ const defaultConfig = {
     //Nipples
     rubNipples: true,
     clothespins: true,
+    nipplesAndStroke: true,
     //Misc
     pickYourPoison: true
   }
