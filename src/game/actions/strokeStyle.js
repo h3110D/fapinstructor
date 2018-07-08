@@ -4,7 +4,6 @@ import {StrokeStyleEnum} from "game/enums/StrokeStyle";
 import {getRandomInclusiveInteger} from "utils/math";
 
 export const setRandomStrokeStyle = async () => {
-  const { slowestStrokeSpeed, fastestStrokeSpeed } = store.config;
   const tasks = store.const.tasks;
   const newStrokeStyleIndex = getRandomInclusiveInteger(0, StrokeStyleEnum.length-1);
 
@@ -19,7 +18,6 @@ export const setRandomStrokeStyle = async () => {
 };
 
 export const setRandomStrokeStyle_OneHand = async () => {
-  const {slowestStrokeSpeed, fastestStrokeSpeed} = store.config;
   const tasks = store.const.tasks;
   const newStrokeStyleIndex = getRandomInclusiveInteger(0, StrokeStyleEnum.length - 1);
 
