@@ -803,7 +803,8 @@ class ConfigPage extends React.Component {
                           shaftOnly: "Shaft Only",
                           gripAdjustments: "Grip Adjustments",
                           overhandGrip: "Overhand Grip",
-                          bothHands: "Both Hands"
+                          bothHands: "Both Hands",
+                          handsOff: "Hands Off"
                         }}
                       />
                     </Grid>
