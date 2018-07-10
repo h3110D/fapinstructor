@@ -1,11 +1,20 @@
 import store from "store";
-import { clamp, getRandomArbitrary } from "utils/math";
+import {clamp, getRandomArbitrary} from "utils/math";
 
 /**
  * Generates a random stroke speed
- * We use the slowest & fastest stroke speeds, reduce the fastest
- * and increase the slowest, ensure it stays in the allowed
- * config range and then randomize it
+ * We use the slowest & fastest stroke speeds:
+ *  - reduce the fastest (faster) and increase the slowest. (slower)
+ *  - ensure it stays in the allowed config range.
+ *  - and then randomize it.
+ *
+ * @since 08.07.2018
+ * @author thefapinstructor
+ *
+ * @param   {Number}  slow  - The slowest stroke speed.
+ * @param   {Number}  fast  - the fastest stroke speed.
+ *
+ * @returns {Number} A random stroke speed.
  */
 export const randomStrokeSpeed = ({ slow = 2, fast = 1.4 } = {}) => {
   const { slowestStrokeSpeed, fastestStrokeSpeed } = store.config;
@@ -25,9 +34,8 @@ export const randomStrokeSpeed = ({ slow = 2, fast = 1.4 } = {}) => {
     slowestStrokeSpeed,
     fastestStrokeSpeed
   );
-  const strokeSpeed = getRandomArbitrary(minStrokeSpeed, maxStrokeSpeed);
 
-  return strokeSpeed;
+  return getRandomArbitrary(minStrokeSpeed, maxStrokeSpeed);
 };
 
 export const setStrokeSpeed = newSpeed => {

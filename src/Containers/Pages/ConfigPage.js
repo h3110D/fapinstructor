@@ -803,7 +803,8 @@ class ConfigPage extends React.Component {
                           shaftOnly: "Shaft Only",
                           gripAdjustments: "Grip Adjustments",
                           overhandGrip: "Overhand Grip",
-                          bothHands: "Both Hands"
+                          bothHands: "Both Hands",
+                          handsOff: "Hands Off"
                         }}
                       />
                     </Grid>
@@ -847,7 +848,8 @@ class ConfigPage extends React.Component {
                         title="Misc."
                         tasks={{
                             pickYourPoison: "Pick your Poison",
-                            rubNipples: "Rub Nipples"
+                            rubNipples: "Rub Nipples",
+                            nipplesAndStroke: "Nipples and Stroking"
 
                         }}
                       />
