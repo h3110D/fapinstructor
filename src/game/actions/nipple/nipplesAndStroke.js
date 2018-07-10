@@ -16,9 +16,10 @@ import {setRandomStrokeStyle, setRandomStrokeStyle_OneHand} from "game/actions/s
  */
 const nipplesAndStroke = async () => {
     // set intensity
-    const intensity = getRandomInclusiveInteger(0, RubStrengthEnum.length - 1);
+    const intensity = getRandomInclusiveInteger(0, Object.keys(RubStrengthEnum).length/2);
 
-    const left_or_right = getRandomInclusiveInteger(0, HandSideEnum.length - 1);
+    const left_or_right = getRandomInclusiveInteger(0, Object.keys(HandSideEnum).length/2);
+    //TODO: always getting "right" so getRandomInclusiveInteger(0, 1) either always returns 0 or Object.keys is wrong calculation.
 
     // task duration (= total time in this case)
     const taskDuration = getRandomInclusiveInteger(10, 25);

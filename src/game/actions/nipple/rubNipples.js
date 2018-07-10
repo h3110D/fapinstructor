@@ -1,6 +1,6 @@
 import createNotification from "engine/createNotification";
 import {randomStrokeSpeed, setStrokeSpeed,} from "game/utils/strokeSpeed";
-import {RubStrengthString} from "game/enums/RubStrength";
+import {RubStrengthEnum, RubStrengthString} from "game/enums/RubStrength"
 import {getRandomInclusiveInteger} from "utils/math";
 import delay from "utils/delay";
 import {setRandomStrokeStyle, setStrokeStyleHandsOff} from "game/actions/strokeStyle";
@@ -16,7 +16,8 @@ import {setRandomStrokeStyle, setStrokeStyleHandsOff} from "game/actions/strokeS
  */
 const rubNipples = async () => {
     // set intensity
-    const intensity = getRandomInclusiveInteger(0, 4);
+    const intensity = getRandomInclusiveInteger(0, Object.keys(RubStrengthEnum).length/2 - 1);
+    //TODO: Probably also here wrong Output of getRandomInclusiveInteger
 
     // task duration (= total time in this case)
     const taskDuration = getRandomInclusiveInteger(10, 25);

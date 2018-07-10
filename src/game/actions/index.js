@@ -85,7 +85,8 @@ const initializeActions = taskConfigs =>
     taskConfigs.clothespins && createProbability(addClothespin, 3),
     taskConfigs.clothespins && createProbability(removeClothespin, 1),
     taskConfigs.rubNipples && createProbability(rubNipples, 15),
-    taskConfigs.nipplesAndStroke && createProbability(nipplesAndStroke, 15),
+    taskConfigs.nipplesAndStroke && createProbability(nipplesAndStroke, 100),
+    //TODO: 100 -> 25 after Testing
   ].filter(action => !!action);
 
 export default initializeActions;
