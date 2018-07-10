@@ -1,8 +1,6 @@
 import store from "store";
-import createNotification, {
-  dismissNotification
-} from "engine/createNotification";
-import { strokerRemoteControl } from "game/loops/strokerLoop";
+import createNotification, {dismissNotification} from "engine/createNotification";
+import {strokerRemoteControl} from "game/loops/strokerLoop";
 
 export const addClothespin = async () => {
   if (store.game.clothespins < 2) {

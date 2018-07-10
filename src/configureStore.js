@@ -1,15 +1,23 @@
 import store from "store";
-import { GripStrengthEnum } from "game/enums/GripStrength";
+import {GripStrengthEnum} from "game/enums/GripStrength";
 
+/**
+ * A big enum containing all setup information of the game.
+ *
+ * @since 08.07.2018
+ */
 const defaultConfig = {
   version: 2,
   tumblrId: "fapstergifs, allcowgirl, mar-cuss-blowjob-gifs",
+  failedIds: [],
+  redditId: "60fpsporn, porninaminute",
   gifs: true,
   pictures: false,
-  tumblrOffset: [],
+  videos: true,
   slideDuration: 10, // sec
   enableVoice: true,
   enableMoans: true,
+  videoMuted: false,
   finalOrgasmAllowed: true,
   finalOrgasmDenied: false,
   finalOrgasmRuined: false,
@@ -20,7 +28,7 @@ const defaultConfig = {
   minimumRuinedOrgasms: 0,
   maximumRuinedOrgasms: 0,
   maximumOrgasms: 1,
-  postOrgasmTorture: true,
+  postOrgasmTorture: false,
   postOrgasmTortureMinimumTime: 10,
   postOrgasmTortureMaximumTime: 90,
   edgeCooldown: 5, // sec
@@ -31,6 +39,7 @@ const defaultConfig = {
   initialGripStrength: GripStrengthEnum.Normal,
   actionFrequency: 5, // sec
   tasks: {
+    //Stroke Speed
     doubleStrokes: true,
     halvedStrokes: true,
     teasingStrokes: true,
@@ -39,16 +48,19 @@ const defaultConfig = {
     randomStrokeSpeed: true,
     redLightGreenLight: true,
     clusterStrokes: true,
+    //Stroke Style
     dominant: true,
     nondominant: true,
     headOnly: true,
     shaftOnly: true,
     overhandGrip: true,
     bothHands: true,
+    handsOff: true,
+    //Grip Strength
     gripAdjustments: true,
+    //CBT
     bindCockBalls: true,
     rubberBands: true,
-    clothespins: true,
     ballSlaps: true,
     squeezeBalls: true,
     headPalming: true,
@@ -59,7 +71,13 @@ const defaultConfig = {
     flicking: true,
     cbtIce: true,
     precum: true,
+    //Anal
     buttplug: true,
+    //Nipples
+    rubNipples: true,
+    clothespins: true,
+    nipplesAndStroke: true,
+    //Misc
     pickYourPoison: true
   }
 };

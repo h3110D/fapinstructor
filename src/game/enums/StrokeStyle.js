@@ -4,7 +4,8 @@ const StrokeStyleString = {
   2: "Head Only",
   3: "Shaft Only",
   4: "Overhand Grip",
-  5: "Both Hands"
+  5: "Both Hands",
+  6: "Hands Off!!"
 };
 
 const StrokeStyleEnum = {
@@ -13,7 +14,8 @@ const StrokeStyleEnum = {
   HeadOnly: 2,
   ShaftOnly: 3,
   OverhandGrip: 4,
-  BothHands: 5
+  BothHands: 5,
+  HandsOff: 6
 };
 
 export { StrokeStyleString, StrokeStyleEnum };

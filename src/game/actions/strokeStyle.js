@@ -1,6 +1,37 @@
 import store from "store";
 import createNotification from "engine/createNotification";
-import { StrokeStyleEnum } from "game/enums/StrokeStyle";
+import {StrokeStyleEnum} from "game/enums/StrokeStyle";
+//import {getRandomInclusiveInteger} from "utils/math";
+
+export const setRandomStrokeStyle = async () => {
+  //const tasks = store.const.tasks;
+  //const newStrokeStyleIndex = getRandomInclusiveInteger(0, StrokeStyleEnum.length-1);
+
+  // TODO: Write algorithm that is independent of the number of the Stroke tasks,
+  // in order to be independent of future changes
+
+  // TODO: store.game.strokeStyle = ... ;
+
+  // TODO: Remove TEMPORARY SOLUTION:
+  setStrokeStyleDominant();
+
+};
+
+export const setRandomStrokeStyle_OneHand = async () => {
+  //const tasks = store.const.tasks;
+  //const newStrokeStyleIndex = getRandomInclusiveInteger(0, StrokeStyleEnum.length - 1);
+
+  // TODO: Write algorithm that is independent of the number of the Stroke tasks,
+  // in order to be independent of future changes
+
+  // TODO: store.game.strokeStyle = ... ;
+
+  // TODO: Remove TEMPORARY SOLUTION:
+  setStrokeStyleNondominant();
+};
+
+// export const getStrokeStyle = () =>
+//   store.game.strokeStyle;
 
 export const setStrokeStyleDominant = async () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.Dominant) {
@@ -49,3 +80,11 @@ export const setStrokeStyleBothHands = async () => {
   }
 };
 setStrokeStyleBothHands.label = "Both Hands";
+
+export const setStrokeStyleHandsOff = async () => {
+    if (store.game.strokeStyle !== StrokeStyleEnum.HandsOff) {
+        createNotification(`Hands off your cock!`);
+        store.game.strokeStyle = StrokeStyleEnum.HandsOff;
+    }
+};
+setStrokeStyleHandsOff.label = "HANDS OFF!!";

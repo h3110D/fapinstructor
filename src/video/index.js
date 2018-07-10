@@ -1,8 +1,11 @@
+const createYouTubeLink = videoId =>
+  `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&amp;showinfo=0&autoplay=0`;
+
 const videoLibrary = {
-  CockBallsTie: "lnX-zRnqA94",
-  BallSeperation: "-ZYUVJwSBio",
-  CockBallWrapping: "YcnhFFapoH4",
-  BallWrapping: "2XAEket8d8w"
+  CockBallsTie: createYouTubeLink("lnX-zRnqA94"),
+  BallSeperation: createYouTubeLink("-ZYUVJwSBio"),
+  CockBallWrapping: createYouTubeLink("YcnhFFapoH4"),
+  BallWrapping: createYouTubeLink("2XAEket8d8w")
 };
 
 export default videoLibrary;

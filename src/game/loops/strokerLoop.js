@@ -14,7 +14,7 @@ const strokerLoop = progress => {
     if (strokeSpeed > 0) {
       if (lastStroke > 1 / strokeSpeed * 1000) {
         if (!playTick(strokeSpeed)) {
-          // play(audioLibrary.Tick);
+          play(audioLibrary.Tick);
         }
         store.game.strokeWave.push(lastStroke);
         store.game.strokes++;

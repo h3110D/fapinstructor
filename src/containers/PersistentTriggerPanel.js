@@ -1,8 +1,14 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
+import store from "store";
+import createNotification from "engine/createNotification";
 import Button from "material-ui/Button";
+import IconButton from "material-ui/IconButton";
 import executeAction from "engine/executeAction";
 import { ruinedOrgasm } from "game/actions/orgasm/ruin";
+import ThumbUp from "material-ui-icons/ThumbUp";
+import ThumbDown from "material-ui-icons/ThumbDown";
+import { nextSlide } from "game/utils/fetchPictures";
 
 const styles = theme => ({
   root: {
@@ -13,6 +19,16 @@ const styles = theme => ({
 class PersistentTriggerPanel extends React.Component {
   state = {
     ruinedOrgasmDisabled: false
+  };
+
+  bookmark = () => {
+    const url = store.game.mediaPlayerUrl;
+
+    createNotification(`Bookmarked Image`);
+
+    if (!store.game.bookmarks.includes(url)) {
+      store.game.bookmarks.push(url);
+    }
   };
 
   render() {
@@ -35,6 +51,12 @@ class PersistentTriggerPanel extends React.Component {
         >
           Ruin
         </Button>
+        <IconButton color="secondary" variant="raised" onClick={this.bookmark}>
+          <ThumbUp />
+        </IconButton>
+        <IconButton color="secondary" variant="raised" onClick={nextSlide}>
+          <ThumbDown />
+        </IconButton>
       </div>
     );
   }

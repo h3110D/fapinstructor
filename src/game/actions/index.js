@@ -7,12 +7,8 @@ import randomBeat from "./speed/randomBeat";
 import redLightGreenLight from "./speed/redLightGreenLight";
 import clusterStrokes from "./speed/clusterStrokes";
 import randomGripAdjustment from "./grip";
-import {
-  addRubberBand,
-  removeRubberBand,
-  snapRubberBand
-} from "./cbt/rubberband";
-import { addClothespin, removeClothespin } from "./cbt/clothespin";
+import {addRubberBand, removeRubberBand, snapRubberBand} from "./cbt/rubberband";
+import {addClothespin, removeClothespin} from "./nipple/clothespin";
 import applyIcyHot from "./cbt/icyhot";
 import applyToothpaste from "./cbt/toothpaste";
 import ballslaps from "./cbt/ballslaps";
@@ -20,27 +16,28 @@ import squeezeBalls from "./cbt/squeezeBalls";
 import headPalming from "./cbt/headPalming";
 import bindCockAndBalls from "./cbt/bindCockAndBalls";
 import holdBreath from "./cbt/holdBreath";
+import {scratchChest, scratchShoulders, scratchThighs} from "./cbt/scratching";
+import {flickCockHead, flickNipples} from "./cbt/flicking";
+import {rubIceOnBalls} from "./cbt/ice";
 import {
-  scratchChest,
-  scratchThighs,
-  scratchShoulders
-} from "./cbt/scratching";
-import { flickCockHead, flickNipples } from "./cbt/flicking";
-import { rubIceOnBalls } from "./cbt/ice";
-import {
+  setStrokeStyleBothHands,
   setStrokeStyleDominant,
-  setStrokeStyleNondominant,
+  setStrokeStyleHandsOff,
   setStrokeStyleHeadOnly,
-  setStrokeStyleShaftOnly,
+  setStrokeStyleNondominant,
   setStrokeStyleOverhandGrip,
-  setStrokeStyleBothHands
+  setStrokeStyleShaftOnly
 } from "./strokeStyle";
 import eatPrecum from "./cei/eatPrecum";
-import { insertButtPlug, removeButtPlug } from "./anal/buttPlug";
+import {insertButtPlug, removeButtPlug} from "./anal/buttPlug";
 import pickYourPoison from "./pickYourPoison";
 import acceleration from "./speed/acceleration";
+import rubNipples from "./nipple/rubNipples.js";
+import nipplesAndStroke from "./nipple/nipplesAndStroke";
 
 const initializeActions = taskConfigs =>
+  // We use a task configuration to determine if the task is active. We will get to this in the next step.
+  // createProbability takes your action and the probability percentage the action will be invoked
   [
     // speed
     taskConfigs.halvedStrokes && createProbability(halvedStrokes, 5),
@@ -54,8 +51,6 @@ const initializeActions = taskConfigs =>
     // cbt
     taskConfigs.rubberBands && createProbability(addRubberBand, 2),
     taskConfigs.rubberBands && createProbability(removeRubberBand, 1),
-    taskConfigs.clothespins && createProbability(addClothespin, 3),
-    taskConfigs.clothespins && createProbability(removeClothespin, 1),
     taskConfigs.icyHot && createProbability(applyIcyHot, 1),
     taskConfigs.toothpaste && createProbability(applyToothpaste, 1),
     taskConfigs.ballSlaps && createProbability(ballslaps, 4),
@@ -76,16 +71,22 @@ const initializeActions = taskConfigs =>
     taskConfigs.nondominant && createProbability(setStrokeStyleNondominant, 5),
     taskConfigs.headOnly && createProbability(setStrokeStyleHeadOnly, 1),
     taskConfigs.shaftOnly && createProbability(setStrokeStyleShaftOnly, 3),
-    taskConfigs.overhandGrip &&
-      createProbability(setStrokeStyleOverhandGrip, 1),
+    taskConfigs.overhandGrip && createProbability(setStrokeStyleOverhandGrip, 1),
     taskConfigs.bothHands && createProbability(setStrokeStyleBothHands, 10),
+    taskConfigs.handsOff && createProbability(setStrokeStyleHandsOff, 1),
     // anal
     taskConfigs.buttplug && createProbability(insertButtPlug, 1),
     taskConfigs.buttplug && createProbability(removeButtPlug, 1),
     // cei
     taskConfigs.precum && createProbability(eatPrecum, 3),
     // misc.
-    taskConfigs.pickYourPoison && createProbability(pickYourPoison, 15)
+    taskConfigs.pickYourPoison && createProbability(pickYourPoison, 15),
+    // nipples
+    taskConfigs.clothespins && createProbability(addClothespin, 3),
+    taskConfigs.clothespins && createProbability(removeClothespin, 1),
+    taskConfigs.rubNipples && createProbability(rubNipples, 15),
+    taskConfigs.nipplesAndStroke && createProbability(nipplesAndStroke, 100),
+    //TODO: 100 -> 25 after Testing
   ].filter(action => !!action);
 
 export default initializeActions;

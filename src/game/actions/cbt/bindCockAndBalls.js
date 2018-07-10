@@ -1,14 +1,14 @@
 import store from "store";
 import createNotification from "engine/createNotification";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
-import { slideRemoteControl } from "game/loops/slideLoop";
 import videoLibrary from "video";
 import { getRandomInclusiveInteger } from "utils/math";
+import { nextSlide } from "game/utils/fetchPictures";
 
 const bindCockAndBalls = async () => {
   if (!store.game.cockAndBallsBound) {
     strokerRemoteControl.pause();
-    slideRemoteControl.pause();
+    store.game.mediaFrozen = true;
     // pause images
     createNotification(`Bind your cock & balls`);
 
@@ -19,14 +19,14 @@ const bindCockAndBalls = async () => {
       videoLibrary.BallWrapping
     ];
 
-    const video = videos[getRandomInclusiveInteger(0, videos.length - 1)];
-    store.game.activeVideo = video;
+    store.game.mediaPlayerUrl =
+      videos[getRandomInclusiveInteger(0, videos.length - 1)];
 
     const done = async () => {
       strokerRemoteControl.play();
-      slideRemoteControl.play();
+      store.game.mediaFrozen = false;
       store.game.cockAndBallsBound = true;
-      store.game.activeVideo = null;
+      nextSlide();
     };
     done.label = "Bound";
 
