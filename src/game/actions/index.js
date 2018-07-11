@@ -27,7 +27,7 @@ import {
   setStrokeStyleNondominant,
   setStrokeStyleOverhandGrip,
   setStrokeStyleShaftOnly
-} from "./strokeStyle";
+} from "game/enums/StrokeStyle";
 import eatPrecum from "./cei/eatPrecum";
 import {insertButtPlug, removeButtPlug} from "./anal/buttPlug";
 import pickYourPoison from "./pickYourPoison";
@@ -85,8 +85,7 @@ const initializeActions = taskConfigs =>
     taskConfigs.clothespins && createProbability(addClothespin, 3),
     taskConfigs.clothespins && createProbability(removeClothespin, 1),
     taskConfigs.rubNipples && createProbability(rubNipples, 15),
-    taskConfigs.nipplesAndStroke && createProbability(nipplesAndStroke, 100),
-    //TODO: 100 -> 25 after Testing
+    taskConfigs.nipplesAndStroke && createProbability(nipplesAndStroke, 25),
   ].filter(action => !!action);
 
 export default initializeActions;
