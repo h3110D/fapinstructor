@@ -1,7 +1,7 @@
 import store from "store";
 import moment from "moment";
-import { randomStrokeSpeed } from "./utils/strokeSpeed";
-import { StrokeStyleEnum } from "game/enums/StrokeStyle";
+import {randomStrokeSpeed} from "./utils/strokeSpeed";
+import {StrokeStyleEnum} from "game/enums/StrokeStyle";
 
 export default () => {
   store.game = {
@@ -21,7 +21,7 @@ export default () => {
     orgasms: 0,
     strokes: 0,
     strokeWave: [],
-    strokeStyle: StrokeStyleEnum.Dominant,
+    strokeStyle: StrokeStyleEnum.dominant,
     buttPlugInserted: false
   };
 };

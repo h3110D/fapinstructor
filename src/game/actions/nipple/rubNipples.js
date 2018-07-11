@@ -17,7 +17,6 @@ import {setRandomStrokeStyle, setStrokeStyleHandsOff} from "game/enums/StrokeSty
 const rubNipples = async () => {
     // set intensity
   const strength = getRandomRubStrength();
-    //TODO: Probably also here wrong Output of getRandomInclusiveInteger
 
     // task duration (= total time in this case)
     const taskDuration = getRandomInclusiveInteger(10, 25);
