@@ -1,11 +1,11 @@
 const HandSideString = {
-  0: "right",
-  1: "left",
+  0: "dominant",
+  1: "nondominant",
 };
 
 const HandSideEnum = {
-  rightHandSide: 0,
-  leftHandSide: 1,
+  dominantHandSide: 0,
+  nondominantHandSide: 1,
 };
 
 export { HandSideString, HandSideEnum };
