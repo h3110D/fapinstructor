@@ -65,6 +65,7 @@ const fetchTumblrPics = tumblrId => {
 
          createNotification(`${tumblrId} failed to retrieve and will not be included in this game.`, {}, false);
       }
+      return [];
     });
 };
 
