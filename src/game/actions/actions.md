@@ -1,6 +1,8 @@
 # actions
 
-This folder contains all possible actions that may occur during playing the game. 
+This folder contains: 
+
+- all possible actions that may occur during playing the game. 
 
 The actions are divided in further folders.
 
