@@ -1,3 +1,4 @@
+import store from "store";
 import createNotification from "engine/createNotification";
 import {randomStrokeSpeed, setStrokeSpeed,} from "game/utils/strokeSpeed";
 import {getRandomRubStrength} from "game/enums/RubStrength"
@@ -15,21 +16,29 @@ import {setRandomStrokeStyle, setStrokeStyleHandsOff} from "game/enums/StrokeSty
  * @memberof    actions
  */
 const rubNipples = async () => {
-    // set intensity
+  // set intensity
   const strength = getRandomRubStrength();
 
-    // task duration (= total time in this case)
-    const taskDuration = getRandomInclusiveInteger(10, 25);
+  // task duration (= total time in this case)
+  const taskDuration = getRandomInclusiveInteger(10, 25);
 
-  createNotification(`Use both of your hands to ${strength}rub your nipples`, {
-        time: taskDuration * 1000
-    });
+  let message = `Use both of your hands to ${strength}rub your nipples`;
 
-    setStrokeSpeed(0);
+  if (store.game.clothespins === 1) {
+    message = `Use one of your hands to ${strength}rub your free nipple`;
+  }
+  else if (store.game.clothespins > 1) {
+    message = `Use both of your hands to ${strength}turn the clothespins on your nipples`;
+  }
+  createNotification(message, {
+    time: taskDuration * 1000
+  });
+
+  setStrokeSpeed(0);
   await setStrokeStyleHandsOff();
-    await delay((taskDuration + 1) * 1000);
+  await delay((taskDuration + 1) * 1000);
 
-    setStrokeSpeed(randomStrokeSpeed());
+  setStrokeSpeed(randomStrokeSpeed());
   await setRandomStrokeStyle();
 
 };
