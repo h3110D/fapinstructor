@@ -9,7 +9,7 @@ import {setRandomStrokeStyle, setStrokeStyleHandsOff} from "game/enums/StrokeSty
 /**
  * Task to rub ones nipples while not touching ones cock.
  *
- * @since       06.07.2018
+ * @since       14.07.2018
  * @author      the1nstructor
  *
  * @alias       rubNipples

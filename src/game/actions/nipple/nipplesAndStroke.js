@@ -10,11 +10,11 @@ import {setRandomStrokeStyle, setRandomStrokeStyle_OneHand} from "game/enums/Str
 /**
  * Task to play with ones nipples while stroking ones cock.
  *
- * @since      11.07.2018
+ * @since      14.07.2018
  * @author     the1nstructor
  *
- * @alias   nipplesAndStroke
- * @memberof actions
+ * @alias      nipplesAndStroke
+ * @memberof   actions
  */
 const nipplesAndStroke = async () => {
   // get Random strength
