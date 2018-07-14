@@ -22,7 +22,6 @@ import {rubIceOnBalls} from "./cbt/ice";
 import {
   setStrokeStyleBothHands,
   setStrokeStyleDominant,
-  setStrokeStyleHandsOff,
   setStrokeStyleHeadOnly,
   setStrokeStyleNondominant,
   setStrokeStyleOverhandGrip,
@@ -34,6 +33,7 @@ import pickYourPoison from "./pickYourPoison";
 import acceleration from "./speed/acceleration";
 import rubNipples from "./nipple/rubNipples.js";
 import nipplesAndStroke from "./nipple/nipplesAndStroke";
+import handsOff from "./handsOff";
 
 const initializeActions = taskConfigs =>
   // We use a task configuration to determine if the task is active. We will get to this in the next step.
@@ -65,27 +65,28 @@ const initializeActions = taskConfigs =>
     taskConfigs.flicking && createProbability(flickCockHead, 1),
     taskConfigs.flicking && createProbability(flickNipples, 1),
     taskConfigs.cbtIce && createProbability(rubIceOnBalls, 1),
-    // stroke style
+    // stroke grip
     taskConfigs.gripAdjustments && createProbability(randomGripAdjustment, 30),
+    // stroke style
     taskConfigs.dominant && createProbability(setStrokeStyleDominant, 10),
     taskConfigs.nondominant && createProbability(setStrokeStyleNondominant, 5),
     taskConfigs.headOnly && createProbability(setStrokeStyleHeadOnly, 1),
     taskConfigs.shaftOnly && createProbability(setStrokeStyleShaftOnly, 3),
     taskConfigs.overhandGrip && createProbability(setStrokeStyleOverhandGrip, 1),
     taskConfigs.bothHands && createProbability(setStrokeStyleBothHands, 10),
-    taskConfigs.handsOff && createProbability(setStrokeStyleHandsOff, 1),
+    taskConfigs.handsOff && createProbability(handsOff, 5),
     // anal
     taskConfigs.buttplug && createProbability(insertButtPlug, 1),
     taskConfigs.buttplug && createProbability(removeButtPlug, 1),
     // cei
     taskConfigs.precum && createProbability(eatPrecum, 3),
-    // misc.
-    taskConfigs.pickYourPoison && createProbability(pickYourPoison, 15),
     // nipples
     taskConfigs.clothespins && createProbability(addClothespin, 3),
     taskConfigs.clothespins && createProbability(removeClothespin, 1),
     taskConfigs.rubNipples && createProbability(rubNipples, 15),
     taskConfigs.nipplesAndStroke && createProbability(nipplesAndStroke, 25),
+    // misc.
+    taskConfigs.pickYourPoison && createProbability(pickYourPoison, 15),
   ].filter(action => !!action);
 
 export default initializeActions;
