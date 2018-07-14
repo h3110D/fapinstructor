@@ -40,6 +40,12 @@ export const getRandomActions = (count = 0) => {
   return chosenActions;
 };
 
+
+/**
+ * TODO @thefapinstructor please create docu for this
+ *
+ * @returns {*}
+ */
 const generateAction = () => {
   let action = null;
 
