@@ -25,7 +25,7 @@ const rubNipples = async () => {
   let message = `Use both of your hands to ${strength}rub your nipples`;
 
   if (store.game.clothespins === 1) {
-    message = `Use one of your hands to ${strength}rub your free nipple`;
+    message = `Use one of your hands to ${strength}turn the clothespin on your nipple`;
   }
   else if (store.game.clothespins > 1) {
     message = `Use both of your hands to ${strength}turn the clothespins on your nipples`;
