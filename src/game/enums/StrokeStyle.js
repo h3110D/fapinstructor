@@ -94,6 +94,18 @@ const StrokeStyleSetterEnum = {
 const StrokeStyleSetterArray = Object.entries(StrokeStyleSetterEnum);
 
 /**
+ * sets the Stroke style
+ *
+ * @param strokeStyle   a strokeStyle from StrokeStyleEnum to be applied
+ *
+ * @author the1nstructor
+ * @since 15.07.2018
+ */
+export const setStrokeStyle = (strokeStyle = StrokeStyleEnum.dominant) => {
+  StrokeStyleSetterArray[strokeStyle][1]();
+};
+
+/**
  * Get a array with all active stroke styles.
  * [task1, task2, ...]
  * @returns {Array}
@@ -182,6 +194,17 @@ export const setRandomStrokeStyle_OneHand = async () => {
   const index = getRandomStrokeStyleIndex(styles);
   // Set the style
   StrokeStyleSetterArray[index][1]();
+};
+
+/**
+ *
+ * @returns {Number} The current Stroke Style as StrokeStyleEnum.any (a number basically)
+ *
+ * @author the1nstructor
+ * @since 15.07.2018
+ */
+export const getCurrentStrokeStyle = () => {
+  return store.game.strokeStyle;
 };
 
 export {StrokeStyleString, StrokeStyleEnum};
