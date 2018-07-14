@@ -83,8 +83,8 @@ const initializeActions = taskConfigs =>
     // nipples
     taskConfigs.clothespins && createProbability(addClothespin, 3),
     taskConfigs.clothespins && createProbability(removeClothespin, 1),
-    taskConfigs.rubNipples && createProbability(rubNipples, 15),
-    taskConfigs.nipplesAndStroke && createProbability(nipplesAndStroke, 25),
+    taskConfigs.rubNipples && createProbability(rubNipples, 5),
+    taskConfigs.nipplesAndStroke && createProbability(nipplesAndStroke, 10),
     // misc.
     taskConfigs.pickYourPoison && createProbability(pickYourPoison, 15),
   ].filter(action => !!action);
