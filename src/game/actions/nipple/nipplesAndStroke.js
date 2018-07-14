@@ -5,18 +5,20 @@ import {getRandomRubStrength} from "game/enums/RubStrength"
 import {getRandomLeftOrRight} from "game/enums/HandSide";
 import {getRandomInclusiveInteger} from "utils/math";
 import delay from "utils/delay";
-import {setRandomStrokeStyle, setRandomStrokeStyle_OneHand} from "game/enums/StrokeStyle";
+import {getCurrentStrokeStyle, setRandomStrokeStyle_OneHand, setStrokeStyle} from "game/enums/StrokeStyle";
 
 /**
  * Task to play with ones nipples while stroking ones cock.
  *
- * @since      14.07.2018
+ * @since      15.07.2018
  * @author     the1nstructor
  *
  * @alias      nipplesAndStroke
  * @memberof   actions
  */
 const nipplesAndStroke = async () => {
+
+  const style = getCurrentStrokeStyle();
   // get Random strength
   const strength = getRandomRubStrength();
   const left_or_right = getRandomLeftOrRight();
@@ -41,7 +43,7 @@ const nipplesAndStroke = async () => {
   await delay((taskDuration + 1) * 1000);
 
   setStrokeSpeed(randomStrokeSpeed());
-  await setRandomStrokeStyle();
+  await setStrokeStyle(style);
 
 };
 nipplesAndStroke.label = "Nipple and Stroke";
