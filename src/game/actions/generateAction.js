@@ -15,6 +15,7 @@ import _ from "lodash";
  * @returns {any | Array}
  */
 export const getRandomActions = (count = 0) => {
+  //Take only actions from src/configureStore.js and initialize them with probabilities from actions/index.js
   const actions = initializeActions(store.config.tasks);
 
   // applies the probability to each action
