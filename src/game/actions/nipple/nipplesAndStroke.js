@@ -1,3 +1,4 @@
+import store from "store";
 import createNotification from "engine/createNotification";
 import {randomStrokeSpeed, setStrokeSpeed,} from "game/utils/strokeSpeed";
 import {getRandomRubStrength} from "game/enums/RubStrength"
@@ -23,7 +24,17 @@ const nipplesAndStroke = async () => {
   // task duration (= total time in this case)
   const taskDuration = getRandomInclusiveInteger(10, 25);
   await setRandomStrokeStyle_OneHand();
-  createNotification(`Use one of your hands to ${strength}play with your ${left_or_right} nipple`, {
+
+  let message = `Use one of your hands to ${strength}play with your ${left_or_right} nipple`;
+
+  if (store.game.clothespins === 1) {
+    message = `Use one of your hands to ${strength}turn the clothespin on your nipple`;
+  }
+  else if (store.game.clothespins > 1) {
+    message = `Use one of your hands to ${strength}turn the clothespin on your ${left_or_right} nipple`;
+  }
+
+  createNotification(message, {
     time: taskDuration * 1000
   });
 
