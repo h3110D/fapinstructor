@@ -35,6 +35,9 @@ const styles = theme => ({
     background: `url(${BackgroundImage})`,
     backgroundSize: "cover",
     backgroundAttachment: "fixed"
+  },
+  buttonMargin: {
+    margin: "5px"
   }
 });
 
@@ -89,7 +92,28 @@ class GamePage extends React.Component {
   componentWillUnmount() {
     stopGame();
   }
+  
+  backToConfig() {
+    this.props.history.push('/');
+  }
 
+  renderBackToConfig() {
+    if(store.config.allowConfigEdit) {
+      return (
+        <Button
+          onClick={ () => {
+            this.backToConfig();
+          }}
+          variant="raised"
+          color="secondary"
+          className={this.props.classes.buttonMargin}
+        >
+        Configure game
+        </Button>
+      );
+    }
+  }
+  
   render() {
     if (!this.state.gameStarted) {
       return (
@@ -101,9 +125,13 @@ class GamePage extends React.Component {
             }}
             variant="raised"
             color="secondary"
+            className={this.props.classes.buttonMargin}
           >
             start game
-          </Button>
+          </Button>  
+          {
+            this.renderBackToConfig()
+          }
         </div>
       );
     }

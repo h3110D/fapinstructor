@@ -903,6 +903,18 @@ class ConfigPage extends React.Component {
                   Generate Link
                 </Button>
               </Tooltip>
+              <FormControlLabel
+                 control={
+                   <Switch
+                      checked={store.config.allowConfigEdit}
+                      onChange={this.handleCheckChange(
+                        "allowConfigEdit"
+                      )}
+                      value="allowConfigEdit"
+                   />
+                  }
+                 label="Editable?"
+                />
             </div>
           </Paper>
         </div>
