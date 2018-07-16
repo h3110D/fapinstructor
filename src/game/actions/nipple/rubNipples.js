@@ -20,7 +20,7 @@ const rubNipples = async () => {
   const strength = getRandomRubStrength();
 
   // task duration (= total time in this case)
-  const taskDuration = getRandomInclusiveInteger(10, 25);
+  const taskDuration = getRandomInclusiveInteger(15, 30);
 
   let message = `Use both of your hands to ${strength}rub your nipples`;
 
@@ -36,7 +36,7 @@ const rubNipples = async () => {
 
   setStrokeSpeed(0);
   await setStrokeStyleHandsOff();
-  await delay((taskDuration + 1) * 1000);
+  await delay(taskDuration * 1000);
 
   setStrokeSpeed(randomStrokeSpeed());
   await setRandomStrokeStyle();
