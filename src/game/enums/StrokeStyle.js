@@ -1,6 +1,6 @@
 import store from "store";
 import createNotification from "engine/createNotification";
-//import {getRandomInclusiveInteger} from "utils/math";
+import handsOff from "../actions/handsOff";
 
 const StrokeStyleString = {
   0: "Dominant",
@@ -9,7 +9,6 @@ const StrokeStyleString = {
   3: "Shaft Only",
   4: "Overhand Grip",
   5: "Both Hands",
-  6: "Hands off!"
 };
 
 const StrokeStyleEnum = {
@@ -19,7 +18,6 @@ const StrokeStyleEnum = {
   shaftOnly: 3,
   overhandGrip: 4,
   bothHands: 5,
-  handsOff: 6
 };
 
 const StrokeStyleArray = Object.entries(StrokeStyleEnum);
@@ -80,7 +78,9 @@ export const setStrokeStyleHandsOff = async () => {
 };
 setStrokeStyleHandsOff.label = "HANDS OFF!!";
 
-// Enum of the Function calls. Has to have the same indices and order as the StrokeStyleEnum
+/**
+ * Enum of the Function calls. Has to have the same indices and order as the StrokeStyleEnum
+ */
 const StrokeStyleSetterEnum = {
   0: setStrokeStyleDominant,
   1: setStrokeStyleNondominant,
@@ -88,7 +88,6 @@ const StrokeStyleSetterEnum = {
   3: setStrokeStyleShaftOnly,
   4: setStrokeStyleOverhandGrip,
   5: setStrokeStyleBothHands,
-  6: setStrokeStyleHandsOff
 };
 
 const StrokeStyleSetterArray = Object.entries(StrokeStyleSetterEnum);
