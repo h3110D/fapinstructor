@@ -7,9 +7,12 @@ cache:
 script:
   - npm run build
 deploy:
-  provider: pages
+  provider: s3
+  access_key_id: $accesskey
+  secret_access_key: $secretaccesskey
+  bucket: "fapinstructor.com" 
   skip_cleanup: true
-  github_token: $github_token
+  acl: public_read
   local_dir: build
   on:
     branch: master
