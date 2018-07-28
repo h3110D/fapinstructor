@@ -22,14 +22,14 @@ export const nextSlide = async () => {
 
 const fetchPictures = async () => {
   const { tumblrId, redditId } = store.config;
-  var splitOnCommaOutsideSqBr = /\,(?![^\[]*])/g;
+  var splitOnCommaOutsideSqBr = /,(?![^[]*])/g;
 
   const tumblrIds =
     tumblrId.length > 0 && tumblrId.split(splitOnCommaOutsideSqBr).map(id => id.trim());
   const redditIds =
     redditId.length > 0 && redditId.split(splitOnCommaOutsideSqBr).map(id => id.trim());
 
-  tumblrIds.map((id, index) => {
+  tumblrIds.forEach((id, index) => {
     var tagsRegex = /\[(.*?)\]/g
     var tagMatch = tagsRegex.exec(id);
     var tags = "";
@@ -39,10 +39,10 @@ const fetchPictures = async () => {
       tagMatch = tagsRegex.exec(id);
     }
 
-    tags.replace(" ", "+");
     tags = tags.split(",");
     tags.forEach((tag) => {
       tag.trim();
+      tag.replace(" ", "+");
       let newTumblrId = id.concat(`[${tag}]`);
       tumblrIds.push(newTumblrId);
     });

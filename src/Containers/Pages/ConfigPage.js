@@ -318,7 +318,7 @@ class ConfigPage extends React.Component {
                       <FormHelperText>{errors.mediaSource}</FormHelperText>
                     ) : (
                       <FormHelperText>
-                        You can add multiple tumblrs each seperated by a comma
+                        You can add multiple tumblrs each seperated by a comma, you can also add tags inside square brackets eg: tumblr[tag1,tag2]
                       </FormHelperText>
                     )}
                   </FormControl>
