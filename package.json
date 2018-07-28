@@ -2,6 +2,7 @@
   "name": "fi2",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://fapinstructor.com/",
   "dependencies": {
     "clipboard": "^1.7.1",
     "fetch-jsonp": "^1.1.3",
