@@ -65,7 +65,8 @@ const defaultConfig = {
     precum: true,
     buttplug: true,
     pickYourPoison: true
-  }
+  },
+  allowConfigEdit: true
 };
 
 export default () => {
