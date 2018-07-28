@@ -22,11 +22,31 @@ export const nextSlide = async () => {
 
 const fetchPictures = async () => {
   const { tumblrId, redditId } = store.config;
+  var splitOnCommaOutsideSqBr = /,(?![^[]*])/g;
 
   const tumblrIds =
-    tumblrId.length > 0 && tumblrId.split(",").map(id => id.trim());
+    tumblrId.length > 0 && tumblrId.split(splitOnCommaOutsideSqBr).map(id => id.trim());
   const redditIds =
-    redditId.length > 0 && redditId.split(",").map(id => id.trim());
+    redditId.length > 0 && redditId.split(splitOnCommaOutsideSqBr).map(id => id.trim());
+
+  tumblrIds.forEach((id, index) => {
+    var tagsRegex = /\[(.*?)\]/g
+    var tagMatch = tagsRegex.exec(id);
+    var tags = "";
+    while (tagMatch != null) {
+      tags = tagMatch[1];
+      id = id.replace(tagsRegex, "");
+      tagMatch = tagsRegex.exec(id);
+    }
+
+    tags = tags.split(",");
+    tags.forEach((tag) => {
+      tag.trim();
+      tag.replace(" ", "+");
+      let newTumblrId = id.concat(`[${tag}]`);
+      tumblrIds.push(newTumblrId);
+    });
+  });
 
   let fetches = [];
 

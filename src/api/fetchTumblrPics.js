@@ -7,10 +7,21 @@ let offset = {};
 const fetchTumblrPics = tumblrId => {
   const { pictures, gifs, videos } = store.config;
 
+  var tagsRegex = /\[(.*?)\]/g
+  var tagMatch = tagsRegex.exec(tumblrId);
+  var tag = "";
+  while (tagMatch != null) {
+    tag = tagMatch[1];
+    tumblrId = tumblrId.replace(tagsRegex, "");
+    tagMatch = tagsRegex.exec(tumblrId);
+  }
+
+  tag.replace(" ", "+");
+
   return fetchJsonp(
     `https://${encodeURIComponent(
       tumblrId
-    )}.tumblr.com/api/read/json?num=${limit}&start=${offset[tumblrId] || ""}`
+    )}.tumblr.com/api/read/json?num=${limit}&start=${offset[tumblrId] || ""}&tagged=${tag}`
   )
     .then(response => response.json())
     .then(({ posts }) => {
