@@ -1,8 +1,8 @@
 import React from "react";
 // mui
-import { Switch, Button } from "material-ui";
-import { FormControlLabel } from "material-ui/Form";
-import { withStyles } from "material-ui/styles";
+import {Button, Switch} from "material-ui";
+import {FormControlLabel} from "material-ui/Form";
+import {withStyles} from "material-ui/styles";
 import Typography from "material-ui/Typography";
 import DownIcon from "material-ui-icons/ArrowDropDown";
 import UpIcon from "material-ui-icons/ArrowDropUp";
@@ -11,9 +11,9 @@ import UpIcon from "material-ui-icons/ArrowDropUp";
 // internal
 import connect from "hoc/connect";
 import elapsedGameTime from "game/utils/elapsedGameTime";
-import { round } from "utils/math";
-import { GripStrengthString } from "game/enums/GripStrength";
-import { StrokeStyleString } from "game/enums/StrokeStyle";
+import {round} from "utils/math";
+import {GripStrengthString} from "game/enums/GripStrength";
+import {StrokeStyleString} from "game/enums/StrokeStyle";
 import logo from "images/logo.svg";
 import store from "store";
 

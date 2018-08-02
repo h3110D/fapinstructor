@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+  - node_modules
+script:
+  - yarn build
+deploy:
+  provider: s3
+  access_key_id: $accesskey
+  secret_access_key: $secretaccesskey
+  bucket: "fapinstructor.com" 
+  skip_cleanup: true
+  acl: public_read
+  local_dir: build
+  on:
+    branch: master
+after_deploy:
+  - aws configure set preview.cloudfront true
+  - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"

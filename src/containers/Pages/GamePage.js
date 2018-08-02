@@ -1,16 +1,16 @@
 import React from "react";
-import { Base64 } from "js-base64";
-import { withStyles } from "material-ui/styles";
+import {Base64} from "js-base64";
+import {withStyles} from "material-ui/styles";
 import connect from "hoc/connect";
-import { startGame, stopGame } from "game";
+import {startGame, stopGame} from "game";
 import store from "store";
 import CustomError from "utils/CustomError";
-import { CircularProgress } from "material-ui/Progress";
+import {CircularProgress} from "material-ui/Progress";
 import Button from "material-ui/Button";
 import HUD from "containers/HUD";
 import EndPage from "containers/Pages/EndPage";
 import MediaPlayer from "components/MediaPlayer";
-import { nextSlide } from "game/utils/fetchPictures";
+import {nextSlide} from "game/utils/fetchPictures";
 import BackgroundImage from "images/background.jpg";
 
 const styles = theme => ({
@@ -35,6 +35,9 @@ const styles = theme => ({
     background: `url(${BackgroundImage})`,
     backgroundSize: "cover",
     backgroundAttachment: "fixed"
+  },
+  buttonMargin: {
+    margin: "5px"
   }
 });
 
@@ -90,6 +93,27 @@ class GamePage extends React.Component {
     stopGame();
   }
 
+  backToConfig() {
+    this.props.history.push('/');
+  }
+
+  renderBackToConfig() {
+    if (store.config.allowConfigEdit) {
+      return (
+        <Button
+          onClick={() => {
+            this.backToConfig();
+          }}
+          variant="raised"
+          color="secondary"
+          className={this.props.classes.buttonMargin}
+        >
+          Configure game
+        </Button>
+      );
+    }
+  }
+  
   render() {
     if (!this.state.gameStarted) {
       return (
@@ -101,9 +125,13 @@ class GamePage extends React.Component {
             }}
             variant="raised"
             color="secondary"
+            className={this.props.classes.buttonMargin}
           >
             start game
           </Button>
+          {
+            this.renderBackToConfig()
+          }
         </div>
       );
     }

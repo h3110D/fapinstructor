@@ -8,11 +8,12 @@ import {GripStrengthEnum} from "game/enums/GripStrength";
  */
 const defaultConfig = {
   version: 2,
-  tumblrId: "fapstergifs, allcowgirl, mar-cuss-blowjob-gifs",
+  tumblrId:
+    "fapstergifs, allcowgirl, mar-cuss-blowjob-gifs, pornonmotion[blowjob,cumshot]",
   failedIds: [],
   redditId: "60fpsporn, porninaminute",
   gifs: true,
-  pictures: false,
+  pictures: true,
   videos: true,
   slideDuration: 10, // sec
   enableVoice: true,
@@ -79,7 +80,8 @@ const defaultConfig = {
     nipplesAndStroke: true,
     //Misc
     pickYourPoison: true
-  }
+  },
+  allowConfigEdit: true
 };
 
 export default () => {
