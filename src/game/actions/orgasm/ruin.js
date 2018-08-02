@@ -1,14 +1,12 @@
 import store from "store";
-import createNotification, {
-  dismissNotification
-} from "engine/createNotification";
-import { setStrokeSpeed, randomStrokeSpeed } from "game/utils/strokeSpeed";
+import createNotification, {dismissNotification} from "engine/createNotification";
+import {randomStrokeSpeed, setStrokeSpeed} from "game/utils/strokeSpeed";
 import delay from "utils/delay";
 import play from "engine/audio";
-import audioLibrary, { getRandomAudioVariation } from "audio";
-import { strokerRemoteControl } from "game/loops/strokerLoop";
+import audioLibrary, {getRandomAudioVariation} from "audio";
+import {strokerRemoteControl} from "game/loops/strokerLoop";
 import elapsedGameTime from "game/utils/elapsedGameTime";
-import { nextSlide } from "game/utils/fetchPictures";
+import {nextSlide} from "game/utils/fetchPictures";
 
 export const shouldRuin = () => {
   const {
@@ -24,7 +22,7 @@ export const shouldRuin = () => {
 
   let result = false;
   const isAllowedChance =
-    ruins <= maximumRuinedOrgasms &&
+    ruins < maximumRuinedOrgasms &&
     elapsedGameTime("minutes") >= minimumGameTime * 1.3 &&
     strokeSpeed >= fastestStrokeSpeed / 1.7;
 
