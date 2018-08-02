@@ -221,12 +221,12 @@ class ConfigPage extends React.Component {
 
   handleChange = name => event => {
     store.config[name] = event.target.value;
-    this.setState({errors: this.validateConfig()});
+    this.setState({ errors: this.validateConfig() });
   };
 
   handleCheckChange = name => (event, checked) => {
     store.config[name] = checked;
-    this.setState({errors: this.validateConfig()});
+    this.setState({ errors: this.validateConfig() });
   };
 
   handleTaskRandomize = event => {
@@ -261,24 +261,24 @@ class ConfigPage extends React.Component {
   };
 
   render() {
-    const {classes} = this.props;
-    const {copyToolTipOpen, errors} = this.state;
+    const { classes } = this.props;
+    const { copyToolTipOpen, errors } = this.state;
 
     return (
       <div className={classes.background}>
-        <ForkMe/>
+        <ForkMe />
         <div className={classes.title}>
           <Typography
             variant="display3"
             color="inherit"
-            style={{fontFamily: "'Damion', cursive", whiteSpace: "nowrap"}}
+            style={{ fontFamily: "'Damion', cursive", whiteSpace: "nowrap" }}
           >
             Fap Instructor
           </Typography>
           <Typography variant="body2" color="inherit" gutterBottom>
             Make each fap session a unique and challenging experience
           </Typography>
-          <Feedback iconWidth={20}/>
+          <Feedback iconWidth={20} />
         </div>
         <div className={classes.formContainer}>
           <Paper className={classes.form}>
@@ -342,7 +342,7 @@ class ConfigPage extends React.Component {
                       value={store.config.slideDuration}
                       onChange={this.handleChange("slideDuration")}
                       type="number"
-                      inputProps={{step: "1", min: "3"}}
+                      inputProps={{ step: "1", min: "3" }}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -415,7 +415,7 @@ class ConfigPage extends React.Component {
                       required
                       onChange={this.handleChange("minimumGameTime")}
                       type="number"
-                      inputProps={{step: "1", min: "3"}}
+                      inputProps={{ step: "1", min: "3" }}
                       endAdornment={
                         <InputAdornment position="end">minutes</InputAdornment>
                       }
@@ -436,7 +436,7 @@ class ConfigPage extends React.Component {
                       required
                       onChange={this.handleChange("maximumGameTime")}
                       type="number"
-                      inputProps={{step: "1", min: "5"}}
+                      inputProps={{ step: "1", min: "5" }}
                       endAdornment={
                         <InputAdornment position="end">minutes</InputAdornment>
                       }
@@ -523,7 +523,7 @@ class ConfigPage extends React.Component {
                     onChange={this.handleChange("maximumOrgasms")}
                     fullWidth
                     type="number"
-                    inputProps={{step: "1", min: "1"}}
+                    inputProps={{ step: "1", min: "1" }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -553,7 +553,7 @@ class ConfigPage extends React.Component {
                       )}
                       fullWidth
                       type="number"
-                      inputProps={{step: "1", min: "3"}}
+                      inputProps={{ step: "1", min: "3" }}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -578,7 +578,7 @@ class ConfigPage extends React.Component {
                       )}
                       fullWidth
                       type="number"
-                      inputProps={{step: "1", min: "5"}}
+                      inputProps={{ step: "1", min: "5" }}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -588,7 +588,7 @@ class ConfigPage extends React.Component {
                     </FormHelperText>
                   </FormControl>
                 </Grid>
-                <Grid item xs/>
+                <Grid item xs />
                 <Grid item xs={12} md={4}>
                   <FormControl
                     className={classes.control}
@@ -601,7 +601,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("minimumEdges")}
                       fullWidth
                       type="number"
-                      inputProps={{step: "1", min: "0"}}
+                      inputProps={{ step: "1", min: "0" }}
                     />
                     <FormHelperText>{errors.minimumEdges}</FormHelperText>
                   </FormControl>
@@ -618,7 +618,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("edgeCooldown")}
                       fullWidth
                       type="number"
-                      inputProps={{step: "1", min: "0"}}
+                      inputProps={{ step: "1", min: "0" }}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -638,7 +638,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("edgeFrequency")}
                       fullWidth
                       type="number"
-                      inputProps={{step: "1", min: "0"}}
+                      inputProps={{ step: "1", min: "0" }}
                       endAdornment={
                         <InputAdornment position="end">%</InputAdornment>
                       }
@@ -658,7 +658,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("minimumRuinedOrgasms")}
                       fullWidth
                       type="number"
-                      inputProps={{step: "1", min: "0"}}
+                      inputProps={{ step: "1", min: "0" }}
                     />
                     <FormHelperText>
                       {errors.minimumRuinedOrgasms}
@@ -677,7 +677,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("maximumRuinedOrgasms")}
                       fullWidth
                       type="number"
-                      inputProps={{step: "1", min: "0"}}
+                      inputProps={{ step: "1", min: "0" }}
                     />
                     <FormHelperText>
                       {errors.maximumRuinedOrgasms}
@@ -696,7 +696,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("ruinCooldown")}
                       fullWidth
                       type="number"
-                      inputProps={{step: "1", min: "0"}}
+                      inputProps={{ step: "1", min: "0" }}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -720,7 +720,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("slowestStrokeSpeed")}
                       fullWidth
                       type="number"
-                      inputProps={{step: "0.25", min: "0.25", max: "6"}}
+                      inputProps={{ step: "0.25", min: "0.25", max: "6" }}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -740,7 +740,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("fastestStrokeSpeed")}
                       fullWidth
                       type="number"
-                      inputProps={{step: "0.25", min: "0.25", max: "6"}}
+                      inputProps={{ step: "0.25", min: "0.25", max: "6" }}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -767,7 +767,7 @@ class ConfigPage extends React.Component {
             </Group>
             <Group title="Tasks">
               <ExpansionPanel defaultExpanded>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                   <Button
                     variant="raised"
                     color="primary"
@@ -859,7 +859,7 @@ class ConfigPage extends React.Component {
                 </ExpansionPanelDetails>
               </ExpansionPanel>
             </Group>
-            <div style={{display: "flex", justifyContent: "center"}}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
               <Button
                 variant="raised"
                 color="primary"
