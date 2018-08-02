@@ -1,5 +1,6 @@
 import store from "store";
 import createNotification from "engine/createNotification";
+import handsOff from "../actions/speed/handsOff";
 
 const StrokeStyleString = {
   0: "Dominant",
@@ -8,6 +9,7 @@ const StrokeStyleString = {
   3: "Shaft Only",
   4: "Overhand Grip",
   5: "Both Hands",
+  6: "Hands Off",
 };
 
 const StrokeStyleEnum = {
@@ -17,6 +19,7 @@ const StrokeStyleEnum = {
   shaftOnly: 3,
   overhandGrip: 4,
   bothHands: 5,
+  handsOff: 6,
 };
 
 const StrokeStyleArray = Object.entries(StrokeStyleEnum);
@@ -73,7 +76,6 @@ setStrokeStyleBothHands.label = "Both Hands";
  * setStrokeStyleHandsOff is not included in the Enums because it cannot be triggered by the default random action
  * trigger methods as this would result in a random StrokeSpeed along with the HandsOff Style. So the "HandsOff"
  * Task is modeled as a speed Card, rather than a style Card.
- * @returns {Promise<void>}
  */
 export const setStrokeStyleHandsOff = async () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.handsOff) {
@@ -93,6 +95,7 @@ const StrokeStyleSetterEnum = {
   3: setStrokeStyleShaftOnly,
   4: setStrokeStyleOverhandGrip,
   5: setStrokeStyleBothHands,
+  6: handsOff,
 };
 
 const StrokeStyleSetterArray = Object.entries(StrokeStyleSetterEnum);
@@ -113,7 +116,7 @@ export const setStrokeStyle = (strokeStyle = StrokeStyleEnum.dominant) => {
  * Get a array with all active stroke styles.
  * [task1, task2, ...]
  * @returns {Array}
- * @param arrayToBeExcluded {Array}   a array of stylenames that are to be excluded.
+ * @param arrayToBeExcluded {Array}   a array of style names (from StrokeStyleEnum) that are to be excluded.
  *
  * @author the1nstructor
  * @since 11.07.2018
@@ -168,14 +171,14 @@ const getRandomStrokeStyleIndex = (activatedArray) => {
 };
 
 /**
- * Sets a random Stroking Style for you. Only uses styles marked as active in the setup of the game.
- *
- * @returns {Promise<void>}
+ * Sets a random Stroking Style for you. Only uses styles marked as active in the setup of the game. And does atm not
+ * care about the probabilities set in game/actions/index.js
  *
  * @author the1nstructor
  * @since 11.07.2018
  */
 export const setRandomStrokeStyle = async () => {
+
   const styles = getRandomActivatedStokeStyles();
   const index = getRandomStrokeStyleIndex(styles);
   // Set the style
@@ -187,13 +190,11 @@ export const setRandomStrokeStyle = async () => {
  *
  * Has to be updated manually. simply extend the exclude array.
  *
- * @returns {Promise<void>}
- *
  * @author the1nstructor
- * @since 11.07.2018
+ * @since 02.08.2018
  */
 export const setRandomStrokeStyle_OneHand = async () => {
-  const exclude = ["bothHands"];
+  const exclude = ["bothHands", "handsOff"]; // StrokeStyleEnum names
   let styles = getRandomActivatedStokeStyles(exclude);
   const index = getRandomStrokeStyleIndex(styles);
   // Set the style

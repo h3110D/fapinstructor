@@ -4,7 +4,7 @@ import {randomStrokeSpeed, setStrokeSpeed,} from "game/utils/strokeSpeed";
 import {getRandomRubStrength} from "game/enums/RubStrength"
 import {getRandomInclusiveInteger} from "utils/math";
 import delay from "utils/delay";
-import {setRandomStrokeStyle, setStrokeStyleHandsOff} from "game/enums/StrokeStyle";
+import {getCurrentStrokeStyle, setStrokeStyle, setStrokeStyleHandsOff} from "game/enums/StrokeStyle";
 
 /**
  * Task to rub ones nipples while not touching ones cock.
@@ -16,6 +16,8 @@ import {setRandomStrokeStyle, setStrokeStyleHandsOff} from "game/enums/StrokeSty
  * @memberof    actions
  */
 const rubNipples = async () => {
+  // backup style
+  const style = getCurrentStrokeStyle();
   // set intensity
   const strength = getRandomRubStrength();
 
@@ -39,7 +41,7 @@ const rubNipples = async () => {
   await delay(taskDuration * 1000);
 
   setStrokeSpeed(randomStrokeSpeed());
-  await setRandomStrokeStyle();
+  await setStrokeStyle(style);
 
 };
 rubNipples.label = "Rub Nipples";
