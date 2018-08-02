@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import ErrorBoundary from "containers/ErrorBoundary";
 import ConfigPage from "containers/Pages/ConfigPage";
 import GamePage from "containers/Pages/GamePage";

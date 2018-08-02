@@ -64,7 +64,7 @@ class ConfigPage extends React.Component {
   validateConfig = () => {
     const errors = {};
 
-    for ( let name in store.config ) {
+    for (let name in store.config) {
       let value = store.config[name];
       switch (name) {
         case "tumblrId":
@@ -92,24 +92,24 @@ class ConfigPage extends React.Component {
         }
         case "slideDuration": {
           delete errors[name];
-          if ( !value || value < 3 ) {
+          if (!value || value < 3) {
             errors[name] = "Slide Duration is less than 3 seconds";
           }
           break;
         }
         case "minimumGameTime": {
           delete errors[name];
-          if ( !value || value < 3 ) {
+          if (!value || value < 3) {
             errors[name] = "Minimum Game Time is less than 3 minutes";
           }
           break;
         }
         case "maximumGameTime": {
           delete errors[name];
-          if ( value <= store.config.minimumGameTime ) {
+          if (value <= store.config.minimumGameTime) {
             errors[name] = "Maximum Game Time is less than Minimum Game Time";
           }
-          if ( !value || value < 5 ) {
+          if (!value || value < 5) {
             errors[name] = "Maximum Game Time is less than 5 minutes";
           }
           break;
@@ -129,17 +129,17 @@ class ConfigPage extends React.Component {
         }
         case "postOrgasmTortureMinimumTime": {
           delete errors[name];
-          if ( value < 1 ) {
+          if (value < 1) {
             errors[name] = "Cannot be less than 3";
           }
           break;
         }
         case "postOrgasmTortureMaximumTime": {
           delete errors[name];
-          if ( value <= store.config.postOrgasmTortureMinimumTime ) {
+          if (value <= store.config.postOrgasmTortureMinimumTime) {
             errors[name] = "Must be greater than the minimum";
           }
-          if ( !value || value < 5 ) {
+          if (!value || value < 5) {
             errors[name] = "Must be greater than 5 seconds";
           }
           break;
@@ -147,7 +147,7 @@ class ConfigPage extends React.Component {
         case "minimumEdges": {
           delete errors[name];
           value = parseInt(value, 10);
-          if ( isNaN(value) || value < 0 ) {
+          if (isNaN(value) || value < 0) {
             errors[name] = "Cannot be less than 0";
           }
           break;
@@ -155,7 +155,7 @@ class ConfigPage extends React.Component {
         case "edgeCooldown": {
           delete errors[name];
           value = parseInt(value, 10);
-          if ( isNaN(value) || value < 0 ) {
+          if (isNaN(value) || value < 0) {
             errors[name] = "Cannot be less than 0";
           }
           break;
@@ -163,7 +163,7 @@ class ConfigPage extends React.Component {
         case "edgeFrequency": {
           delete errors[name];
           value = parseInt(value, 10);
-          if ( isNaN(value) || value < 0 ) {
+          if (isNaN(value) || value < 0) {
             errors[name] = "Cannot be less than 0";
           }
           break;
@@ -171,14 +171,14 @@ class ConfigPage extends React.Component {
         case "minimumRuinedOrgasms": {
           delete errors[name];
           value = parseInt(value, 10);
-          if ( isNaN(value) || value < 0 ) {
+          if (isNaN(value) || value < 0) {
             errors[name] = "Cannot be less than 0";
           }
           break;
         }
         case "maximumRuinedOrgasms": {
           delete errors[name];
-          if ( value < store.config.minimumRuinedOrgasms ) {
+          if (value < store.config.minimumRuinedOrgasms) {
             errors[name] = "Maximum Game Time is less than Minimum Game Time";
           }
           break;
@@ -186,27 +186,27 @@ class ConfigPage extends React.Component {
         case "ruinCooldown": {
           delete errors[name];
           value = parseInt(value, 10);
-          if ( isNaN(value) || value < 0 ) {
+          if (isNaN(value) || value < 0) {
             errors[name] = "Cannot be less than 0";
           }
           break;
         }
         case "slowestStrokeSpeed": {
           delete errors[name];
-          if ( isNaN(value) || value < 0.25 ) {
+          if (isNaN(value) || value < 0.25) {
             errors[name] = "Cannot be less than 0.25";
           }
-          if ( value > 6 ) {
+          if (value > 6) {
             errors[name] = "Cannot be greater than 6";
           }
           break;
         }
         case "fastestStrokeSpeed": {
           delete errors[name];
-          if ( isNaN(value) || value < store.config.slowestStrokeSpeed ) {
+          if (isNaN(value) || value < store.config.slowestStrokeSpeed) {
             errors[name] = "Cannot be less than the slowest stroke speed";
           }
-          if ( value > 6 ) {
+          if (value > 6) {
             errors[name] = "Cannot be greater than 6";
           }
           break;
@@ -241,7 +241,7 @@ class ConfigPage extends React.Component {
     const encodedValues = Base64.encodeURI(JSON.stringify(store.config));
 
     let url = "";
-    if ( isAbsolute ) {
+    if (isAbsolute) {
       url = window.location.host;
     }
     url += `/game/${encodedValues}`;

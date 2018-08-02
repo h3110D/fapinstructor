@@ -1,10 +1,10 @@
 import store from "store";
 import actionIterator from "engine/actionIterator";
-import {getRandomInclusiveInteger} from "utils/math";
+import { getRandomInclusiveInteger } from "utils/math";
 import initializeActions from "./index";
-import edge, {shouldEdge} from "./orgasm/edge";
-import ruin, {shouldRuin} from "./orgasm/ruin";
-import orgasm, {shouldOrgasm} from "./orgasm/orgasm";
+import edge, { shouldEdge } from "./orgasm/edge";
+import ruin, { shouldRuin } from "./orgasm/ruin";
+import orgasm, { shouldOrgasm } from "./orgasm/orgasm";
 import _ from "lodash";
 
 

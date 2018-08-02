@@ -29,10 +29,10 @@ const nipplesAndStroke = async () => {
 
   let message = `Use one of your hands to ${strength}play with your ${left_or_right} nipple`;
 
-  if ( store.game.clothespins === 1 ) {
+  if (store.game.clothespins === 1) {
     message = `Use one of your hands to ${strength}turn the clothespin on your nipple`;
   }
-  else if ( store.game.clothespins > 1 ) {
+  else if (store.game.clothespins > 1) {
     message = `Use one of your hands to ${strength}turn the clothespin on your ${left_or_right} nipple`;
   }
 
