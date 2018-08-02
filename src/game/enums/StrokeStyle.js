@@ -1,6 +1,6 @@
 import store from "store";
 import createNotification from "engine/createNotification";
-import handsOff from "../actions/speed/handsOff";
+import handsOff from "game/actions/speed/handsOff";
 
 const StrokeStyleString = {
   0: "Dominant",
@@ -119,7 +119,7 @@ export const setStrokeStyle = (strokeStyle = StrokeStyleEnum.dominant) => {
  * @param arrayToBeExcluded {Array}   a array of style names (from StrokeStyleEnum) that are to be excluded.
  *
  * @author the1nstructor
- * @since 11.07.2018
+ * @since 02.08.2018
  */
 const getRandomActivatedStokeStyles = (arrayToBeExcluded = []) => {
   let name;
@@ -132,13 +132,13 @@ const getRandomActivatedStokeStyles = (arrayToBeExcluded = []) => {
         // now push only active tasks. And only the names.
         if (tasks[i][1]) {
           //only push if the name is not excluded
-          let NotToBeExcluded = true;
+          let ToBeExcluded = false;
           for (let j = 0; j < arrayToBeExcluded.length; j++) {
             if (tasks[i][0] === arrayToBeExcluded[j]) {
-              NotToBeExcluded = false;
+              ToBeExcluded = true;
             }
           }
-          if (NotToBeExcluded) {
+          if (!ToBeExcluded) {
             arr.push(tasks[i][0]);  // Append only if not excluded
           }
         }
