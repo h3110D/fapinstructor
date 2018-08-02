@@ -20,4 +20,4 @@ const getRandomLeftOrRight = () => {
   return HandSideStringArray[Math.floor(Math.random() * HandSideArray.length)][1];
 };
 
-export {getRandomLeftOrRight};
+export { getRandomLeftOrRight };

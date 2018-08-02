@@ -28,7 +28,7 @@ const RubStrengthArray = Object.entries(RubStrengthEnum);
  * @returns {string}
  */
 const getRandomRubStrength = () => {
-  return RubStrengthStringArray[Math.floor(Math.random()*RubStrengthStringArray.length)][1];
+  return RubStrengthStringArray[Math.floor(Math.random() * RubStrengthStringArray.length)][1];
 };
 
-export {RubStrengthEnum, RubStrengthString, RubStrengthStringArray, RubStrengthArray, getRandomRubStrength}
+export { RubStrengthEnum, RubStrengthString, RubStrengthStringArray, RubStrengthArray, getRandomRubStrength }

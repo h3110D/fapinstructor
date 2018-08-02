@@ -7,8 +7,8 @@ import randomBeat from "./speed/randomBeat";
 import redLightGreenLight from "./speed/redLightGreenLight";
 import clusterStrokes from "./speed/clusterStrokes";
 import randomGripAdjustment from "./grip";
-import {addRubberBand, removeRubberBand, snapRubberBand} from "./cbt/rubberband";
-import {addClothespin, removeClothespin} from "./nipple/clothespin";
+import { addRubberBand, removeRubberBand, snapRubberBand } from "./cbt/rubberband";
+import { addClothespin, removeClothespin } from "./nipple/clothespin";
 import applyIcyHot from "./cbt/icyhot";
 import applyToothpaste from "./cbt/toothpaste";
 import ballslaps from "./cbt/ballslaps";
@@ -16,9 +16,9 @@ import squeezeBalls from "./cbt/squeezeBalls";
 import headPalming from "./cbt/headPalming";
 import bindCockAndBalls from "./cbt/bindCockAndBalls";
 import holdBreath from "./cbt/holdBreath";
-import {scratchChest, scratchShoulders, scratchThighs} from "./cbt/scratching";
-import {flickCockHead, flickNipples} from "./cbt/flicking";
-import {rubIceOnBalls} from "./cbt/ice";
+import { scratchChest, scratchShoulders, scratchThighs } from "./cbt/scratching";
+import { flickCockHead, flickNipples } from "./cbt/flicking";
+import { rubIceOnBalls } from "./cbt/ice";
 import {
   setStrokeStyleBothHands,
   setStrokeStyleDominant,
@@ -28,7 +28,7 @@ import {
   setStrokeStyleShaftOnly
 } from "game/enums/StrokeStyle";
 import eatPrecum from "./cei/eatPrecum";
-import {insertButtPlug, removeButtPlug} from "./anal/buttPlug";
+import { insertButtPlug, removeButtPlug } from "./anal/buttPlug";
 import pickYourPoison from "./pickYourPoison";
 import acceleration from "./speed/acceleration";
 import rubNipples from "./nipple/rubNipples.js";

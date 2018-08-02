@@ -1,10 +1,10 @@
 import store from "store";
 import createNotification from "engine/createNotification";
-import {randomStrokeSpeed, setStrokeSpeed,} from "game/utils/strokeSpeed";
-import {getRandomRubStrength} from "game/enums/RubStrength"
-import {getRandomInclusiveInteger} from "utils/math";
+import { randomStrokeSpeed, setStrokeSpeed, } from "game/utils/strokeSpeed";
+import { getRandomRubStrength } from "game/enums/RubStrength"
+import { getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
-import {getCurrentStrokeStyle, setStrokeStyle, setStrokeStyleHandsOff} from "game/enums/StrokeStyle";
+import { getCurrentStrokeStyle, setStrokeStyle, setStrokeStyleHandsOff } from "game/enums/StrokeStyle";
 
 /**
  * Task to rub ones nipples while not touching ones cock.
@@ -26,10 +26,10 @@ const rubNipples = async () => {
 
   let message = `Use both of your hands to ${strength}rub your nipples`;
 
-  if (store.game.clothespins === 1) {
+  if ( store.game.clothespins === 1 ) {
     message = `Use one of your hands to ${strength}turn the clothespin on your nipple`;
   }
-  else if (store.game.clothespins > 1) {
+  else if ( store.game.clothespins > 1 ) {
     message = `Use both of your hands to ${strength}turn the clothespins on your nipples`;
   }
   createNotification(message, {

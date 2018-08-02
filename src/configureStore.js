@@ -1,5 +1,5 @@
 import store from "store";
-import {GripStrengthEnum} from "game/enums/GripStrength";
+import { GripStrengthEnum } from "game/enums/GripStrength";
 
 /**
  * A big enum containing all setup information of the game.

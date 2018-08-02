@@ -1,8 +1,8 @@
 import createNotification from "engine/createNotification";
-import {randomStrokeSpeed, setStrokeSpeed,} from "game/utils/strokeSpeed";
-import {getRandomInclusiveInteger} from "utils/math";
+import { randomStrokeSpeed, setStrokeSpeed, } from "game/utils/strokeSpeed";
+import { getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
-import {getCurrentStrokeStyle, setStrokeStyle, setStrokeStyleHandsOff} from "game/enums/StrokeStyle";
+import { getCurrentStrokeStyle, setStrokeStyle, setStrokeStyleHandsOff } from "game/enums/StrokeStyle";
 
 /**
  * Task to not touch ones cock

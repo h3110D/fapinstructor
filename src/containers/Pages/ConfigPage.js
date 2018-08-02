@@ -1,24 +1,24 @@
 import React from "react";
-import {Base64} from "js-base64";
-import {withRouter} from "react-router-dom";
+import { Base64 } from "js-base64";
+import { withRouter } from "react-router-dom";
 // mui
-import {Button, Grid, Paper, Select, Switch, TextField, Tooltip} from "material-ui";
+import { Button, Grid, Paper, Select, Switch, TextField, Tooltip } from "material-ui";
 import Typography from "material-ui/Typography";
-import {withStyles} from "material-ui/styles";
-import Input, {InputAdornment, InputLabel} from "material-ui/Input";
-import {FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel} from "material-ui/Form";
-import {MenuItem} from "material-ui/Menu";
-import ExpansionPanel, {ExpansionPanelDetails, ExpansionPanelSummary} from "material-ui/ExpansionPanel";
+import { withStyles } from "material-ui/styles";
+import Input, { InputAdornment, InputLabel } from "material-ui/Input";
+import { FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel } from "material-ui/Form";
+import { MenuItem } from "material-ui/Menu";
+import ExpansionPanel, { ExpansionPanelDetails, ExpansionPanelSummary } from "material-ui/ExpansionPanel";
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
 // internal
 import store from "store";
 import Feedback from "components/Feedback";
 import BackgroundImage from "images/background.jpg";
 import ForkMe from "components/ForkMe";
-import {getRandomBoolean} from "utils/math";
+import { getRandomBoolean } from "utils/math";
 import Group from "components/Group";
 import TaskList from "containers/TaskList";
-import {GripStrengthEnum, GripStrengthString} from "game/enums/GripStrength";
+import { GripStrengthEnum, GripStrengthString } from "game/enums/GripStrength";
 import copyToClipboard from "utils/copyToClipboard";
 import connect from "hoc/connect";
 
@@ -64,7 +64,7 @@ class ConfigPage extends React.Component {
   validateConfig = () => {
     const errors = {};
 
-    for (let name in store.config) {
+    for ( let name in store.config ) {
       let value = store.config[name];
       switch (name) {
         case "tumblrId":
@@ -92,24 +92,24 @@ class ConfigPage extends React.Component {
         }
         case "slideDuration": {
           delete errors[name];
-          if (!value || value < 3) {
+          if ( !value || value < 3 ) {
             errors[name] = "Slide Duration is less than 3 seconds";
           }
           break;
         }
         case "minimumGameTime": {
           delete errors[name];
-          if (!value || value < 3) {
+          if ( !value || value < 3 ) {
             errors[name] = "Minimum Game Time is less than 3 minutes";
           }
           break;
         }
         case "maximumGameTime": {
           delete errors[name];
-          if (value <= store.config.minimumGameTime) {
+          if ( value <= store.config.minimumGameTime ) {
             errors[name] = "Maximum Game Time is less than Minimum Game Time";
           }
-          if (!value || value < 5) {
+          if ( !value || value < 5 ) {
             errors[name] = "Maximum Game Time is less than 5 minutes";
           }
           break;
@@ -129,17 +129,17 @@ class ConfigPage extends React.Component {
         }
         case "postOrgasmTortureMinimumTime": {
           delete errors[name];
-          if (value < 1) {
+          if ( value < 1 ) {
             errors[name] = "Cannot be less than 3";
           }
           break;
         }
         case "postOrgasmTortureMaximumTime": {
           delete errors[name];
-          if (value <= store.config.postOrgasmTortureMinimumTime) {
+          if ( value <= store.config.postOrgasmTortureMinimumTime ) {
             errors[name] = "Must be greater than the minimum";
           }
-          if (!value || value < 5) {
+          if ( !value || value < 5 ) {
             errors[name] = "Must be greater than 5 seconds";
           }
           break;
@@ -147,7 +147,7 @@ class ConfigPage extends React.Component {
         case "minimumEdges": {
           delete errors[name];
           value = parseInt(value, 10);
-          if (isNaN(value) || value < 0) {
+          if ( isNaN(value) || value < 0 ) {
             errors[name] = "Cannot be less than 0";
           }
           break;
@@ -155,7 +155,7 @@ class ConfigPage extends React.Component {
         case "edgeCooldown": {
           delete errors[name];
           value = parseInt(value, 10);
-          if (isNaN(value) || value < 0) {
+          if ( isNaN(value) || value < 0 ) {
             errors[name] = "Cannot be less than 0";
           }
           break;
@@ -163,7 +163,7 @@ class ConfigPage extends React.Component {
         case "edgeFrequency": {
           delete errors[name];
           value = parseInt(value, 10);
-          if (isNaN(value) || value < 0) {
+          if ( isNaN(value) || value < 0 ) {
             errors[name] = "Cannot be less than 0";
           }
           break;
@@ -171,14 +171,14 @@ class ConfigPage extends React.Component {
         case "minimumRuinedOrgasms": {
           delete errors[name];
           value = parseInt(value, 10);
-          if (isNaN(value) || value < 0) {
+          if ( isNaN(value) || value < 0 ) {
             errors[name] = "Cannot be less than 0";
           }
           break;
         }
         case "maximumRuinedOrgasms": {
           delete errors[name];
-          if (value < store.config.minimumRuinedOrgasms) {
+          if ( value < store.config.minimumRuinedOrgasms ) {
             errors[name] = "Maximum Game Time is less than Minimum Game Time";
           }
           break;
@@ -186,27 +186,27 @@ class ConfigPage extends React.Component {
         case "ruinCooldown": {
           delete errors[name];
           value = parseInt(value, 10);
-          if (isNaN(value) || value < 0) {
+          if ( isNaN(value) || value < 0 ) {
             errors[name] = "Cannot be less than 0";
           }
           break;
         }
         case "slowestStrokeSpeed": {
           delete errors[name];
-          if (isNaN(value) || value < 0.25) {
+          if ( isNaN(value) || value < 0.25 ) {
             errors[name] = "Cannot be less than 0.25";
           }
-          if (value > 6) {
+          if ( value > 6 ) {
             errors[name] = "Cannot be greater than 6";
           }
           break;
         }
         case "fastestStrokeSpeed": {
           delete errors[name];
-          if (isNaN(value) || value < store.config.slowestStrokeSpeed) {
+          if ( isNaN(value) || value < store.config.slowestStrokeSpeed ) {
             errors[name] = "Cannot be less than the slowest stroke speed";
           }
-          if (value > 6) {
+          if ( value > 6 ) {
             errors[name] = "Cannot be greater than 6";
           }
           break;
@@ -221,12 +221,12 @@ class ConfigPage extends React.Component {
 
   handleChange = name => event => {
     store.config[name] = event.target.value;
-    this.setState({ errors: this.validateConfig() });
+    this.setState({errors: this.validateConfig()});
   };
 
   handleCheckChange = name => (event, checked) => {
     store.config[name] = checked;
-    this.setState({ errors: this.validateConfig() });
+    this.setState({errors: this.validateConfig()});
   };
 
   handleTaskRandomize = event => {
@@ -241,7 +241,7 @@ class ConfigPage extends React.Component {
     const encodedValues = Base64.encodeURI(JSON.stringify(store.config));
 
     let url = "";
-    if (isAbsolute) {
+    if ( isAbsolute ) {
       url = window.location.host;
     }
     url += `/game/${encodedValues}`;
@@ -261,24 +261,24 @@ class ConfigPage extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { copyToolTipOpen, errors } = this.state;
+    const {classes} = this.props;
+    const {copyToolTipOpen, errors} = this.state;
 
     return (
       <div className={classes.background}>
-        <ForkMe />
+        <ForkMe/>
         <div className={classes.title}>
           <Typography
             variant="display3"
             color="inherit"
-            style={{ fontFamily: "'Damion', cursive", whiteSpace: "nowrap" }}
+            style={{fontFamily: "'Damion', cursive", whiteSpace: "nowrap"}}
           >
             Fap Instructor
           </Typography>
           <Typography variant="body2" color="inherit" gutterBottom>
             Make each fap session a unique and challenging experience
           </Typography>
-          <Feedback iconWidth={20} />
+          <Feedback iconWidth={20}/>
         </div>
         <div className={classes.formContainer}>
           <Paper className={classes.form}>
@@ -342,7 +342,7 @@ class ConfigPage extends React.Component {
                       value={store.config.slideDuration}
                       onChange={this.handleChange("slideDuration")}
                       type="number"
-                      inputProps={{ step: "1", min: "3" }}
+                      inputProps={{step: "1", min: "3"}}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -415,7 +415,7 @@ class ConfigPage extends React.Component {
                       required
                       onChange={this.handleChange("minimumGameTime")}
                       type="number"
-                      inputProps={{ step: "1", min: "3" }}
+                      inputProps={{step: "1", min: "3"}}
                       endAdornment={
                         <InputAdornment position="end">minutes</InputAdornment>
                       }
@@ -436,7 +436,7 @@ class ConfigPage extends React.Component {
                       required
                       onChange={this.handleChange("maximumGameTime")}
                       type="number"
-                      inputProps={{ step: "1", min: "5" }}
+                      inputProps={{step: "1", min: "5"}}
                       endAdornment={
                         <InputAdornment position="end">minutes</InputAdornment>
                       }
@@ -523,7 +523,7 @@ class ConfigPage extends React.Component {
                     onChange={this.handleChange("maximumOrgasms")}
                     fullWidth
                     type="number"
-                    inputProps={{ step: "1", min: "1" }}
+                    inputProps={{step: "1", min: "1"}}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -553,7 +553,7 @@ class ConfigPage extends React.Component {
                       )}
                       fullWidth
                       type="number"
-                      inputProps={{ step: "1", min: "3" }}
+                      inputProps={{step: "1", min: "3"}}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -578,7 +578,7 @@ class ConfigPage extends React.Component {
                       )}
                       fullWidth
                       type="number"
-                      inputProps={{ step: "1", min: "5" }}
+                      inputProps={{step: "1", min: "5"}}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -588,7 +588,7 @@ class ConfigPage extends React.Component {
                     </FormHelperText>
                   </FormControl>
                 </Grid>
-                <Grid item xs />
+                <Grid item xs/>
                 <Grid item xs={12} md={4}>
                   <FormControl
                     className={classes.control}
@@ -601,7 +601,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("minimumEdges")}
                       fullWidth
                       type="number"
-                      inputProps={{ step: "1", min: "0" }}
+                      inputProps={{step: "1", min: "0"}}
                     />
                     <FormHelperText>{errors.minimumEdges}</FormHelperText>
                   </FormControl>
@@ -618,7 +618,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("edgeCooldown")}
                       fullWidth
                       type="number"
-                      inputProps={{ step: "1", min: "0" }}
+                      inputProps={{step: "1", min: "0"}}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -638,7 +638,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("edgeFrequency")}
                       fullWidth
                       type="number"
-                      inputProps={{ step: "1", min: "0" }}
+                      inputProps={{step: "1", min: "0"}}
                       endAdornment={
                         <InputAdornment position="end">%</InputAdornment>
                       }
@@ -658,7 +658,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("minimumRuinedOrgasms")}
                       fullWidth
                       type="number"
-                      inputProps={{ step: "1", min: "0" }}
+                      inputProps={{step: "1", min: "0"}}
                     />
                     <FormHelperText>
                       {errors.minimumRuinedOrgasms}
@@ -677,7 +677,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("maximumRuinedOrgasms")}
                       fullWidth
                       type="number"
-                      inputProps={{ step: "1", min: "0" }}
+                      inputProps={{step: "1", min: "0"}}
                     />
                     <FormHelperText>
                       {errors.maximumRuinedOrgasms}
@@ -696,7 +696,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("ruinCooldown")}
                       fullWidth
                       type="number"
-                      inputProps={{ step: "1", min: "0" }}
+                      inputProps={{step: "1", min: "0"}}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -720,7 +720,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("slowestStrokeSpeed")}
                       fullWidth
                       type="number"
-                      inputProps={{ step: "0.25", min: "0.25", max: "6" }}
+                      inputProps={{step: "0.25", min: "0.25", max: "6"}}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -740,7 +740,7 @@ class ConfigPage extends React.Component {
                       onChange={this.handleChange("fastestStrokeSpeed")}
                       fullWidth
                       type="number"
-                      inputProps={{ step: "0.25", min: "0.25", max: "6" }}
+                      inputProps={{step: "0.25", min: "0.25", max: "6"}}
                       endAdornment={
                         <InputAdornment position="end">seconds</InputAdornment>
                       }
@@ -767,7 +767,7 @@ class ConfigPage extends React.Component {
             </Group>
             <Group title="Tasks">
               <ExpansionPanel defaultExpanded>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                   <Button
                     variant="raised"
                     color="primary"
@@ -848,9 +848,9 @@ class ConfigPage extends React.Component {
                       <TaskList
                         title="Misc."
                         tasks={{
-                            pickYourPoison: "Pick your Poison",
-                            rubNipples: "Rub Nipples",
-                            nipplesAndStroke: "Nipples and Stroking"
+                          pickYourPoison: "Pick your Poison",
+                          rubNipples: "Rub Nipples",
+                          nipplesAndStroke: "Nipples and Stroking"
 
                         }}
                       />
@@ -859,7 +859,7 @@ class ConfigPage extends React.Component {
                 </ExpansionPanelDetails>
               </ExpansionPanel>
             </Group>
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{display: "flex", justifyContent: "center"}}>
               <Button
                 variant="raised"
                 color="primary"

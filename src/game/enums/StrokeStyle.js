@@ -25,7 +25,7 @@ const StrokeStyleEnum = {
 const StrokeStyleArray = Object.entries(StrokeStyleEnum);
 
 export const setStrokeStyleDominant = async () => {
-  if (store.game.strokeStyle !== StrokeStyleEnum.dominant) {
+  if ( store.game.strokeStyle !== StrokeStyleEnum.dominant ) {
     createNotification(`Use your dominant hand`);
     store.game.strokeStyle = StrokeStyleEnum.dominant;
   }
@@ -33,7 +33,7 @@ export const setStrokeStyleDominant = async () => {
 setStrokeStyleDominant.label = "dominant Hand";
 
 export const setStrokeStyleNondominant = async () => {
-  if (store.game.strokeStyle !== StrokeStyleEnum.nondominant) {
+  if ( store.game.strokeStyle !== StrokeStyleEnum.nondominant ) {
     createNotification(`Use your nondominant hand`);
     store.game.strokeStyle = StrokeStyleEnum.nondominant;
   }
@@ -41,7 +41,7 @@ export const setStrokeStyleNondominant = async () => {
 setStrokeStyleNondominant.label = "nondominant Hand";
 
 export const setStrokeStyleHeadOnly = async () => {
-  if (store.game.strokeStyle !== StrokeStyleEnum.headOnly) {
+  if ( store.game.strokeStyle !== StrokeStyleEnum.headOnly ) {
     createNotification(`Stroke only the head`);
     store.game.strokeStyle = StrokeStyleEnum.headOnly;
   }
@@ -49,7 +49,7 @@ export const setStrokeStyleHeadOnly = async () => {
 setStrokeStyleHeadOnly.label = "Head Stroking";
 
 export const setStrokeStyleShaftOnly = async () => {
-  if (store.game.strokeStyle !== StrokeStyleEnum.shaftOnly) {
+  if ( store.game.strokeStyle !== StrokeStyleEnum.shaftOnly ) {
     createNotification(`Stroke only the shaft`);
     store.game.strokeStyle = StrokeStyleEnum.shaftOnly;
   }
@@ -57,7 +57,7 @@ export const setStrokeStyleShaftOnly = async () => {
 setStrokeStyleShaftOnly.label = "Shaft Stroking";
 
 export const setStrokeStyleOverhandGrip = async () => {
-  if (store.game.strokeStyle !== StrokeStyleEnum.overhandGrip) {
+  if ( store.game.strokeStyle !== StrokeStyleEnum.overhandGrip ) {
     createNotification(`Stroke with the overhand grip`);
     store.game.strokeStyle = StrokeStyleEnum.overhandGrip;
   }
@@ -65,7 +65,7 @@ export const setStrokeStyleOverhandGrip = async () => {
 setStrokeStyleOverhandGrip.label = "Overhand Grip";
 
 export const setStrokeStyleBothHands = async () => {
-  if (store.game.strokeStyle !== StrokeStyleEnum.bothHands) {
+  if ( store.game.strokeStyle !== StrokeStyleEnum.bothHands ) {
     createNotification(`Use both of your hands`);
     store.game.strokeStyle = StrokeStyleEnum.bothHands;
   }
@@ -78,7 +78,7 @@ setStrokeStyleBothHands.label = "Both Hands";
  * Task is modeled as a speed Card, rather than a style Card.
  */
 export const setStrokeStyleHandsOff = async () => {
-  if (store.game.strokeStyle !== StrokeStyleEnum.handsOff) {
+  if ( store.game.strokeStyle !== StrokeStyleEnum.handsOff ) {
     createNotification(`Hands off your cock!`);
     store.game.strokeStyle = StrokeStyleEnum.handsOff;
   }
@@ -125,27 +125,27 @@ const getRandomActivatedStokeStyles = (arrayToBeExcluded = []) => {
   let name;
   let arr = [];
   const tasks = Object.entries(store.config.tasks);
-  for (name in StrokeStyleEnum) {
-    for (let i = 0; i < tasks.length; i++) {
+  for ( name in StrokeStyleEnum ) {
+    for ( let i = 0; i < tasks.length; i++ ) {
       // find the specified task
-      if (tasks[i][0] === name) {
+      if ( tasks[i][0] === name ) {
         // now push only active tasks. And only the names.
-        if (tasks[i][1]) {
+        if ( tasks[i][1] ) {
           //only push if the name is not excluded
           let ToBeExcluded = false;
-          for (let j = 0; j < arrayToBeExcluded.length; j++) {
-            if (tasks[i][0] === arrayToBeExcluded[j]) {
+          for ( let j = 0; j < arrayToBeExcluded.length; j++ ) {
+            if ( tasks[i][0] === arrayToBeExcluded[j] ) {
               ToBeExcluded = true;
             }
           }
-          if (!ToBeExcluded) {
+          if ( !ToBeExcluded ) {
             arr.push(tasks[i][0]);  // Append only if not excluded
           }
         }
       }
     }
   }
-  if (arr === undefined || arr.length === 0) {
+  if ( arr === undefined || arr.length === 0 ) {
     // array empty or does not exist
     arr.push("dominant");  // To avoid ever getting an empty array
   }
@@ -163,8 +163,8 @@ const getRandomActivatedStokeStyles = (arrayToBeExcluded = []) => {
  */
 const getRandomStrokeStyleIndex = (activatedArray) => {
   let styleName = activatedArray[Math.floor(Math.random() * activatedArray.length)];
-  for (let i = 0; i < StrokeStyleArray.length; i++) {
-    if (StrokeStyleArray[i][0] === styleName) {
+  for ( let i = 0; i < StrokeStyleArray.length; i++ ) {
+    if ( StrokeStyleArray[i][0] === styleName ) {
       return StrokeStyleArray[i][1];
     }
   }
@@ -212,4 +212,4 @@ export const getCurrentStrokeStyle = () => {
   return store.game.strokeStyle;
 };
 
-export {StrokeStyleString, StrokeStyleEnum};
+export { StrokeStyleString, StrokeStyleEnum };
