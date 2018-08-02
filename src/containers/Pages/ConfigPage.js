@@ -790,7 +790,8 @@ class ConfigPage extends React.Component {
                           randomBeat: "Random Beats",
                           randomStrokeSpeed: "Random Stroke Speed",
                           redLightGreenLight: "Red Light Green Light",
-                          clusterStrokes: "Cluster Strokes"
+                          clusterStrokes: "Cluster Strokes",
+                          handsOff: "Hands Off"
                         }}
                       />
                     </Grid>
@@ -804,8 +805,7 @@ class ConfigPage extends React.Component {
                           shaftOnly: "Shaft Only",
                           gripAdjustments: "Grip Adjustments",
                           overhandGrip: "Overhand Grip",
-                          bothHands: "Both Hands",
-                          handsOff: "Hands Off"
+                          bothHands: "Both Hands"
                         }}
                       />
                     </Grid>

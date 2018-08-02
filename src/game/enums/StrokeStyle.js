@@ -69,13 +69,19 @@ export const setStrokeStyleBothHands = async () => {
 };
 setStrokeStyleBothHands.label = "Both Hands";
 
+/**
+ * setStrokeStyleHandsOff is not included in the Enums because it cannot be triggered by the default random action
+ * trigger methods as this would result in a random StrokeSpeed along with the HandsOff Style. So the "HandsOff"
+ * Task is modeled as a speed Card, rather than a style Card.
+ * @returns {Promise<void>}
+ */
 export const setStrokeStyleHandsOff = async () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.handsOff) {
-        createNotification(`Hands off your cock!`);
+    createNotification(`Hands off your cock!`);
     store.game.strokeStyle = StrokeStyleEnum.handsOff;
-    }
+  }
 };
-setStrokeStyleHandsOff.label = "HANDS OFF!!";
+setStrokeStyleHandsOff.label = "Hands Off!!";
 
 /**
  * Enum of the Function calls. Has to have the same indices and order as the StrokeStyleEnum

@@ -49,6 +49,7 @@ const defaultConfig = {
     randomStrokeSpeed: true,
     redLightGreenLight: true,
     clusterStrokes: true,
+    handsOff: true,
     //Stroke Style
     dominant: true,
     nondominant: true,
@@ -56,7 +57,6 @@ const defaultConfig = {
     shaftOnly: true,
     overhandGrip: true,
     bothHands: true,
-    handsOff: true,
     //Grip Strength
     gripAdjustments: true,
     //CBT

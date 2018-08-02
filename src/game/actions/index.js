@@ -33,7 +33,7 @@ import pickYourPoison from "./pickYourPoison";
 import acceleration from "./speed/acceleration";
 import rubNipples from "./nipple/rubNipples.js";
 import nipplesAndStroke from "./nipple/nipplesAndStroke";
-import handsOff from "./handsOff";
+import handsOff from "game/actions/speed/handsOff";
 
 const initializeActions = taskConfigs =>
   // We use a task configuration to determine if the task is active. We will get to this in the next step.
@@ -48,6 +48,7 @@ const initializeActions = taskConfigs =>
     taskConfigs.accelerationCycles && createProbability(acceleration, 7),
     taskConfigs.redLightGreenLight && createProbability(redLightGreenLight, 7),
     taskConfigs.clusterStrokes && createProbability(clusterStrokes, 7),
+    taskConfigs.handsOff && createProbability(handsOff, 5),
     // cbt
     taskConfigs.rubberBands && createProbability(addRubberBand, 2),
     taskConfigs.rubberBands && createProbability(removeRubberBand, 1),
@@ -74,7 +75,6 @@ const initializeActions = taskConfigs =>
     taskConfigs.shaftOnly && createProbability(setStrokeStyleShaftOnly, 3),
     taskConfigs.overhandGrip && createProbability(setStrokeStyleOverhandGrip, 1),
     taskConfigs.bothHands && createProbability(setStrokeStyleBothHands, 10),
-    taskConfigs.handsOff && createProbability(handsOff, 5),
     // anal
     taskConfigs.buttplug && createProbability(insertButtPlug, 1),
     taskConfigs.buttplug && createProbability(removeButtPlug, 1),
