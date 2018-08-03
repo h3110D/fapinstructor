@@ -24,7 +24,7 @@ const StrokeStyleEnum = {
 
 const StrokeStyleArray = Object.entries(StrokeStyleEnum);
 
-export const setStrokeStyleDominant = async () => {
+export const setStrokeStyleDominant = () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.dominant) {
     createNotification(`Use your dominant hand`);
     store.game.strokeStyle = StrokeStyleEnum.dominant;
@@ -32,7 +32,7 @@ export const setStrokeStyleDominant = async () => {
 };
 setStrokeStyleDominant.label = "dominant Hand";
 
-export const setStrokeStyleNondominant = async () => {
+export const setStrokeStyleNondominant = () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.nondominant) {
     createNotification(`Use your nondominant hand`);
     store.game.strokeStyle = StrokeStyleEnum.nondominant;
@@ -40,7 +40,7 @@ export const setStrokeStyleNondominant = async () => {
 };
 setStrokeStyleNondominant.label = "nondominant Hand";
 
-export const setStrokeStyleHeadOnly = async () => {
+export const setStrokeStyleHeadOnly = () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.headOnly) {
     createNotification(`Stroke only the head`);
     store.game.strokeStyle = StrokeStyleEnum.headOnly;
@@ -48,7 +48,7 @@ export const setStrokeStyleHeadOnly = async () => {
 };
 setStrokeStyleHeadOnly.label = "Head Stroking";
 
-export const setStrokeStyleShaftOnly = async () => {
+export const setStrokeStyleShaftOnly =  () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.shaftOnly) {
     createNotification(`Stroke only the shaft`);
     store.game.strokeStyle = StrokeStyleEnum.shaftOnly;
@@ -56,7 +56,7 @@ export const setStrokeStyleShaftOnly = async () => {
 };
 setStrokeStyleShaftOnly.label = "Shaft Stroking";
 
-export const setStrokeStyleOverhandGrip = async () => {
+export const setStrokeStyleOverhandGrip = () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.overhandGrip) {
     createNotification(`Stroke with the overhand grip`);
     store.game.strokeStyle = StrokeStyleEnum.overhandGrip;
@@ -64,7 +64,7 @@ export const setStrokeStyleOverhandGrip = async () => {
 };
 setStrokeStyleOverhandGrip.label = "Overhand Grip";
 
-export const setStrokeStyleBothHands = async () => {
+export const setStrokeStyleBothHands = () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.bothHands) {
     createNotification(`Use both of your hands`);
     store.game.strokeStyle = StrokeStyleEnum.bothHands;
@@ -77,7 +77,7 @@ setStrokeStyleBothHands.label = "Both Hands";
  * trigger methods as this would result in a random StrokeSpeed along with the HandsOff Style. So the "HandsOff"
  * Task is modeled as a speed Card, rather than a style Card.
  */
-export const setStrokeStyleHandsOff = async () => {
+export const setStrokeStyleHandsOff = () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.handsOff) {
     createNotification(`Hands off your cock!`);
     store.game.strokeStyle = StrokeStyleEnum.handsOff;
@@ -177,7 +177,7 @@ const getRandomStrokeStyleIndex = (activatedArray) => {
  * @author the1nstructor
  * @since 11.07.2018
  */
-export const setRandomStrokeStyle = async () => {
+export const setRandomStrokeStyle = () => {
 
   const styles = getRandomActivatedStokeStyles();
   const index = getRandomStrokeStyleIndex(styles);
@@ -193,7 +193,7 @@ export const setRandomStrokeStyle = async () => {
  * @author the1nstructor
  * @since 02.08.2018
  */
-export const setRandomStrokeStyle_OneHand = async () => {
+export const setRandomStrokeStyle_OneHand = () => {
   const exclude = ["bothHands", "handsOff"]; // StrokeStyleEnum names
   let styles = getRandomActivatedStokeStyles(exclude);
   const index = getRandomStrokeStyleIndex(styles);
