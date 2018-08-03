@@ -12,7 +12,9 @@ import { strokerRemoteControl } from "game/loops/strokerLoop";
 
 /**
  * Determines if the user should edge.
- * @returns {boolean} true when the user should edge now
+ *
+ * @returns {boolean}
+ *   true when the user should edge now
  */
 export const shouldEdge = () => {
   const {
@@ -38,7 +40,9 @@ export const shouldEdge = () => {
 
 /**
  * lets you ride the edge for time seconds.
- * @param time       How long to ride the edge
+ *
+ * @param time
+ *   How long to ride the edge
  */
 export const rideTheEdge = async (time = getRandomInclusiveInteger(5, 30)) => {
   setStrokeSpeed(0);
@@ -56,7 +60,9 @@ export const rideTheEdge = async (time = getRandomInclusiveInteger(5, 30)) => {
 
 /**
  * Decides whether to ride the edge or not and increases edge counter.
- * @param time       How long to ride the edge
+ *
+ * @param time
+ *   How long to ride the edge
  */
 export const edging = async time => {
   store.game.edges++;
@@ -92,9 +98,14 @@ export const stopEdging = async () => {
 };
 
 /**
- * Sets the Speed to Maximum, the Grip to default and the StrokeStyle to Dominant.
+ * Sets the Speed to Maximum, the Grip to default and the StrokeStyle to Dominant. Displays message.
+ *
+ * @param message
+ *   the message that is displayed.
+ * @returns {Promise<*>}
+ *   the notificationId
  */
-export const getToTheEdge = async () => {
+export const getToTheEdge = async (message = "Get to the edge for me") => {
   const { config: { fastestStrokeSpeed } } = store;
 
   if (store.config.enableVoice) {
@@ -106,14 +117,14 @@ export const getToTheEdge = async () => {
   setDefaultGrip();
   setStrokeStyleDominant();
 
-  const notificationId = createNotification("Get to the edge for me", {
+  return createNotification(message, {
     autoDismiss: false
   });
-  return notificationId;
 };
 
 /**
- * Calls getToTheEdge() then displays an "Edging" button.
+ * Calls getToTheEdge() and displays an "Edging" button.
+ *
  * @returns {Promise<*[]>}
  */
 const edge = async () => {
