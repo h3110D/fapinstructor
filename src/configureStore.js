@@ -4,7 +4,7 @@ import { GripStrengthEnum } from "game/enums/GripStrength";
 /**
  * A big enum containing all setup information of the game.
  *
- * @since 08.07.2018
+ * @since 03.08.2018
  */
 const defaultConfig = {
   version: 2,
@@ -71,6 +71,7 @@ const defaultConfig = {
     scratching: true,
     flicking: true,
     cbtIce: true,
+    //CEI
     precum: true,
     //Anal
     buttplug: true,
