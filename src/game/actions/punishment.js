@@ -59,7 +59,7 @@ punishment.label = "Punishment";
 export const initializePunishments = (taskConfigs = store.config.tasks) =>
   [
     // speed
-    createProbability(handsOff, 33), // is always included
+    createProbability(handsOff, 33),  // is always included
     // cbt
     taskConfigs.rubberBands && createProbability(addRubberBand, 50),
     taskConfigs.icyHot && createProbability(applyIcyHot, 10),
@@ -74,7 +74,7 @@ export const initializePunishments = (taskConfigs = store.config.tasks) =>
     taskConfigs.scratching && createProbability(scratchThighs, 10),
     taskConfigs.scratching && createProbability(scratchShoulders, 5),
     taskConfigs.flicking && createProbability(flickCockHead, 40),
-    taskConfigs.flicking && createProbability(flickNipples, 50),
+    createProbability(flickNipples, 50),  // is also always included
     taskConfigs.cbtIce && createProbability(rubIceOnBalls, 33),
     // anal
     taskConfigs.buttplug && (!store.game.buttPlugInserted) && createProbability(insertButtPlug, 45),
@@ -84,4 +84,4 @@ export const initializePunishments = (taskConfigs = store.config.tasks) =>
     taskConfigs.clothespins && store.game.clothespins < 2 && createProbability(addClothespin, 50),
   ].filter(action => !!action);
 
-export default punishment;
+export default punishment
