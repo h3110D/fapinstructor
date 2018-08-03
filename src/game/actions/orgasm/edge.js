@@ -10,6 +10,10 @@ import { getRandomBoolean, getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
 
+/**
+ * Determines if the user should edge.
+ * @returns {boolean} true when the user should edge now
+ */
 export const shouldEdge = () => {
   const {
     config: { minimumGameTime, maximumGameTime, actionFrequency, edgeFrequency }
@@ -32,6 +36,10 @@ export const shouldEdge = () => {
   return result;
 };
 
+/**
+ * lets you ride the edge for time seconds.
+ * @param time       How long to ride the edge
+ */
 export const rideTheEdge = async (time = getRandomInclusiveInteger(5, 30)) => {
   setStrokeSpeed(0);
   const notificationId = createNotification("Ride the edge", {
@@ -46,6 +54,10 @@ export const rideTheEdge = async (time = getRandomInclusiveInteger(5, 30)) => {
   dismissNotification(notificationId);
 };
 
+/**
+ * Decides whether to ride the edge or not and increases edge counter.
+ * @param time       How long to ride the edge
+ */
 export const edging = async time => {
   store.game.edges++;
 
@@ -56,6 +68,9 @@ export const edging = async time => {
   }
 };
 
+/**
+ * The whole cooldown stuff after edging and setting up the stroking task again.
+ */
 export const stopEdging = async () => {
   const { config: { edgeCooldown } } = store;
 
@@ -76,6 +91,9 @@ export const stopEdging = async () => {
   await delay(3000);
 };
 
+/**
+ * Sets the Speed to Maximum, the Grip to default and the StrokeStyle to Dominant.
+ */
 export const getToTheEdge = async () => {
   const { config: { fastestStrokeSpeed } } = store;
 
@@ -94,6 +112,10 @@ export const getToTheEdge = async () => {
   return notificationId;
 };
 
+/**
+ * Calls getToTheEdge() then displays an "Edging" button.
+ * @returns {Promise<*[]>}
+ */
 const edge = async () => {
   const notificationId = await getToTheEdge();
 
