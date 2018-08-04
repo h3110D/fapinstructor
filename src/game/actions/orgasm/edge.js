@@ -10,6 +10,7 @@ import { getRandomBoolean, getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
 import handsOff from "game/actions/speed/handsOff";
+import { getRandom_edge_message } from "game/texts/messages";
 
 /**
  * Determines if the user should edge.
@@ -104,9 +105,8 @@ export const stopEdging = async () => {
  * @returns {Promise<*>}
  *   the notificationId
  */
-export const getToTheEdge = async (message = "Get to the edge for me") => {
+export const getToTheEdge = async (message = getRandom_edge_message) => {
   const { config: { fastestStrokeSpeed } } = store;
-
   if (store.config.enableVoice) {
     play(audioLibrary.Edge);
   }
