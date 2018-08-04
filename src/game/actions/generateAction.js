@@ -61,20 +61,37 @@ export const applyProbability = (actions, count = 0) => {
 
 
 /**
- * TODO @thefapinstructor please create docu for this
+ * Determines whether the user should orgasm, edge or ruin. If none of the three applies a random action from the
+ * initial setup is chosen.
  *
- * @returns {*}
+ * @returns {*} action - the next action that will be executed and displayed
  */
 const generateAction = () => {
+
   let action = null;
 
   if (shouldOrgasm()) {
     action = orgasm;
-  } else if (shouldEdge()) {
+  }
+
+  else if (shouldEdge()) {
     action = edge;
-  } else if (shouldRuin()) {
+    if (store.config.advancedEdging && chance(75)) {
+      if (chance(60)) {
+        action = edgeAdvanced;
+      } else if (chance(60)) {
+        action = edgeInTime;
+      } else {
+        action = edgeAdvancedInTime;
+      }
+    }
+  }
+
+  else if (shouldRuin()) {
     action = ruin;
-  } else {
+  }
+
+  else {
     const chosenActions = getRandomActions();
 
     // get one of the chosen actions
