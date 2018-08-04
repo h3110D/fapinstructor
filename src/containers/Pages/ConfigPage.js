@@ -107,7 +107,7 @@ class ConfigPage extends React.Component {
           if (!value || value < 5) {
             errors["maximumGameTime"] = "Maximum Game Time must be greater than 5 minutes";
           }
-          if (parseInt(store.config.maximumGameTime) < parseInt(store.config.minimumGameTime)) {
+          if (parseInt(store.config.maximumGameTime, 10) < parseInt(store.config.minimumGameTime, 10)) {
             errors["minimumGameTime"] = "Minimum Game Time has to be smaller than Maximum Game Time";
             errors["maximumGameTime"] = "Maximum Game Time has to be greater than Minimum Game Time";
           }
@@ -144,7 +144,8 @@ class ConfigPage extends React.Component {
         }
         case "postOrgasmTortureMaximumTime": {
           delete errors[name];
-          if (parseInt(value) < parseInt(store.config.postOrgasmTortureMinimumTime)) {
+          value = parseInt(value, 10);
+          if (value < parseInt(store.config.postOrgasmTortureMinimumTime, 10)) {
             errors[name] = "Must be greater than the minimum";
           }
           if (!value || value < 5) {
@@ -186,7 +187,7 @@ class ConfigPage extends React.Component {
         }
         case "maximumRuinedOrgasms": {
           delete errors[name];
-          if (parseInt(value) < parseInt(store.config.minimumRuinedOrgasms)) {
+          if (parseInt(value, 10) < parseInt(store.config.minimumRuinedOrgasms, 10)) {
             errors[name] = "Maximum Ruined Orgasms cannot be less than Minimum Ruined Orgasms";
           }
           break;
