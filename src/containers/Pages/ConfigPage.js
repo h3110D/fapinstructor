@@ -2,7 +2,7 @@ import React from "react";
 import { Base64 } from "js-base64";
 import { withRouter } from "react-router-dom";
 // mui
-import { Button, Grid, Paper, Select, Switch, TextField, Tooltip } from "material-ui";
+import { Button, Grid, Paper, Select, Switch, Tooltip } from "material-ui";
 import Typography from "material-ui/Typography";
 import { withStyles } from "material-ui/styles";
 import Input, { InputAdornment, InputLabel } from "material-ui/Input";
