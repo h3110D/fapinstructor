@@ -3,6 +3,7 @@ import { randomStrokeSpeed, setStrokeSpeed, } from "game/utils/strokeSpeed";
 import { getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
 import { getCurrentStrokeStyle, setStrokeStyle, setStrokeStyleHandsOff } from "game/enums/StrokeStyle";
+import { getRandom_handsOff_message } from "../../texts/messages";
 
 /**
  * Task to not touch ones cock
@@ -18,8 +19,8 @@ const handsOff = async () => {
   const style = getCurrentStrokeStyle();
   // task duration (= total time in this case)
   const taskDuration = getRandomInclusiveInteger(10, 25);
-
-  createNotification(`Don't you dare touching your cock!`, {
+  const m = getRandom_handsOff_message();
+  createNotification(m, {
     time: taskDuration * 1000
   });
 
