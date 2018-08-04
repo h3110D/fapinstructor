@@ -9,6 +9,7 @@ import createNotification, { dismissNotification } from "engine/createNotificati
 import { getRandomBoolean, getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
+import handsOff from "game/actions/speed/handsOff";
 
 /**
  * Determines if the user should edge.
@@ -80,10 +81,8 @@ export const edging = async time => {
 export const stopEdging = async () => {
   const { config: { edgeCooldown } } = store;
 
-  createNotification("Let go of your cock");
   strokerRemoteControl.pause();
-
-  await delay(edgeCooldown * 1000);
+  await handsOff(edgeCooldown);
 
   strokerRemoteControl.play();
 
