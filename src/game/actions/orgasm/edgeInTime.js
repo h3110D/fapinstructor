@@ -8,14 +8,13 @@ import { edging, getToTheEdge, stopEdging } from "game/actions/orgasm/edge";
 import punishment from "../punishment";
 import { getRandom_edgeAdvanced_message, getRandom_edgeInTime_message } from "game/texts/messages";
 
-
 /**
  * You have to get to the edge with the current gripStrength, StrokeStyle and StrokeSpeed!
  *
  * @returns {Promise<*>}
  *   the notificationId
  */
-export const getToTheEdgeAdvanced = async (message = getRandom_edgeAdvanced_message()) => {
+const getToTheEdgeAdvanced = async (message = getRandom_edgeAdvanced_message()) => {
 
   if (store.config.enableVoice) {
     play(audioLibrary.Edge);
