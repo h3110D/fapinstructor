@@ -8,25 +8,27 @@ import { getRandom_handsOff_message } from "../../texts/messages";
 /**
  * Task to not touch ones cock
  *
+ * @param duration
+ *   The duration how long the break shall last in ms
+ *
  * @since       15.07.2018
  * @author      the1nstructor
  *
  * @alias       handsOff
  * @memberof    actions
  */
-const handsOff = async () => {
+const handsOff = async (duration = getRandomInclusiveInteger(10, 25)) => {
 
   const style = getCurrentStrokeStyle();
   // task duration (= total time in this case)
-  const taskDuration = getRandomInclusiveInteger(10, 25);
   const m = getRandom_handsOff_message();
   createNotification(m, {
-    time: taskDuration * 1000
+    time: duration * 1000
   });
 
   setStrokeSpeed(0);
   await setStrokeStyleHandsOff();
-  await delay(taskDuration * 1000);
+  await delay(duration * 1000);
 
   setStrokeSpeed(randomStrokeSpeed());
   await setStrokeStyle(style);
