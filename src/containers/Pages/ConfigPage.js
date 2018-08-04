@@ -401,7 +401,7 @@ class ConfigPage extends React.Component {
               </Grid>
             </Group>
             <Group title="Time">
-              <Grid container>
+              <Grid container spacing={16}>
                 <Grid item xs={12} md={6}>
                   <FormControl
                     className={classes.control}
@@ -454,7 +454,7 @@ class ConfigPage extends React.Component {
               </Grid>
             </Group>
             <Group title="Orgasm">
-              <Grid container>
+              <Grid container spacing={16}>
                 <Grid item xs={12}>
                   <FormControl
                     component="fieldset"
@@ -462,8 +462,9 @@ class ConfigPage extends React.Component {
                     error={!!errors.finialOrgasm}
                   >
                     <FormLabel component="legend">Final Orgasm</FormLabel>
-                    <FormGroup>
+                    <FormGroup row={1}>
                       <FormControlLabel
+                        title={"Whether you will be allowed to have a full orgasm in the end"}
                         control={
                           <Switch
                             checked={store.config.finalOrgasmAllowed}
@@ -476,6 +477,7 @@ class ConfigPage extends React.Component {
                         label="Allowed"
                       />
                       <FormControlLabel
+                        title={"Whether you will be denied in the end"}
                         control={
                           <Switch
                             checked={store.config.finalOrgasmDenied}
@@ -488,6 +490,7 @@ class ConfigPage extends React.Component {
                         label="Denied"
                       />
                       <FormControlLabel
+                        title={"Whether you will be asked to ruin in the end"}
                         control={
                           <Switch
                             checked={store.config.finalOrgasmRuined}
@@ -500,6 +503,7 @@ class ConfigPage extends React.Component {
                         label="Ruined"
                       />
                       <FormControlLabel
+                        title={"Chooses at random from the left hand side selected game ends"}
                         control={
                           <Switch
                             checked={store.config.finalOrgasmRandom}
@@ -515,7 +519,9 @@ class ConfigPage extends React.Component {
                     <FormHelperText>{errors.finialOrgasm}</FormHelperText>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={12}>
+              </Grid>
+              <Grid container spacing={16}>
+                <Grid item xs={12}>
                   <TextField
                     id="maximumOrgasms"
                     label="Maximum Number of Orgasms"
@@ -526,7 +532,9 @@ class ConfigPage extends React.Component {
                     inputProps={{ step: "1", min: "1" }}
                   />
                 </Grid>
-                <Grid item xs={12}>
+              </Grid>
+              <Grid container spacing={16}>
+                <Grid item xs={12} md={4}>
                   <FormControlLabel
                     control={
                       <Switch
@@ -586,64 +594,6 @@ class ConfigPage extends React.Component {
                     <FormHelperText>
                       {errors.postOrgasmTortureMaximumTime}
                     </FormHelperText>
-                  </FormControl>
-                </Grid>
-                <Grid item xs />
-                <Grid item xs={12} md={4}>
-                  <FormControl
-                    className={classes.control}
-                    error={!!errors.minimumEdges}
-                  >
-                    <InputLabel>Minimum Edges</InputLabel>
-                    <Input
-                      id="minimumEdges"
-                      value={store.config.minimumEdges}
-                      onChange={this.handleChange("minimumEdges")}
-                      fullWidth
-                      type="number"
-                      inputProps={{ step: "1", min: "0" }}
-                    />
-                    <FormHelperText>{errors.minimumEdges}</FormHelperText>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <FormControl
-                    className={classes.control}
-                    error={!!errors.edgeCooldown}
-                  >
-                    <InputLabel>Edge Cooldown</InputLabel>
-                    <Input
-                      id="edgeCooldown"
-                      value={store.config.edgeCooldown}
-                      onChange={this.handleChange("edgeCooldown")}
-                      fullWidth
-                      type="number"
-                      inputProps={{ step: "1", min: "0" }}
-                      endAdornment={
-                        <InputAdornment position="end">seconds</InputAdornment>
-                      }
-                    />
-                    <FormHelperText>{errors.edgeCooldown}</FormHelperText>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={4}>
-                  <FormControl
-                    className={classes.control}
-                    error={!!errors.edgeFrequency}
-                  >
-                    <InputLabel>Increase Edge Frequency</InputLabel>
-                    <Input
-                      id="edgeFrequency"
-                      value={store.config.edgeFrequency}
-                      onChange={this.handleChange("edgeFrequency")}
-                      fullWidth
-                      type="number"
-                      inputProps={{ step: "1", min: "0" }}
-                      endAdornment={
-                        <InputAdornment position="end">%</InputAdornment>
-                      }
-                    />
-                    <FormHelperText>{errors.edgeFrequency}</FormHelperText>
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} md={4}>
@@ -706,8 +656,84 @@ class ConfigPage extends React.Component {
                 </Grid>
               </Grid>
             </Group>
+            <Group title="Edging">
+              <Grid container spacing={16}>
+                <Grid item xs={12} md={3}>
+                  <FormControlLabel
+                    title={"Makes edging more interesting. If this is active, there is a chance for harder " +
+                    "edging tasks. This does not affect the other edging options like frequency, minimum edges " +
+                    "and cooldown."}
+                    control={
+                      <Switch
+                        checked={store.config.advancedEdging}
+                        onChange={this.handleCheckChange("advancedEdging")}
+                        value="advancedEdging"
+                      />
+                    }
+                    label="Advanced Edging"
+                  />
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <FormControl
+                    className={classes.control}
+                    error={!!errors.minimumEdges}
+                  >
+                    <InputLabel>Minimum Edges</InputLabel>
+                    <Input
+                      id="minimumEdges"
+                      value={store.config.minimumEdges}
+                      onChange={this.handleChange("minimumEdges")}
+                      fullWidth
+                      type="number"
+                      inputProps={{ step: "1", min: "0" }}
+                    />
+                    <FormHelperText>{errors.minimumEdges}</FormHelperText>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <FormControl
+                    className={classes.control}
+                    error={!!errors.edgeCooldown}
+                  >
+                    <InputLabel>Edge Cooldown</InputLabel>
+                    <Input
+                      id="edgeCooldown"
+                      value={store.config.edgeCooldown}
+                      onChange={this.handleChange("edgeCooldown")}
+                      fullWidth
+                      type="number"
+                      inputProps={{ step: "1", min: "0" }}
+                      endAdornment={
+                        <InputAdornment position="end">seconds</InputAdornment>
+                      }
+                    />
+                    <FormHelperText>{errors.edgeCooldown}</FormHelperText>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <FormControl
+                    className={classes.control}
+                    error={!!errors.edgeFrequency}
+                  >
+                    <InputLabel>Increase Edge Frequency</InputLabel>
+                    <Input
+                      id="edgeFrequency"
+                      value={store.config.edgeFrequency}
+                      onChange={this.handleChange("edgeFrequency")}
+                      fullWidth
+                      type="number"
+                      inputProps={{ step: "1", min: "0" }}
+                      endAdornment={
+                        <InputAdornment position="end">%</InputAdornment>
+                      }
+                    />
+                    <FormHelperText>{errors.edgeFrequency}</FormHelperText>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </Group>
             <Group title="Stroke">
-              <Grid container>
+              <Grid container spacing={16}>
                 <Grid item xs={12} md={4}>
                   <FormControl
                     className={classes.control}
