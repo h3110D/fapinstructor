@@ -79,7 +79,7 @@ setStrokeStyleBothHands.label = "Both Hands";
  */
 export const setStrokeStyleHandsOff = () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.handsOff) {
-    createNotification(`Hands off your cock!`);
+    // createNotification(`Hands off your cock!`); // Not needed any longer
     store.game.strokeStyle = StrokeStyleEnum.handsOff;
   }
 };
