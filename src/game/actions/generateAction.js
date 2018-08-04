@@ -6,18 +6,36 @@ import edge, { shouldEdge } from "./orgasm/edge";
 import ruin, { shouldRuin } from "./orgasm/ruin";
 import orgasm, { shouldOrgasm } from "./orgasm/orgasm";
 import _ from "lodash";
+import { edgeAdvanced, edgeAdvancedInTime, edgeInTime } from "./orgasm/edgeInTime";
+import { chance } from "../../utils/math";
 
 
 /**
- * TODO @thefapinstructor please create docu for this
+ * retrieves a set of random actions
  *
  * @param count
+ *   the length of the set
  * @returns {any | Array}
  */
 export const getRandomActions = (count = 0) => {
   //Take only actions from src/configureStore.js and initialize them with probabilities from actions/index.js
   const actions = initializeActions(store.config.tasks);
 
+  return applyProbability(actions, count);
+};
+
+/**
+ * Applies the probability specified in index.js to each action.
+ * Can also apply different probabilities like those from punishment.js for example.
+ *
+ * @param actions
+ *   the {func, probability} pairs created by the initializeActions functionality
+ * @param count
+ *   the number of elements that shall be generated
+ * @returns {any | [action]}
+ *   an array of actions and maybe an empty array if count === 0
+ */
+export const applyProbability = (actions, count = 0) => {
   // applies the probability to each action
   let chosenActions = [];
   do {
