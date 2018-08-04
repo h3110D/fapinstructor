@@ -1,22 +1,25 @@
 import store from "store";
 import executeAction from "engine/executeAction";
-import createProbability from "../utils/createProbability";
-import { addRubberBand, snapRubberBand } from "./cbt/rubberband";
-import { addClothespin } from "./nipple/clothespin";
-import applyIcyHot from "./cbt/icyhot";
-import applyToothpaste from "./cbt/toothpaste";
-import ballslaps from "./cbt/ballslaps";
-import squeezeBalls from "./cbt/squeezeBalls";
-import headPalming from "./cbt/headPalming";
-import bindCockAndBalls from "./cbt/bindCockAndBalls";
-import holdBreath from "./cbt/holdBreath";
+import createProbability from "game/utils/createProbability";
+import { addRubberBand, snapRubberBand } from "game/actions/cbt/rubberband";
+import { addClothespin } from "game/actions/nipple/clothespin";
+import applyIcyHot from "game/actions/cbt/icyhot";
+import applyToothpaste from "game/actions/cbt/toothpaste";
+import ballslaps from "game/actions/cbt/ballslaps";
+import squeezeBalls from "game/actions/cbt/squeezeBalls";
+import headPalming from "game/actions/cbt/headPalming";
+import bindCockAndBalls from "game/actions/cbt/bindCockAndBalls";
+import holdBreath from "game/actions/cbt/holdBreath";
 import { scratchChest, scratchShoulders, scratchThighs } from "./cbt/scratching";
-import { flickCockHead, flickNipples } from "./cbt/flicking";
-import { rubIceOnBalls } from "./cbt/ice";
-import eatPrecum from "./cei/eatPrecum";
-import { insertButtPlug } from "./anal/buttPlug";
+import { flickCockHead, flickNipples } from "game/actions/cbt/flicking";
+import { rubIceOnBalls } from "game/actions/cbt/ice";
+import eatPrecum from "game/actions/cei/eatPrecum";
+import { insertButtPlug } from "game/actions/anal/buttPlug";
 import handsOff from "game/actions/speed/handsOff";
-import { applyProbability } from "./generateAction";
+import { applyProbability } from "game/actions/generateAction";
+import createNotification from "engine/createNotification";
+import { getRandom_punishment_message } from "game/texts/messages";
+import delay from "utils/delay"
 
 
 /**
@@ -42,6 +45,9 @@ const getRandomPunishment = () => {
 const punishment = async () => {
 
   const punish = getRandomPunishment();
+  const message = getRandom_punishment_message();
+  createNotification(message);
+  await delay(6000);
   await executeAction(punish);
 };
 punishment.label = "Punishment";
