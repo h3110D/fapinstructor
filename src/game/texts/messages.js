@@ -23,6 +23,8 @@ export const getRandom_edge_message = () => {
 
 const edge_messages = [
   "Edge! I know you can do it.",
+  "Get to the edge for me",
+  "Edge! Show me how much you love working that cock for me"
 ];
 
 export const getRandom_edgeAdvanced_message = () => {
