@@ -9,7 +9,7 @@ import { getRandom_handsOff_message } from "../../texts/messages";
  * Task to not touch ones cock
  *
  * @param duration
- *   The duration how long the break shall last in ms
+ *   The duration how long the break shall last in s
  *
  * @since       15.07.2018
  * @author      the1nstructor
@@ -28,7 +28,9 @@ const handsOff = async (duration = getRandomInclusiveInteger(10, 25)) => {
 
   setStrokeSpeed(0);
   await setStrokeStyleHandsOff();
-  await delay(duration * 1000);
+  await delay((duration + 1) * 1000);
+
+  createNotification("Start stroking again");
 
   setStrokeSpeed(randomStrokeSpeed());
   await setStrokeStyle(style);

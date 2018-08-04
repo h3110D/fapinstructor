@@ -84,10 +84,10 @@ export const stopEdging = async () => {
   strokerRemoteControl.pause();
   await handsOff(edgeCooldown);
 
+  setStrokeSpeed(randomStrokeSpeed());
+
   strokerRemoteControl.play();
 
-  setStrokeSpeed(randomStrokeSpeed());
-  createNotification("Start stroking again");
 
   if (store.config.enableVoice) {
     play(audioLibrary.StartStrokingAgain);
