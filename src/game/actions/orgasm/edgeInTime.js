@@ -14,7 +14,7 @@ import { getRandom_edgeAdvanced_message, getRandom_edgeInTime_message } from "ga
  * @returns {Promise<*>}
  *   the notificationId
  */
-const getToTheEdgeAdvanced = async (message = getRandom_edgeAdvanced_message()) => {
+export const getToTheEdgeAdvanced = async (message = getRandom_edgeAdvanced_message()) => {
 
   if (store.config.enableVoice) {
     play(audioLibrary.Edge);
