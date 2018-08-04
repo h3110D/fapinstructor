@@ -1,5 +1,5 @@
 import store from "store";
-import actionIterator from "engine/actionIterator";
+import ActionIterator from "engine/actionIterator";
 import { getRandomInclusiveInteger } from "utils/math";
 import initializeActions from "./index";
 import edge, { shouldEdge } from "./orgasm/edge";
@@ -103,6 +103,6 @@ const generateAction = () => {
 };
 
 /**
- * Create an actionIterator using a action generator
+ * Create an ActionIterator using a action generator
  */
-export default new actionIterator(generateAction);
+export default new ActionIterator(generateAction);
