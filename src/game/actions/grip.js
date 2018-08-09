@@ -7,7 +7,7 @@ import audioLibrary from "audio";
 
 export const setDefaultGrip = () => {
   const currentGrip = store.game.gripStrength;
-  const defaultGrip = GripStrengthEnum.Normal;
+  const defaultGrip = store.config.initialGripStrength;
 
   if (currentGrip !== defaultGrip) {
     store.game.gripStrength = defaultGrip;
