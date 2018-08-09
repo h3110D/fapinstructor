@@ -87,14 +87,7 @@ export const doRuin = async () => {
  * @returns {Promise<done>}
  */
 export const doOrgasm = async () => {
-  const {
-    config: {
-      fastestStrokeSpeed,
-      postOrgasmTorture,
-      postOrgasmTortureMinimumTime,
-      postOrgasmTortureMaximumTime
-    }
-  } = store;
+  const { config: { fastestStrokeSpeed } } = store;
 
   setStrokeSpeed(fastestStrokeSpeed);
 
@@ -107,27 +100,45 @@ export const doOrgasm = async () => {
   const done = async () => {
     dismissNotification(nid);
 
-    if (postOrgasmTorture) {
-      const nid = createNotification("Time for a little post-orgasm torture, don't you dare stop!");
-
-      await delay(
-        getRandomInclusiveInteger(
-          postOrgasmTortureMinimumTime,
-          postOrgasmTortureMaximumTime
-        ) * 1000
-      );
-
-      dismissNotification(nid);
-
-      createNotification("I guess you've had enough.  You may stop.");
-      setStrokeSpeed(0);
-      await delay(3 * 1000);
-    }
+    await postOrgasmTorture();
     end();
   };
   done.label = "Orgasmed";
 
   return done;
+};
+
+/**
+ * If postOrgasmTorture is active, this task lets the user stroke on with the current stroking style, grip and speed.
+ *
+ * @returns {Promise<void>}
+ */
+export const postOrgasmTorture = async () => {
+  const {
+    config: {
+      postOrgasmTorture,
+      postOrgasmTortureMinimumTime,
+      postOrgasmTortureMaximumTime
+    }
+  } = store;
+
+  if (postOrgasmTorture) {
+    const nid = createNotification("Time for a little post-orgasm torture, don't you dare stop!");
+
+    await delay(
+      getRandomInclusiveInteger(
+        postOrgasmTortureMinimumTime,
+        postOrgasmTortureMaximumTime
+      ) * 1000
+    );
+
+    dismissNotification(nid);
+
+    createNotification("I guess you've had enough.  You may stop.");
+    setStrokeSpeed(0);
+    await delay(3 * 1000);
+  }
+
 };
 
 /**
