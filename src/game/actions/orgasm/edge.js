@@ -105,7 +105,7 @@ export const stopEdging = async () => {
  * @returns {Promise<*>}
  *   the notificationId
  */
-export const getToTheEdge = async (message = getRandom_edge_message) => {
+export const getToTheEdge = async (message = getRandom_edge_message()) => {
   const { config: { fastestStrokeSpeed } } = store;
   if (store.config.enableVoice) {
     play(audioLibrary.Edge);
