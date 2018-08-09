@@ -8,6 +8,7 @@ import orgasm, { shouldOrgasm } from "./orgasm/orgasm";
 import _ from "lodash";
 import { edgeAdvanced, edgeAdvancedInTime, edgeInTime } from "./orgasm/edgeInTime";
 import { chance } from "../../utils/math";
+import { doOrgasmInTime } from "./orgasm/orgasmInTime";
 
 
 /**
@@ -98,6 +99,8 @@ const generateAction = () => {
     action =
       chosenActions[getRandomInclusiveInteger(0, chosenActions.length - 1)];
   }
+
+  action = doOrgasmInTime;
 
   return action;
 };
