@@ -6,7 +6,12 @@ import { getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
 import { edging, getToTheEdge, stopEdging } from "game/actions/orgasm/edge";
 import punishment from "../punishment";
-import { getRandom_edgeAdvanced_message, getRandom_edgeInTime_message } from "game/texts/messages";
+import {
+  getRandom_edgeAdvanced_message,
+  getRandom_edgeInTime_message,
+  getRandom_hurryUp_message
+} from "game/texts/messages";
+import executeAction from "engine/executeAction";
 
 /**
  * You have to get to the edge with the current gripStrength, StrokeStyle and StrokeSpeed!
@@ -46,6 +51,17 @@ export const edgeAdvanced = async () => {
 };
 
 /**
+ * A task where the user has to do a certain amount of edges in a short time span.
+ *
+ * @param numberOfEdges
+ *   the number of Edges the user has to do.
+ * @returns {Promise<void>}
+ */
+export const edgingLadder = async (numberOfEdges = 5) => {
+  // TODO: implement functionality
+};
+
+/**
  * DANGER ZONE - Multithreading
  * Checks whether a user reaches the edge in time.
  *
@@ -74,12 +90,12 @@ export const edgeInTime = async (timer = getRandomInclusiveInteger(10, 40), edge
     if (!edged) {
       dismissNotification(notificationId);
       dismissNotification(timerId);
-      await punishment();
+      executeAction(punishment, true);
     }
 
   };
 
-  const timerId = createNotification(`Hurry up, I don't want to wait this time`, {
+  const timerId = createNotification(getRandom_hurryUp_message(), {
     time: timer * 1000
   });
 
