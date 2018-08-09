@@ -56,7 +56,8 @@ export const shouldOrgasm = () => {
 
 /**
  * Makes the user ruin their orgasm.
- * //TODO: Duplicate code
+ * Duplicate code is necessary due to game end functionality.
+ *
  * @returns {Promise<done>}
  */
 export const doRuin = async () => {
