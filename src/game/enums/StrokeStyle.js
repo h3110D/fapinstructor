@@ -24,6 +24,10 @@ const StrokeStyleEnum = {
 
 const StrokeStyleArray = Object.entries(StrokeStyleEnum);
 
+export const setDefaultStrokeStyle = () => {
+  //TODO: Create DropDown menu for default Stroke Style
+};
+
 export const setStrokeStyleDominant = () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.dominant) {
     createNotification(`Use your dominant hand`);
