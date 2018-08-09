@@ -2,30 +2,13 @@ import React from "react";
 import { Base64 } from "js-base64";
 import { withRouter } from "react-router-dom";
 // mui
-import {
-  TextField,
-  Switch,
-  Grid,
-  Select,
-  Button,
-  Paper,
-  Tooltip
-} from "material-ui";
+import { Button, Grid, Paper, Select, Switch, Tooltip } from "material-ui";
 import Typography from "material-ui/Typography";
 import { withStyles } from "material-ui/styles";
-import Input, { InputLabel, InputAdornment } from "material-ui/Input";
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  FormGroup,
-  FormHelperText
-} from "material-ui/Form";
+import Input, { InputAdornment, InputLabel } from "material-ui/Input";
+import { FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel } from "material-ui/Form";
 import { MenuItem } from "material-ui/Menu";
-import ExpansionPanel, {
-  ExpansionPanelSummary,
-  ExpansionPanelDetails
-} from "material-ui/ExpansionPanel";
+import ExpansionPanel, { ExpansionPanelDetails, ExpansionPanelSummary } from "material-ui/ExpansionPanel";
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
 // internal
 import store from "store";
@@ -35,7 +18,7 @@ import ForkMe from "components/ForkMe";
 import { getRandomBoolean } from "utils/math";
 import Group from "components/Group";
 import TaskList from "containers/TaskList";
-import { GripStrengthString, GripStrengthEnum } from "game/enums/GripStrength";
+import { GripStrengthEnum, GripStrengthString } from "game/enums/GripStrength";
 import copyToClipboard from "utils/copyToClipboard";
 import connect from "hoc/connect";
 
@@ -114,20 +97,19 @@ class ConfigPage extends React.Component {
           }
           break;
         }
-        case "minimumGameTime": {
-          delete errors[name];
-          if (!value || value < 3) {
-            errors[name] = "Minimum Game Time is less than 3 minutes";
-          }
-          break;
-        }
+        case "minimumGameTime":
         case "maximumGameTime": {
-          delete errors[name];
-          if (value <= store.config.minimumGameTime) {
-            errors[name] = "Maximum Game Time is less than Minimum Game Time";
+          delete errors["minimumGameTime"];
+          delete errors["maximumGameTime"];
+          if (!value || store.config.minimumGameTime < 3) {
+            errors["minimumGameTime"] = "Minimum Game Time must be greater than 3 minutes";
           }
           if (!value || value < 5) {
-            errors[name] = "Maximum Game Time is less than 5 minutes";
+            errors["maximumGameTime"] = "Maximum Game Time must be greater than 5 minutes";
+          }
+          if (parseInt(store.config.maximumGameTime, 10) < parseInt(store.config.minimumGameTime, 10)) {
+            errors["minimumGameTime"] = "Minimum Game Time has to be smaller than Maximum Game Time";
+            errors["maximumGameTime"] = "Maximum Game Time has to be greater than Minimum Game Time";
           }
           break;
         }
@@ -144,6 +126,15 @@ class ConfigPage extends React.Component {
           }
           break;
         }
+        // TODO: Why has maximumOrgasms to be at least 1? why not 0? The inputProps does specify a min of 1 ...
+        case "maximumOrgasms": {
+          if (!value) {
+            errors[name] = "Please specify a value";
+          } else if (value < 0) {
+            errors[name] = "Has to be positive";
+          }
+          break;
+        }
         case "postOrgasmTortureMinimumTime": {
           delete errors[name];
           if (value < 1) {
@@ -153,7 +144,8 @@ class ConfigPage extends React.Component {
         }
         case "postOrgasmTortureMaximumTime": {
           delete errors[name];
-          if (value <= store.config.postOrgasmTortureMinimumTime) {
+          value = parseInt(value, 10);
+          if (value < parseInt(store.config.postOrgasmTortureMinimumTime, 10)) {
             errors[name] = "Must be greater than the minimum";
           }
           if (!value || value < 5) {
@@ -195,8 +187,8 @@ class ConfigPage extends React.Component {
         }
         case "maximumRuinedOrgasms": {
           delete errors[name];
-          if (value < store.config.minimumRuinedOrgasms) {
-            errors[name] = "Maximum Game Time is less than Minimum Game Time";
+          if (parseInt(value, 10) < parseInt(store.config.minimumRuinedOrgasms, 10)) {
+            errors[name] = "Maximum Ruined Orgasms cannot be less than Minimum Ruined Orgasms";
           }
           break;
         }
@@ -318,7 +310,8 @@ class ConfigPage extends React.Component {
                       <FormHelperText>{errors.mediaSource}</FormHelperText>
                     ) : (
                       <FormHelperText>
-                        You can add multiple tumblrs each seperated by a comma, you can also add tags inside square brackets eg: tumblr[tag1,tag2]
+                        You can add multiple tumblrs each separated by a comma, you can also add tags inside square
+                        brackets eg: tumblr[tag1,tag2]
                       </FormHelperText>
                     )}
                   </FormControl>
@@ -532,15 +525,28 @@ class ConfigPage extends React.Component {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} md={12}>
-                  <TextField
-                    id="maximumOrgasms"
-                    label="Maximum Number of Orgasms"
-                    value={store.config.maximumOrgasms}
-                    onChange={this.handleChange("maximumOrgasms")}
-                    fullWidth
-                    type="number"
-                    inputProps={{ step: "1", min: "1" }}
-                  />
+                  <FormControl
+                    className={classes.control}
+                    required
+                    error={!!errors.maximumOrgasms}
+                  >
+                    <InputLabel>Maximum Number of Orgasms</InputLabel>
+                    <Input
+                      id="maximumOrgasms"
+                      value={store.config.maximumOrgasms}
+                      onChange={this.handleChange("maximumOrgasms")}
+                      fullWidth
+                      type="number"
+                      inputProps={{ step: "1", min: "1" }}
+                    />
+                    {errors.maximumOrgasms ? (
+                      <FormHelperText>{errors.maximumOrgasms}</FormHelperText>
+                    ) : (
+                      <FormHelperText>
+                        The number of Orgasms that may occur at max during the game
+                      </FormHelperText>
+                    )}
+                  </FormControl>
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
@@ -551,7 +557,7 @@ class ConfigPage extends React.Component {
                         value="postOrgasmTorture"
                       />
                     }
-                    label="Post Orgasm Torure"
+                    label="Post Orgasm Torture"
                   />
                 </Grid>
                 <Grid item xs={12} md={4}>
@@ -904,17 +910,17 @@ class ConfigPage extends React.Component {
                 </Button>
               </Tooltip>
               <FormControlLabel
-                 control={
-                   <Switch
-                      checked={store.config.allowConfigEdit}
-                      onChange={this.handleCheckChange(
-                        "allowConfigEdit"
-                      )}
-                      value="allowConfigEdit"
-                   />
-                  }
-                 label="Editable?"
-                />
+                control={
+                  <Switch
+                    checked={store.config.allowConfigEdit}
+                    onChange={this.handleCheckChange(
+                      "allowConfigEdit"
+                    )}
+                    value="allowConfigEdit"
+                  />
+                }
+                label="Editable?"
+              />
             </div>
           </Paper>
         </div>
