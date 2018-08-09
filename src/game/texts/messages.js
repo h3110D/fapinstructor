@@ -4,6 +4,8 @@ export const getRandomMessage = (messageArray) => {
   return messageArray[getRandomInclusiveInteger(0, messageArray.length - 1)];
 };
 
+// Punishment
+
 export const getRandom_punishment_message = () => {
   return getRandomMessage(punishment_messages);
 };
@@ -16,6 +18,8 @@ const punishment_messages = [
   "Then you shall be punished",
   "Then you shall receive nothing, but punishment!"
 ];
+
+// Edges
 
 export const getRandom_edge_message = () => {
   return getRandomMessage(edge_messages);
@@ -48,6 +52,38 @@ const edgeInTime_messages = [
   "You want to get punished for not reaching the edge in time, don't you?"
 ];
 
+// Orgasm
+
+export const getRandom_orgasm_message = () => {
+  return getRandomMessage(orgasm_messages);
+};
+
+const orgasm_messages = [
+  "You have permission to have a full orgasm",
+];
+
+export const getRandom_orgasmAdvanced_message = () => {
+  return getRandomMessage(orgasmAdvanced_messages);
+};
+
+const orgasmAdvanced_messages = [
+  "You have permission to have a full orgasm. But only if you keep stroking exactly the way you are stroking now!",
+  "Take your time and keep on stroking until you cum",
+  "You now may cum"
+];
+
+export const getRandom_orgasmInTime_message = () => {
+  return getRandomMessage(orgasmInTime_messages);
+};
+
+const orgasmInTime_messages = [
+  "Orgasm now!",
+  "I don't have time for your worthless cock. Cum. Now!",
+  "You will get punished if you don't cum now!"
+];
+
+// Hands Off
+
 export const getRandom_handsOff_message = () => {
   return getRandomMessage(handsOff_messages);
 };
@@ -58,5 +94,19 @@ const handsOff_messages = [
   "Hands off your cock",
   "Take your hands away of your cock!",
   "Don't you dare touching your cock!"
+];
+
+// Hurry Up
+
+export const getRandom_hurryUp_message = () => {
+  return getRandomMessage(hurryUp_messages);
+};
+
+const hurryUp_messages = [
+  "tick ... tack ... tick ... tack ...",
+  "Hurry up, I don't want to wait this time",
+  "Hurry up!",
+  "Do it fast!",
+  "faster!"
 ];
 
