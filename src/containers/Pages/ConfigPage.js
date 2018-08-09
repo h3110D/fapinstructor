@@ -126,7 +126,8 @@ class ConfigPage extends React.Component {
           }
           break;
         }
-        // TODO: Why has maximumOrgasms to be at least 1? why not 0? The inputProps does specify a min of 1 ...
+        // TODO: Why has maximumOrgasms to be at least 1? why not can't it be 0 what would logically be possible?
+        // TODO: The inputProps does specify a min of 1 ...
         case "maximumOrgasms": {
           if (!value) {
             errors[name] = "Please specify a value";
