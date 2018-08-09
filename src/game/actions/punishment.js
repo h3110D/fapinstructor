@@ -34,7 +34,8 @@ const getRandomPunishment = () => {
 };
 
 /**
- * Task that chooses a random punishment from all available
+ * Task that chooses a random punishment from all available.
+ * Every time a punishment is required the chance to be denied in the end is increased (AdvancedOrgasm only)
  *
  * @since      03.08.2018
  * @author     the1nstructor
@@ -47,7 +48,11 @@ const punishment = async () => {
   const punish = getRandomPunishment();
   const message = getRandom_punishment_message();
   createNotification(message);
+
+  store.game.chanceForDenial += 5;
+
   await delay(6000);
+
   await executeAction(punish);
 };
 punishment.label = "Punishment";
