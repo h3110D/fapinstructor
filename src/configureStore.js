@@ -1,13 +1,18 @@
 import store from "store";
 import { GripStrengthEnum } from "game/enums/GripStrength";
 
+/**
+ * A big enum containing all setup information of the game.
+ *
+ * @since 08.07.2018
+ */
 const defaultConfig = {
   version: 2,
   tumblrId:
     "fapstergifs, allcowgirl, mar-cuss-blowjob-gifs, pornonmotion[blowjob,cumshot]",
   failedIds: [],
-  gifs: true,
   redditId: "60fpsporn, porninaminute",
+  gifs: true,
   pictures: true,
   videos: true,
   slideDuration: 10, // sec
@@ -35,6 +40,7 @@ const defaultConfig = {
   initialGripStrength: GripStrengthEnum.Normal,
   actionFrequency: 5, // sec
   tasks: {
+    //Stroke Speed
     doubleStrokes: true,
     halvedStrokes: true,
     teasingStrokes: true,
@@ -43,16 +49,19 @@ const defaultConfig = {
     randomStrokeSpeed: true,
     redLightGreenLight: true,
     clusterStrokes: true,
+    handsOff: true,
+    //Stroke Style
     dominant: true,
     nondominant: true,
     headOnly: true,
     shaftOnly: true,
     overhandGrip: true,
     bothHands: true,
+    //Grip Strength
     gripAdjustments: true,
+    //CBT
     bindCockBalls: true,
     rubberBands: true,
-    clothespins: true,
     ballSlaps: true,
     squeezeBalls: true,
     headPalming: true,
@@ -63,7 +72,13 @@ const defaultConfig = {
     flicking: true,
     cbtIce: true,
     precum: true,
+    //Anal
     buttplug: true,
+    //Nipples
+    rubNipples: true,
+    clothespins: true,
+    nipplesAndStroke: true,
+    //Misc
     pickYourPoison: true
   },
   allowConfigEdit: true

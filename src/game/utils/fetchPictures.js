@@ -30,7 +30,7 @@ const fetchPictures = async () => {
     redditId.length > 0 && redditId.split(splitOnCommaOutsideSqBr).map(id => id.trim());
 
   tumblrIds.forEach((id, index) => {
-    var tagsRegex = /\[(.*?)\]/g
+    var tagsRegex = /\[(.*?)\]/g;
     var tagMatch = tagsRegex.exec(id);
     var tags = "";
     while (tagMatch != null) {

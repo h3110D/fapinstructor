@@ -92,28 +92,28 @@ class GamePage extends React.Component {
   componentWillUnmount() {
     stopGame();
   }
-  
+
   backToConfig() {
     this.props.history.push('/');
   }
 
   renderBackToConfig() {
-    if(store.config.allowConfigEdit) {
+    if (store.config.allowConfigEdit) {
       return (
         <Button
-          onClick={ () => {
+          onClick={() => {
             this.backToConfig();
           }}
           variant="raised"
           color="secondary"
           className={this.props.classes.buttonMargin}
         >
-        Configure game
+          Configure game
         </Button>
       );
     }
   }
-  
+
   render() {
     if (!this.state.gameStarted) {
       return (
@@ -128,7 +128,7 @@ class GamePage extends React.Component {
             className={this.props.classes.buttonMargin}
           >
             start game
-          </Button>  
+          </Button>
           {
             this.renderBackToConfig()
           }

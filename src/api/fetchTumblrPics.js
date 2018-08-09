@@ -7,7 +7,7 @@ let offset = {};
 const fetchTumblrPics = tumblrId => {
   const { pictures, gifs, videos } = store.config;
 
-  var tagsRegex = /\[(.*?)\]/g
+  var tagsRegex = /\[(.*?)\]/g;
   var tagMatch = tagsRegex.exec(tumblrId);
   var tag = "";
   while (tagMatch != null) {

@@ -812,7 +812,8 @@ class ConfigPage extends React.Component {
                           randomBeat: "Random Beats",
                           randomStrokeSpeed: "Random Stroke Speed",
                           redLightGreenLight: "Red Light Green Light",
-                          clusterStrokes: "Cluster Strokes"
+                          clusterStrokes: "Cluster Strokes",
+                          handsOff: "Hands Off"
                         }}
                       />
                     </Grid>
@@ -869,7 +870,10 @@ class ConfigPage extends React.Component {
                       <TaskList
                         title="Misc."
                         tasks={{
-                          pickYourPoison: "Pick your Poison"
+                          pickYourPoison: "Pick your Poison",
+                          rubNipples: "Rub Nipples",
+                          nipplesAndStroke: "Nipples and Stroking"
+
                         }}
                       />
                     </Grid>

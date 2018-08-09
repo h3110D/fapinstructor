@@ -7,7 +7,15 @@ import ruin, { shouldRuin } from "./orgasm/ruin";
 import orgasm, { shouldOrgasm } from "./orgasm/orgasm";
 import _ from "lodash";
 
+
+/**
+ * TODO @thefapinstructor please create docu for this
+ *
+ * @param count
+ * @returns {any | Array}
+ */
 export const getRandomActions = (count = 0) => {
+  //Take only actions from src/configureStore.js and initialize them with probabilities from actions/index.js
   const actions = initializeActions(store.config.tasks);
 
   // applies the probability to each action
@@ -33,6 +41,12 @@ export const getRandomActions = (count = 0) => {
   return chosenActions;
 };
 
+
+/**
+ * TODO @thefapinstructor please create docu for this
+ *
+ * @returns {*}
+ */
 const generateAction = () => {
   let action = null;
 

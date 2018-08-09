@@ -1,6 +1,6 @@
 import React from "react";
 // mui
-import { Switch, Button } from "material-ui";
+import { Button, Switch } from "material-ui";
 import { FormControlLabel } from "material-ui/Form";
 import { withStyles } from "material-ui/styles";
 import Typography from "material-ui/Typography";
