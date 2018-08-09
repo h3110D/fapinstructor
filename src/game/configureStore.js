@@ -22,6 +22,7 @@ export default () => {
     strokes: 0,
     strokeWave: [],
     strokeStyle: StrokeStyleEnum.dominant,
-    buttPlugInserted: false
+    buttPlugInserted: false,
+    chanceForDenial: 0 //percent
   };
 };
