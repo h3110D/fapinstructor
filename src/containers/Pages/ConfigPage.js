@@ -115,7 +115,8 @@ class ConfigPage extends React.Component {
         }
         case "finalOrgasmAllowed":
         case "finalOrgasmDenied":
-        case "finalOrgasmRuined": {
+        case "finalOrgasmRuined":
+        case "finalOrgasmRandom": {
           delete errors.finialOrgasm;
           if (
             !store.config.finalOrgasmAllowed &&
@@ -126,6 +127,7 @@ class ConfigPage extends React.Component {
           }
           break;
         }
+
         // TODO: Why has maximumOrgasms to be at least 1? why not can't it be 0 what would logically be possible?
         // TODO: The inputProps does specify a min of 1 ...
         case "maximumOrgasms": {
