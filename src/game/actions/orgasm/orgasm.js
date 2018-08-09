@@ -1,31 +1,36 @@
 import store from "store";
-import createNotification, {
-  dismissNotification
-} from "engine/createNotification";
-import { setStrokeSpeed, randomStrokeSpeed } from "game/utils/strokeSpeed";
+import createNotification, { dismissNotification } from "engine/createNotification";
+import { randomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
 import delay from "utils/delay";
 import play from "engine/audio";
 import audioLibrary, { getRandomAudioVariation } from "audio";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
-import { getToTheEdge, edging } from "./edge";
+import { edging, getToTheEdge } from "./edge";
 import { getRandomInclusiveInteger } from "utils/math";
 import elapsedGameTime from "game/utils/elapsedGameTime";
 import { stopGame } from "game";
 
+/**
+ * Determines whether all initially specified bounds that are necessary to be fulfilled before orgasm are fulfilled.
+ *
+ * @returns {boolean}
+ *   Whether these bounds are fulfilled (`true`) or not (`false`)
+ */
 export const allowedOrgasm = () => {
   const {
     game: { ruins, edges },
     config: { minimumRuinedOrgasms, minimumEdges, minimumGameTime }
   } = store;
 
-  const isAllowedChance =
-    minimumRuinedOrgasms <= ruins &&
-    minimumEdges <= edges &&
-    elapsedGameTime("minutes") >= minimumGameTime;
-
-  return isAllowedChance;
+  return minimumRuinedOrgasms <= ruins && minimumEdges <= edges && elapsedGameTime("minutes") >= minimumGameTime;
 };
 
+/**
+ * Determines whether it is the right time to orgasm.
+ *
+ * @returns {boolean}
+ *   (`true`) if the user should orgasm now.
+ */
 export const shouldOrgasm = () => {
   const { config: { maximumGameTime, actionFrequency } } = store;
 
@@ -49,6 +54,11 @@ export const shouldOrgasm = () => {
   return result;
 };
 
+/**
+ * Makes the user ruin their orgasm.
+ * //TODO: Duplicate code
+ * @returns {Promise<done>}
+ */
 export const doRuin = async () => {
   const { config: { fastestStrokeSpeed } } = store;
 
@@ -70,6 +80,11 @@ export const doRuin = async () => {
   return done;
 };
 
+/**
+ * Allow the user to cum.
+ *
+ * @returns {Promise<done>}
+ */
 export const doOrgasm = async () => {
   const {
     config: {
@@ -103,7 +118,7 @@ export const doOrgasm = async () => {
 
       dismissNotification(nid);
 
-      createNotification("I guess you've had enough.  You may stop.")
+      createNotification("I guess you've had enough.  You may stop.");
       setStrokeSpeed(0);
       await delay(3 * 1000);
     }
@@ -114,6 +129,11 @@ export const doOrgasm = async () => {
   return done;
 };
 
+/**
+ * The user is not allowed to cum and has to end the session.
+ *
+ * @returns {Promise<done>}
+ */
 export const doDenied = async () => {
   const { config: { fastestStrokeSpeed } } = store;
 
@@ -134,6 +154,11 @@ export const doDenied = async () => {
   return done;
 };
 
+/**
+ * The game end can be chosen at random by using this function.
+ *
+ * @returns {Promise<*[]>}
+ */
 export const determineOrgasm = async () => {
   const {
     config: {
@@ -151,9 +176,11 @@ export const determineOrgasm = async () => {
 
     if (finalOrgasmAllowed) {
       options.push(doOrgasm);
-    } else if (finalOrgasmDenied) {
+    }
+    if (finalOrgasmDenied) {
       options.push(doDenied);
-    } else if (finalOrgasmRuined) {
+    }
+    if (finalOrgasmRuined) {
       options.push(doRuin);
     }
     trigger = options[getRandomInclusiveInteger(0, options.length - 1)];
@@ -170,6 +197,11 @@ export const determineOrgasm = async () => {
   return [await trigger(), skip];
 };
 
+/**
+ * Let the game go on by increasing the maximum game time by 20%.
+ *
+ * @returns {Promise<void>}
+ */
 export const skip = async () => {
   setStrokeSpeed(randomStrokeSpeed());
 
@@ -178,6 +210,14 @@ export const skip = async () => {
 };
 skip.label = "Skip & Add Time";
 
+/**
+ * "Should I stay or should I go now?"
+ *
+ * If the maximum number of orgasms is not reached yet, the game will go on.
+ * Else it will end at this point.
+ *
+ * @returns {Promise<void>}
+ */
 export const end = async () => {
   const { maximumOrgasms } = store.config;
   strokerRemoteControl.pause();
@@ -196,6 +236,11 @@ export const end = async () => {
   }
 };
 
+/**
+ * let the user edge and hold 30s and then let him have the initially specified ending (ruin, denied or orgasm)
+ *
+ * @returns {Promise<function(): *[]>}
+ */
 const orgasm = async () => {
   const notificationId = await getToTheEdge();
 
