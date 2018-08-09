@@ -75,14 +75,14 @@ export const edgeInTime = async (timer = getRandomInclusiveInteger(10, 40), edge
   const m = getRandom_edgeInTime_message();
   const notificationId = await edgeFunc(m);
   let edged = false;
-  const trigger = async () => {
+  const trigger_edging = async () => {
     edged = true;
     dismissNotification(notificationId);
     dismissNotification(timerId);
     await edging();
     await stopEdging();
   };
-  trigger.label = "Edging";
+  trigger_edging.label = "Edging";
 
   const countdown = async () => {
     await delay((timer + 1) * 1000);  // Wait till the timer runs up
@@ -90,7 +90,7 @@ export const edgeInTime = async (timer = getRandomInclusiveInteger(10, 40), edge
     if (!edged) {
       dismissNotification(notificationId);
       dismissNotification(timerId);
-      executeAction(punishment, true);
+      executeAction(punishment, true); // Interrupts other action (trigger_edging)
     }
 
   };
@@ -101,7 +101,7 @@ export const edgeInTime = async (timer = getRandomInclusiveInteger(10, 40), edge
 
   countdown();  // don't wait for the promise just start the thread.
 
-  return [trigger];
+  return [trigger_edging];
 };
 
 export const edgeAdvancedInTime = async (timer = getRandomInclusiveInteger(20, 60)) => {
