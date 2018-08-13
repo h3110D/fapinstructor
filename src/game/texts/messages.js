@@ -28,7 +28,63 @@ export const getRandom_edge_message = () => {
 const edge_messages = [
   "Edge! I know you can do it.",
   "Get to the edge for me",
-  "Edge! Show me how much you love working that cock for me"
+  "Edge! Show me how much you love working that cock for me",
+  "Edge.",
+	"Edge...",
+	"Edge!",
+	"Get on the edge.",
+	"Edge for me.",
+	"I want you to Edge.",
+	"Edge for me!",
+	"Give me that Edge!",
+	"I want to see you Edge!",
+	"Edge, baby.",
+	"Edge, baby!",
+	"Time to Edge!",
+	"Time to Edge.",
+	"Edge! Give it to me!",
+];
+
+//TODO
+
+const edge_more_messages = [
+  "Another Edge for you!",
+	"Again, Edge.",
+	"One more Edge!",
+	"Edge! Again!",
+	"Edge again!",
+	"Can you give me another Edge?",
+	"I want another Edge.",
+	"Give me another Edge.",
+	"Edge! Again and again.",
+	"Edge! You can take some more ...",
+	"Edge! Can you take more?",
+	"Edge! Once again, baby.",
+	"Edge! I'm not done with you yet ...",
+];
+//TODO
+const edge_and_hold_messages = [
+  "Edge! You will hold it.",
+	"Edge and hold.",
+	"Edge and hold it.",
+	"Edge! Then hold it!",
+	"Edge and hold for me, baby.",
+	"Edge and hold, baby.",
+	"Edge and ride it, baby.",
+	"Edge, and keep riding it.",
+	"Edge. I want to see you hold it.",
+	"Edge. I will make you hold it.",
+	"Edge! I will make you ride it.",
+	"Edge, then let me see you hold it.",
+	"Edge, then hold.",
+	"Edge. Time to hold it!",
+	"Edge! Keep yourself right on it!",
+];
+//TODO
+const edge_ladder_messages = [
+  "We are going to play edge ladder. You'll have to climb it",
+	"Edge ladder time for your poor cock",
+	"Let's make you really happy! By climbing the edge ladder",
 ];
 
 export const getRandom_edgeAdvanced_message = () => {
@@ -49,7 +105,10 @@ export const getRandom_edgeInTime_message = () => {
 const edgeInTime_messages = [
   "Get to the edge now!",
   "I don't have much time for your dick today. Edge. Now!",
-  "You want to get punished for not reaching the edge in time, don't you?"
+  "You want to get punished for not reaching the edge in time, don't you?",
+  "Edge. Now.",
+	"Edge. Now!",
+	"Edge ... Now.",
 ];
 
 // Orgasm
@@ -82,18 +141,21 @@ const orgasmInTime_messages = [
   "You will get punished if you don't cum now!"
 ];
 
-// Hands Off
+// Hands Off - REST
 
 export const getRandom_handsOff_message = () => {
   return getRandomMessage(handsOff_messages);
 };
 
 const handsOff_messages = [
-  "Let go of your cock",
-  "Hands off",
-  "Hands off your cock",
+  "Let go of your cock.",
+  "Hands off!",
+  "Hands off your cock.",
   "Take your hands away of your cock!",
-  "Don't you dare touching your cock!"
+  "Don't you dare touching your cock!",
+  "Hands off now, baby.",
+  "Relax. You may rest just a bit.",
+  "Let go. A few moments to rest for you ..."
 ];
 
 // Hurry Up
