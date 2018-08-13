@@ -3,23 +3,9 @@ import { getRandomInclusiveInteger } from "../../utils/math";
 export const getRandomMessage = (messageArray) => {
   return messageArray[getRandomInclusiveInteger(0, messageArray.length - 1)];
 };
-
-// Punishment
-
-export const getRandom_punishment_message = () => {
-  return getRandomMessage(punishment_messages);
-};
-
-const punishment_messages = [
-  "You Looser!",
-  "You are disgusting",
-  "You are not worth it anyway",
-  "Ha Ha Ha! You are not even up for the simple tasks",
-  "Then you shall be punished",
-  "Then you shall receive nothing, but punishment!"
-];
-
-// Edges
+/* ########################################### //
+                    EDGES
+// ########################################### */
 
 export const getRandom_edge_message = () => {
   return getRandomMessage(edge_messages);
@@ -30,61 +16,71 @@ const edge_messages = [
   "Get to the edge for me",
   "Edge! Show me how much you love working that cock for me",
   "Edge.",
-	"Edge...",
-	"Edge!",
-	"Get on the edge.",
-	"Edge for me.",
-	"I want you to Edge.",
-	"Edge for me!",
-	"Give me that Edge!",
-	"I want to see you Edge!",
-	"Edge, baby.",
-	"Edge, baby!",
-	"Time to Edge!",
-	"Time to Edge.",
-	"Edge! Give it to me!",
+  "Edge...",
+  "Edge!",
+  "Get on the edge.",
+  "Edge for me.",
+  "I want you to Edge.",
+  "Edge for me!",
+  "Give me that Edge!",
+  "I want to see you Edge!",
+  "Edge, baby.",
+  "Edge, baby!",
+  "Time to Edge!",
+  "Time to Edge.",
+  "Edge! Give it to me!",
 ];
 
-//TODO
+export const getRandom_edgeMore_message = () => {
+  return getRandomMessage(edgeMore_messages);
+};
 
-const edge_more_messages = [
+const edgeMore_messages = [
   "Another Edge for you!",
-	"Again, Edge.",
-	"One more Edge!",
-	"Edge! Again!",
-	"Edge again!",
-	"Can you give me another Edge?",
-	"I want another Edge.",
-	"Give me another Edge.",
-	"Edge! Again and again.",
-	"Edge! You can take some more ...",
-	"Edge! Can you take more?",
-	"Edge! Once again, baby.",
-	"Edge! I'm not done with you yet ...",
+  "Again, Edge.",
+  "One more Edge!",
+  "Edge! Again!",
+  "Edge again!",
+  "Can you give me another Edge?",
+  "I want another Edge.",
+  "Give me another Edge.",
+  "Edge! Again and again.",
+  "Edge! You can take some more ...",
+  "Edge! Can you take more?",
+  "Edge! Once again, baby.",
+  "Edge! I'm not done with you yet ...",
 ];
-//TODO
-const edge_and_hold_messages = [
+
+export const getRandom_edgeAndHold_message = () => {
+  return getRandomMessage(edgeAndHold_messages);
+};
+
+const edgeAndHold_messages = [
   "Edge! You will hold it.",
-	"Edge and hold.",
-	"Edge and hold it.",
-	"Edge! Then hold it!",
-	"Edge and hold for me, baby.",
-	"Edge and hold, baby.",
-	"Edge and ride it, baby.",
-	"Edge, and keep riding it.",
-	"Edge. I want to see you hold it.",
-	"Edge. I will make you hold it.",
-	"Edge! I will make you ride it.",
-	"Edge, then let me see you hold it.",
-	"Edge, then hold.",
-	"Edge. Time to hold it!",
-	"Edge! Keep yourself right on it!",
+  "Edge and hold.",
+  "Edge and hold it.",
+  "Edge! Then hold it!",
+  "Edge and hold for me, baby.",
+  "Edge and hold, baby.",
+  "Edge and ride it, baby.",
+  "Edge, and keep riding it.",
+  "Edge. I want to see you hold it.",
+  "Edge. I will make you hold it.",
+  "Edge! I will make you ride it.",
+  "Edge, then let me see you hold it.",
+  "Edge, then hold.",
+  "Edge. Time to hold it!",
+  "Edge! Keep yourself right on it!",
 ];
-//TODO
-const edge_ladder_messages = [
+
+export const getRandom_edgeLadder_message = () => {
+  return getRandomMessage(edgeLadder_messages);
+};
+
+const edgeLadder_messages = [
   "We are going to play edge ladder. You'll have to climb it",
-	"Edge ladder time for your poor cock",
-	"Let's make you really happy! By climbing the edge ladder",
+  "Edge ladder time for your poor cock",
+  "Let's make you really happy! By climbing the edge ladder",
 ];
 
 export const getRandom_edgeAdvanced_message = () => {
@@ -107,11 +103,13 @@ const edgeInTime_messages = [
   "I don't have much time for your dick today. Edge. Now!",
   "You want to get punished for not reaching the edge in time, don't you?",
   "Edge. Now.",
-	"Edge. Now!",
-	"Edge ... Now.",
+  "Edge. Now!",
+  "Edge ... Now.",
 ];
 
-// Orgasm
+/* ########################################### //
+                   ORGASM
+// ########################################### */
 
 export const getRandom_orgasm_message = () => {
   return getRandomMessage(orgasm_messages);
@@ -120,9 +118,9 @@ export const getRandom_orgasm_message = () => {
 const orgasm_messages = [
   "You have permission to have a full orgasm",
   "Cum for me! This is your lucky day, slave! Enjoy your precious orgasm!",
-	"CUM! That's right, baby! I allow it.",
-	"Surprise! Full Orgasm for you! That's right, toy, enjoy it for me. Shoot every last drop of it.",
-	"I decided to allow an orgasm for you today. Enjoy your reward!",
+  "CUM! That's right, baby! I allow it.",
+  "Surprise! Full Orgasm for you! That's right, toy, enjoy it for me. Shoot every last drop of it.",
+  "I decided to allow an orgasm for you today. Enjoy your reward!",
 ];
 
 export const getRandom_orgasmAdvanced_message = () => {
@@ -135,11 +133,15 @@ const orgasmAdvanced_messages = [
   "You now may cum"
 ];
 
+export const getRandom_afterFullOrgasm_message = () => {
+  return getRandomMessage(afterFullOrgasm_messages);
+};
+
 const afterFullOrgasm_messages = [
   "Now, I hope you enjoyed it. I still think you really need a longer denial to enjoy it better. ",
-	"Good boy! Cumming on Mistress's command like an obedient little denial-slave you are! Very good. Tomorrow we shall start anew, baby. Be ready.",
-	"I think I'm being too good to you. I mean, I think YOU really want ME to be stricter with you, deep down, don't you, slave? Well, that's okay. ",
-	"God, that looked like a good one. Are you happy? I would let you kiss my feet to thank me, but you can't touch me. That's why you are getting off with your hand like a looser, don't you?",
+  "Good boy! Cumming on Mistress's command like an obedient little denial-slave you are! Very good. Tomorrow we shall start anew, baby. Be ready.",
+  "I think I'm being too good to you. I mean, I think YOU really want ME to be stricter with you, deep down, don't you, slave? Well, that's okay. ",
+  "God, that looked like a good one. Are you happy? I would let you kiss my feet to thank me, but you can't touch me. That's why you are getting off with your hand like a looser, don't you?",
 ];
 
 export const getRandom_orgasmInTime_message = () => {
@@ -151,33 +153,50 @@ const orgasmInTime_messages = [
   "I don't have time for your worthless cock. Cum. Now!",
   "You will get punished if you don't cum now!"
 ];
+/* ########################################### //
+                       RUIN
+// ########################################### */
 
-// RUIN
+export const getRandom_ruinOrgasm_message = () => {
+  return getRandomMessage(ruinOrgasm_messages);
+};
 
 const ruinOrgasm_messages = [
   "RUIN IT! That's right, no full orgasms for you!",
-	"Ruin it, slave. Let it drip helplessly, as you kiss your satisfaction goodbye.",
-	"RUIN! NOW! Don't you cheat me on that one, slave. I'm watching you!",
-	"Ruin it, baby. Aww, look at it leaking out. So sad, baby... so sad...",
+  "Ruin it, slave. Let it drip helplessly, as you kiss your satisfaction goodbye.",
+  "RUIN! NOW! Don't you cheat me on that one, slave. I'm watching you!",
+  "Ruin it, baby. Aww, look at it leaking out. So sad, baby... so sad...",
 ];
+
+export const getRandom_afterRuin_message = () => {
+  return getRandomMessage(afterRuin_messages);
+};
 
 const afterRuin_messages = [
   "You know, I almost feel sorry for making you do it, baby. I would feel really sorry, if I didn't enjoy it so much, Ahaha~! Maybe next time you'll get lucky.",
-	"I just can't begin to imagine how it feels, baby. Well, perhaps it's for the best, I like to enjoy all my orgasms... Mmmm",
-	"God, I should do it more often... I mean, the face you make, Ahaha! Tomorrow we shall start a new session, baby, don't worry.",
-	"I love watching you suffer... Almost there... ALMOST, but not quite. And guess what - it's still an orgasm, so I get to tease you more tomorrow!",
-	"Good boy! Good, obedient little slave! Look at your precious release leaking away helplessly... All on my whim.",
+  "I just can't begin to imagine how it feels, baby. Well, perhaps it's for the best, I like to enjoy all my orgasms... Mmmm",
+  "God, I should do it more often... I mean, the face you make, Ahaha! Tomorrow we shall start a new session, baby, don't worry.",
+  "I love watching you suffer... Almost there... ALMOST, but not quite. And guess what - it's still an orgasm, so I get to tease you more tomorrow!",
+  "Good boy! Good, obedient little slave! Look at your precious release leaking away helplessly... All on my whim.",
 ];
 
-// DENIED
+/* ########################################### //
+                       DENIED
+// ########################################### */
+
+export const getRandom_denied_message = () => {
+  return getRandomMessage(denied_messages);
+};
 
 const denied_messages = [
   "Hands off! No cumming for you today, slave!",
-	"Aaaand, Stop. Too bad, baby, this is not a happy ending day for you... Put your aching cock away now.",
-	"STOP! No cumming for you, boy-toy! Too bad, so sad... Ahahaha.",
+  "Aaaand, Stop. Too bad, baby, this is not a happy ending day for you... Put your aching cock away now.",
+  "STOP! No cumming for you, boy-toy! Too bad, so sad... Ahahaha.",
 ];
 
-// Hands Off - REST
+/* ########################################### //
+                 Hands Off - REST
+// ########################################### */
 
 export const getRandom_handsOff_message = () => {
   return getRandomMessage(handsOff_messages);
@@ -194,7 +213,9 @@ const handsOff_messages = [
   "Let go. A few moments to rest for you ..."
 ];
 
-// Hurry Up
+/* ########################################### //
+                  Hurry Up
+// ########################################### */
 
 export const getRandom_hurryUp_message = () => {
   return getRandomMessage(hurryUp_messages);

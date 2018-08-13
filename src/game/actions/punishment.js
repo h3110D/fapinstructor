@@ -18,7 +18,7 @@ import { insertButtPlug } from "game/actions/anal/buttPlug";
 import handsOff from "game/actions/speed/handsOff";
 import { applyProbability } from "game/actions/generateAction";
 import createNotification from "engine/createNotification";
-import { getRandom_punishment_message } from "game/texts/messages";
+import { getRandom_punishment_message } from "game/texts/teasing_messages";
 import delay from "utils/delay"
 
 
