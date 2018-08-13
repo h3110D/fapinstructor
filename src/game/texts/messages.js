@@ -119,6 +119,10 @@ export const getRandom_orgasm_message = () => {
 
 const orgasm_messages = [
   "You have permission to have a full orgasm",
+  "Cum for me! This is your lucky day, slave! Enjoy your precious orgasm!",
+	"CUM! That's right, baby! I allow it.",
+	"Surprise! Full Orgasm for you! That's right, toy, enjoy it for me. Shoot every last drop of it.",
+	"I decided to allow an orgasm for you today. Enjoy your reward!",
 ];
 
 export const getRandom_orgasmAdvanced_message = () => {
@@ -131,6 +135,13 @@ const orgasmAdvanced_messages = [
   "You now may cum"
 ];
 
+const afterFullOrgasm_messages = [
+  "Now, I hope you enjoyed it. I still think you really need a longer denial to enjoy it better. ",
+	"Good boy! Cumming on Mistress's command like an obedient little denial-slave you are! Very good. Tomorrow we shall start anew, baby. Be ready.",
+	"I think I'm being too good to you. I mean, I think YOU really want ME to be stricter with you, deep down, don't you, slave? Well, that's okay. ",
+	"God, that looked like a good one. Are you happy? I would let you kiss my feet to thank me, but you can't touch me. That's why you are getting off with your hand like a looser, don't you?",
+];
+
 export const getRandom_orgasmInTime_message = () => {
   return getRandomMessage(orgasmInTime_messages);
 };
@@ -139,6 +150,31 @@ const orgasmInTime_messages = [
   "Orgasm now!",
   "I don't have time for your worthless cock. Cum. Now!",
   "You will get punished if you don't cum now!"
+];
+
+// RUIN
+
+const ruinOrgasm_messages = [
+  "RUIN IT! That's right, no full orgasms for you!",
+	"Ruin it, slave. Let it drip helplessly, as you kiss your satisfaction goodbye.",
+	"RUIN! NOW! Don't you cheat me on that one, slave. I'm watching you!",
+	"Ruin it, baby. Aww, look at it leaking out. So sad, baby... so sad...",
+];
+
+const afterRuin_messages = [
+  "You know, I almost feel sorry for making you do it, baby. I would feel really sorry, if I didn't enjoy it so much, Ahaha~! Maybe next time you'll get lucky.",
+	"I just can't begin to imagine how it feels, baby. Well, perhaps it's for the best, I like to enjoy all my orgasms... Mmmm",
+	"God, I should do it more often... I mean, the face you make, Ahaha! Tomorrow we shall start a new session, baby, don't worry.",
+	"I love watching you suffer... Almost there... ALMOST, but not quite. And guess what - it's still an orgasm, so I get to tease you more tomorrow!",
+	"Good boy! Good, obedient little slave! Look at your precious release leaking away helplessly... All on my whim.",
+];
+
+// DENIED
+
+const denied_messages = [
+  "Hands off! No cumming for you today, slave!",
+	"Aaaand, Stop. Too bad, baby, this is not a happy ending day for you... Put your aching cock away now.",
+	"STOP! No cumming for you, boy-toy! Too bad, so sad... Ahahaha.",
 ];
 
 // Hands Off - REST
