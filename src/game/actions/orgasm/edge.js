@@ -11,6 +11,7 @@ import delay from "utils/delay";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
 import handsOff from "game/actions/speed/handsOff";
 import { getRandom_edge_message } from "game/texts/messages";
+import punishment from "../punishment";
 
 /**
  * Determines if the user should edge.
@@ -83,7 +84,7 @@ export const stopEdging = async () => {
   const { config: { edgeCooldown } } = store;
 
   strokerRemoteControl.pause();
-  await handsOff(edgeCooldown);
+  await handsOff(edgeCooldown + getRandomInclusiveInteger(0, edgeCooldown));
 
   setStrokeSpeed(randomStrokeSpeed());
 
@@ -136,7 +137,13 @@ const edge = async () => {
   };
   trigger.label = "Edging";
 
-  return [trigger];
+  const trigger_fail = async () => {
+    dismissNotification(notificationId);
+    await punishment();
+  };
+  trigger_fail.label = "I can't";
+
+  return [trigger, trigger_fail];
 };
 
 export default edge;
