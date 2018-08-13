@@ -48,6 +48,7 @@ export const shouldEdge = () => {
  *   How long to ride the edge
  */
 export const rideTheEdge = async (time = getRandomInclusiveInteger(5, 30)) => {
+  const strokeSpeed = store.game.strokeSpeed;
   setStrokeSpeed(0);
   const notificationId = createNotification("Ride the edge", {
     autoDismiss: false
@@ -59,6 +60,7 @@ export const rideTheEdge = async (time = getRandomInclusiveInteger(5, 30)) => {
 
   await delay(time * 1000);
   dismissNotification(notificationId);
+  setStrokeSpeed(strokeSpeed);
 };
 
 /**

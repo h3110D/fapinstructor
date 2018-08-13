@@ -9,6 +9,9 @@ import { edging, getToTheEdge } from "./edge";
 import { getRandomInclusiveInteger } from "utils/math";
 import elapsedGameTime from "game/utils/elapsedGameTime";
 import { stopGame } from "game";
+import { chance } from "../../../utils/math";
+import { getRandomOrgasm } from "./orgasmInTime";
+import { getRandom_edgeAndHold_message } from "../../texts/messages";
 
 /**
  * Determines whether all initially specified bounds that are necessary to be fulfilled before orgasm are fulfilled.
@@ -84,7 +87,7 @@ export const doRuin = async () => {
 /**
  * Allow the user to cum.
  *
- * @returns {Promise<done>}
+ * @returns {Promise<*[]>}
  */
 export const doOrgasm = async () => {
   const { config: { fastestStrokeSpeed } } = store;
@@ -105,7 +108,7 @@ export const doOrgasm = async () => {
   };
   done.label = "Orgasmed";
 
-  return done;
+  return [done, skip];
 };
 
 /**
@@ -198,7 +201,10 @@ export const determineOrgasm = async () => {
     trigger = options[getRandomInclusiveInteger(0, options.length - 1)];
   } else {
     if (finalOrgasmAllowed) {
-      trigger = doOrgasm;
+      trigger = getRandomOrgasm(); // doOrgasm before in case of advanced / not advanced.
+      if (chance(store.game.chanceForDenial)) {
+        trigger = doDenied;
+      }
     } else if (finalOrgasmDenied) {
       trigger = doDenied;
     } else if (finalOrgasmRuined) {
@@ -206,7 +212,7 @@ export const determineOrgasm = async () => {
     }
   }
 
-  return [await trigger(), skip];
+  return trigger();
 };
 
 /**
@@ -254,7 +260,7 @@ export const end = async () => {
  * @returns {Promise<function(): *[]>}
  */
 const orgasm = async () => {
-  const notificationId = await getToTheEdge();
+  const notificationId = await getToTheEdge(getRandom_edgeAndHold_message);
 
   const trigger = async () => {
     dismissNotification(notificationId);

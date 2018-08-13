@@ -23,6 +23,13 @@ export default () => {
     strokeWave: [],
     strokeStyle: StrokeStyleEnum.dominant,
     buttPlugInserted: false,
-    chanceForDenial: 0 //percent
+
+    // even if only chosen orgasm one may be denied in the end
+    chanceForDenial: 0, //percent
+    // edging Ladder
+    edgingLadder: false,
+    edgingLadderLength: 2,
+    edgingLadderRung: 0,
+    edgingLadderCooldowns: 1,  //every 4 ladder edges one long cooldown is required
   };
 };

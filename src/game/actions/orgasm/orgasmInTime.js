@@ -8,7 +8,7 @@ import { strokerRemoteControl } from "game/loops/strokerLoop";
 import { edging, getToTheEdge } from "./edge";
 import { chance, getRandomInclusiveInteger } from "utils/math";
 import { stopGame } from "game";
-import { doRuin, postOrgasmTorture, skip } from "./orgasm";
+import { doOrgasm, doRuin, postOrgasmTorture, skip } from "./orgasm";
 import punishment from "game/actions/punishment";
 import {
   getRandom_hurryUp_message,
@@ -19,6 +19,8 @@ import { setDefaultGrip } from "../grip";
 import { setDefaultStrokeStyle, setStrokeStyleDominant } from "game/enums/StrokeStyle";
 import { getRandom_orgasmInTime_message } from "../../texts/messages";
 import executeAction from "engine/executeAction";
+import { applyProbability } from "../generateAction";
+import createProbability from "../../utils/createProbability";
 
 
 /**
@@ -277,7 +279,7 @@ export const skipAdvanced = async () => {
 
   setStrokeSpeed(randomStrokeSpeed());
 };
-skip.label = "Skip & Add Time";
+skipAdvanced.label = "Skip & Add Time";
 
 /**
  * "Should I stay or should I go now?"
@@ -306,35 +308,46 @@ export const endAdvanced = async () => {
   }
 };
 
+export const orgasmInTime = async () => {
+  const notificationId = await getToTheEdge();
+
+  const trigger = async () => {
+    dismissNotification(notificationId);
+    await edging(30);
+    return await determineOrgasm();
+  };
+  trigger.label = "Edging";
+
+  return trigger;
+};
+
 /**
- * let the user edge and hold 30s and then let him have the initially specified ending (ruin, denied or orgasm)
- *
- * @returns {Promise<function(): *[]>}
+ * Fetches one of all orgasms.
+ * Difficulty: mostly advanced
+ * @returns {action}
+ *   A random action
  */
-const orgasm = async () => {
-  const notificationId = await getToTheEdge();
-
-  const trigger = async () => {
-    dismissNotification(notificationId);
-    await edging(30);
-    return await determineOrgasm();
-  };
-  trigger.label = "Edging";
-
-  return trigger;
+export const getRandomOrgasm = () => {
+  const chosenActions = initializeOrgasms();
+  return applyProbability(chosenActions, 1)[0];
 };
 
-const orgasmInTime = async () => {
-  const notificationId = await getToTheEdge();
-
-  const trigger = async () => {
-    dismissNotification(notificationId);
-    await edging(30);
-    return await determineOrgasm();
-  };
-  trigger.label = "Edging";
-
-  return trigger;
-};
+/**
+ * Manually created list of all orgasms with probabilities required in final orgasm phase:
+ * createProbability takes your action and the probability percentage the action will be invoked
+ * as an orgasm in the end of the game
+ *
+ * @returns {*[]}
+ *   an array with all the function-probability pairs: {func, probability}
+ */
+export const initializeOrgasms = () =>
+  [
+    // list of all available edges
+    createProbability(doOrgasmAdvancedInTime, 10),
+    createProbability(doOrgasmInTime, 10),
+    createProbability(doOrgasmAdvanced, 10),
+    createProbability(doOrgasmInTime, 10),
+    createProbability(doOrgasm, 1),
+  ].filter(action => !!action);
 
 export default orgasmInTime;
