@@ -13,7 +13,7 @@ import {
   getRandom_hurryUp_message
 } from "game/texts/messages";
 import executeAction from "engine/executeAction";
-import edge from "./edge";
+import { edge } from "./edge";
 import createProbability from "game/utils/createProbability";
 import { applyProbability } from "game/actions/generateAction";
 import handsOff from "../speed/handsOff";

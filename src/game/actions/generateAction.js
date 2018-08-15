@@ -2,12 +2,10 @@ import store from "store";
 import ActionIterator from "engine/actionIterator";
 import { getRandomInclusiveInteger } from "utils/math";
 import initializeActions from "./index";
-import edge, { shouldEdge } from "./orgasm/edge";
+import determineEdge, { shouldEdge } from "./orgasm/edge";
 import ruin, { shouldRuin } from "./orgasm/ruin";
-import orgasm, { shouldOrgasm } from "./orgasm/orgasm";
+import edgeAndOrgasm, { shouldOrgasm } from "./orgasm/orgasm";
 import _ from "lodash";
-import { edgeAdvanced, edgeAdvancedInTime, edgeInTime, edgingLadder, introduceEdgingLadder } from "./orgasm/edgeInTime";
-import { chance } from "../../utils/math";
 
 
 /**
@@ -79,24 +77,7 @@ const generateAction = () => {
   }
 
   else if (shouldEdge()) {
-    action = edge;
-    if (store.config.advancedEdging && chance(75)) {
-      if (chance(60)) {
-        action = edgeAdvanced;
-      } else if (chance(60)) {
-        action = edgeInTime;
-      } else if (chance(60)) {
-        action = edgeAdvancedInTime;
-      } else {
-        store.game.edgingLadder = true;
-        if (store.config.minimumEdges > 3) {
-          store.game.edgingLadderLength = getRandomInclusiveInteger(3, store.config.minimumEdges);
-        } else {
-          store.game.edgingLadderLength = 3;
-        }
-        action = introduceEdgingLadder;
-      }
-    }
+    action = determineEdge;
   }
 
   else if (shouldRuin()) {

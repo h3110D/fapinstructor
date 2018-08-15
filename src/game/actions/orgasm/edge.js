@@ -6,12 +6,13 @@ import { randomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
 import { setDefaultGrip } from "game/actions/grip";
 import { setStrokeStyleDominant } from "game/enums/StrokeStyle";
 import createNotification, { dismissNotification } from "engine/createNotification";
-import { getRandomBoolean, getRandomInclusiveInteger } from "utils/math";
+import { chance, getRandomBoolean, getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
 import handsOff from "game/actions/speed/handsOff";
 import { getRandom_edge_message } from "game/texts/messages";
 import punishment from "../punishment";
+import { edgeAdvanced, edgeAdvancedInTime, edgeInTime, introduceEdgingLadder } from "./edgeInTime";
 
 /**
  * Determines if the user should edge.
@@ -116,12 +117,10 @@ export const getToTheEdge = async (message = getRandom_edge_message()) => {
 
   setStrokeSpeed(fastestStrokeSpeed);
 
-  setDefaultGrip();
+  setDefaultGrip(); //TODO: implement
   setStrokeStyleDominant();
 
-  return createNotification(message, {
-    autoDismiss: false
-  });
+  return createNotification(message, { autoDismiss: false });
 };
 
 /**
@@ -129,7 +128,7 @@ export const getToTheEdge = async (message = getRandom_edge_message()) => {
  *
  * @returns {Promise<*[]>}
  */
-const edge = async () => {
+export const edge = async () => {
   const notificationId = await getToTheEdge();
 
   const trigger = async () => {
@@ -148,4 +147,31 @@ const edge = async () => {
   return [trigger, trigger_fail];
 };
 
-export default edge;
+/**
+ * makes advanced Edges possible if active.
+ *
+ * @returns {Promise<function(): *[]>} the action to be executed next.
+ */
+const determineEdge = async () => {
+  let action = edge;
+  if (store.config.advancedEdging && chance(75)) { // Determine further chances only if advancedEdging is active
+    if (chance(60)) {
+      action = edgeAdvanced;
+    } else if (chance(60)) {
+      action = edgeInTime;
+    } else if (chance(60)) {
+      action = edgeAdvancedInTime;
+    } else {
+      store.game.edgingLadder = true;
+      if (store.config.minimumEdges > 3) {
+        store.game.edgingLadderLength = getRandomInclusiveInteger(3, store.config.minimumEdges);
+      } else {
+        store.game.edgingLadderLength = 3;
+      }
+      action = introduceEdgingLadder;
+    }
+  }
+  return action;
+};
+
+export default determineEdge;
