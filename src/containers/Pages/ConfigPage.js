@@ -533,7 +533,23 @@ class ConfigPage extends React.Component {
                 </Grid>
               </Grid>
               <Grid container spacing={16}>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={4}>
+                  <FormControlLabel
+                    title={"Makes the game ending more challenging by: \n" +
+                    "   - enabling more advanced orgasm tasks, like a time limit to orgasm in or \n" +
+                    "     a specific stroke style and speed that may not be changed to orgasm.\n" +
+                    "   - invoking a chance to be denied in the end if failing on 'Advanced Edge' tasks"}
+                    control={
+                      <Switch
+                        checked={store.config.advancedOrgasm}
+                        onChange={this.handleCheckChange("advancedOrgasm")}
+                        value="advancedOrgasm"
+                      />
+                    }
+                    label="Advanced Orgasm"
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
                   <FormControl
                     className={classes.control}
                     required
@@ -552,11 +568,13 @@ class ConfigPage extends React.Component {
                       <FormHelperText>{errors.maximumOrgasms}</FormHelperText>
                     ) : (
                       <FormHelperText>
-                        The number of Orgasms that may occur at max during the game
+                        The number of Orgasms that will occur at max during the game
                       </FormHelperText>
                     )}
                   </FormControl>
+
                 </Grid>
+
               </Grid>
               <Grid container spacing={16}>
                 <Grid item xs={12} md={4}>

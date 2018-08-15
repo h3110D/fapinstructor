@@ -42,7 +42,7 @@ export const getToTheOrgasm = (message = getRandom_orgasm_message()) => {
   setStrokeSpeed(fastestStrokeSpeed);
   setDefaultGrip();
   setStrokeStyleDominant();
-  setDefaultStrokeStyle();
+  setDefaultStrokeStyle(); // TODO implement
   return createNotification(message, { autoDismiss: false });
 };
 
@@ -64,7 +64,7 @@ export const getToTheOrgasmAdvanced = (message = getRandom_orgasmAdvanced_messag
 /**
  * Allow the user to cum. But only if he can do it in time.
  *
- * Recommendation: An edge before this action would make sense.
+ * Recommendation: An doEdge before this action would make sense.
  *
  * @returns {Promise<*[]>}
  *   the trigger to display

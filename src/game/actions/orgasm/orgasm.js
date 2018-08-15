@@ -11,7 +11,7 @@ import elapsedGameTime from "game/utils/elapsedGameTime";
 import { stopGame } from "game";
 import { chance } from "../../../utils/math";
 import { getRandomOrgasm } from "./orgasmInTime";
-import { getRandom_edgeAndHold_message } from "../../texts/messages";
+import { getRandom_edgeAndHold_message } from "game/texts/messages";
 
 /**
  * Determines whether all initially specified bounds that are necessary to be fulfilled before orgasm are fulfilled.
@@ -190,7 +190,11 @@ export const determineOrgasm = async () => {
     let options = [];
 
     if (finalOrgasmAllowed) {
-      options.push(doOrgasm);
+      if (store.config.advancedOrgasm) {
+        options.push(getRandomOrgasm());
+      } else {
+        options.push(doOrgasm);
+      }
     }
     if (finalOrgasmDenied) {
       options.push(doDenied);
@@ -201,7 +205,12 @@ export const determineOrgasm = async () => {
     trigger = options[getRandomInclusiveInteger(0, options.length - 1)];
   } else {
     if (finalOrgasmAllowed) {
-      trigger = getRandomOrgasm(); // doOrgasm before in case of advanced / not advanced.
+      if (store.config.advancedOrgasm) {
+        trigger = getRandomOrgasm();
+      } else {
+        trigger = doOrgasm;
+      }
+      // Overwrite if user should be denied instead
       if (chance(store.game.chanceForDenial)) {
         trigger = doDenied;
       }
@@ -255,12 +264,13 @@ export const end = async () => {
 };
 
 /**
- * let the user edge and hold 30s and then let him have the initially specified ending (ruin, denied or orgasm)
+ * let the user do edge and hold 30s and then let him have
+ * the initially specified ending (ruin, denied or orgasm)
  *
  * @returns {Promise<function(): *[]>}
  */
-const orgasm = async () => {
-  const notificationId = await getToTheEdge(getRandom_edgeAndHold_message);
+const edgeAndOrgasm = async () => {
+  const notificationId = await getToTheEdge(getRandom_edgeAndHold_message());
 
   const trigger = async () => {
     dismissNotification(notificationId);
@@ -272,4 +282,4 @@ const orgasm = async () => {
   return trigger;
 };
 
-export default orgasm;
+export default edgeAndOrgasm;

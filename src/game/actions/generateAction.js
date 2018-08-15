@@ -6,6 +6,7 @@ import determineEdge, { shouldEdge } from "./orgasm/edge";
 import ruin, { shouldRuin } from "./orgasm/ruin";
 import edgeAndOrgasm, { shouldOrgasm } from "./orgasm/orgasm";
 import _ from "lodash";
+import { edgingLadder } from "./orgasm/edgeInTime";
 
 
 /**
@@ -69,7 +70,7 @@ const generateAction = () => {
   let action = null;
 
   if (shouldOrgasm()) {
-    action = orgasm;
+    action = edgeAndOrgasm;
   }
 
   else if (store.game.edgingLadder) {
