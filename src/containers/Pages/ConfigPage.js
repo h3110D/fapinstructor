@@ -21,6 +21,7 @@ import TaskList from "containers/TaskList";
 import { GripStrengthEnum, GripStrengthString } from "game/enums/GripStrength";
 import copyToClipboard from "utils/copyToClipboard";
 import connect from "hoc/connect";
+import { getStrokeStyleName, StrokeStyleArray, StrokeStyleEnum, StrokeStyleString } from "../../game/enums/StrokeStyle";
 
 const styles = theme => ({
   control: {
@@ -223,6 +224,14 @@ class ConfigPage extends React.Component {
           }
           break;
         }
+        case "defaultStrokeStyle": { // New UI makes this case never happen :)
+          delete errors[name];
+          if (!store.config.tasks[StrokeStyleArray[value][0]]) {
+            errors[name] = "You disabled '" + StrokeStyleString[value] + "' below. " +
+              "Only active Styles can be set as default Style!";
+          }
+          break;
+        }
         default: {
         }
       }
@@ -241,15 +250,17 @@ class ConfigPage extends React.Component {
     this.setState({ errors: this.validateConfig() });
   };
 
-  handleTaskRandomize = event => {
+  handleTaskRandomize = except => event => {
     Object.keys(store.config.tasks).forEach(task => {
-      store.config.tasks[task] = getRandomBoolean();
+      if (!except.includes(task)) {
+        store.config.tasks[task] = getRandomBoolean();
+      }
     });
 
     event.stopPropagation();
   };
 
-  generateLink(isAbsolute = true) {
+  static generateLink(isAbsolute = true) {
     const encodedValues = Base64.encodeURI(JSON.stringify(store.config));
 
     let url = "";
@@ -720,6 +731,7 @@ class ConfigPage extends React.Component {
                   <FormControl
                     className={classes.control}
                     error={!!errors.minimumEdges}
+                    title={"Specify how many edges you will have to fulfill before the game may end"}
                   >
                     <InputLabel>Minimum Edges</InputLabel>
                     <Input
@@ -777,7 +789,45 @@ class ConfigPage extends React.Component {
             </Group>
             <Group title="Stroke">
               <Grid container spacing={16}>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={3}>
+                  <FormControl
+                    className={classes.control}
+                    error={!!errors.defaultStrokeStyle}
+                    title={"Select the most occurring stroke style during this game. Only active Stroke Styles " +
+                    "can be chosen. 'Hands Off' can not be chosen."}
+                  >
+                    <InputLabel>Default Stroke Style</InputLabel>
+                    <Select
+                      value={store.config.defaultStrokeStyle}
+                      onChange={this.handleChange("defaultStrokeStyle")}
+                    >
+                      {Object.keys(StrokeStyleEnum).map(key => (
+                        <MenuItem key={key} value={StrokeStyleEnum[key]}
+                                  disabled={
+                                    !store.config.tasks[key] || key === "handsOff"}>
+                          {StrokeStyleString[StrokeStyleEnum[key]]}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText>{errors.defaultStrokeStyle}</FormHelperText>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <FormControl className={classes.control}>
+                    <InputLabel>Initial Grip Strength</InputLabel>
+                    <Select
+                      value={store.config.initialGripStrength}
+                      onChange={this.handleChange("initialGripStrength")}
+                    >
+                      {Object.keys(GripStrengthEnum).map(key => (
+                        <MenuItem key={key} value={GripStrengthEnum[key]}>
+                          {GripStrengthString[GripStrengthEnum[key]]}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={3}>
                   <FormControl
                     className={classes.control}
                     error={!!errors.slowestStrokeSpeed}
@@ -797,7 +847,7 @@ class ConfigPage extends React.Component {
                     <FormHelperText>{errors.slowestStrokeSpeed}</FormHelperText>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={3}>
                   <FormControl
                     className={classes.control}
                     error={!!errors.fastestStrokeSpeed}
@@ -817,31 +867,18 @@ class ConfigPage extends React.Component {
                     <FormHelperText>{errors.fastestStrokeSpeed}</FormHelperText>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={4}>
-                  <FormControl className={classes.control}>
-                    <InputLabel>Initial Grip Strength</InputLabel>
-                    <Select
-                      value={store.config.initialGripStrength}
-                      onChange={this.handleChange("initialGripStrength")}
-                    >
-                      {Object.keys(GripStrengthEnum).map(key => (
-                        <MenuItem key={key} value={GripStrengthEnum[key]}>
-                          {GripStrengthString[GripStrengthEnum[key]]}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
               </Grid>
             </Group>
             <Group title="Tasks">
               <ExpansionPanel defaultExpanded>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}
+                                       title={"Chooses from all options below at random."}
+                >
                   <Button
                     variant="raised"
                     color="primary"
                     className={classes.button}
-                    onClick={this.handleTaskRandomize}
+                    onClick={this.handleTaskRandomize([getStrokeStyleName(store.config.defaultStrokeStyle)])}
                   >
                     Randomize
                   </Button>
@@ -849,34 +886,50 @@ class ConfigPage extends React.Component {
                 <ExpansionPanelDetails>
                   <Grid container>
                     <Grid item xs={12} sm={6} md={4}>
-                      <TaskList
-                        title="Speed"
-                        tasks={{
-                          doubleStrokes: "Double Strokes",
-                          halvedStrokes: "Halved Strokes",
-                          teasingStrokes: "Teasing Strokes",
-                          accelerationCycles: "Acceleration Cycles",
-                          randomBeat: "Random Beats",
-                          randomStrokeSpeed: "Random Stroke Speed",
-                          redLightGreenLight: "Red Light Green Light",
-                          clusterStrokes: "Cluster Strokes",
-                          handsOff: "Hands Off"
-                        }}
-                      />
+                      <FormControl
+                        className={classes.control}
+                        error={!!errors.speed}
+                      >
+                        <TaskList
+                          title="Speed"
+                          error={errors.speed}
+                          tasks={{
+                            doubleStrokes: "Double Strokes",
+                            halvedStrokes: "Halved Strokes",
+                            teasingStrokes: "Teasing Strokes",
+                            accelerationCycles: "Acceleration Cycles",
+                            randomBeat: "Random Beats",
+                            randomStrokeSpeed: "Random Stroke Speed",
+                            redLightGreenLight: "Red Light Green Light",
+                            clusterStrokes: "Cluster Strokes",
+                          }}
+                        />
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                      <TaskList
-                        title="Style"
-                        tasks={{
-                          dominant: "Dominant",
-                          nondominant: "Nondominant",
-                          headOnly: "Head Only",
-                          shaftOnly: "Shaft Only",
-                          gripAdjustments: "Grip Adjustments",
-                          overhandGrip: "Overhand Grip",
-                          bothHands: "Both Hands"
-                        }}
-                      />
+                      <FormControl
+                        className={classes.button}
+                        error={!!errors.style}
+                        title={"Select the Stroking Styles that shall appear during the game here. \n" +
+                        "At least the default Stroke Style has to be active. \n" +
+                        "You can change the default Stroke Style above. Only active Styles can be chosen."}
+                      >
+                        <TaskList
+                          title="Style"
+                          error={errors.style}
+                          except={[getStrokeStyleName(store.config.defaultStrokeStyle)]}
+                          tasks={{
+                            dominant: "Dominant",
+                            nondominant: "Nondominant",
+                            headOnly: "Head Only",
+                            shaftOnly: "Shaft Only",
+                            gripAdjustments: "Grip Adjustments",
+                            overhandGrip: "Overhand Grip",
+                            bothHands: "Both Hands",
+                            handsOff: "Hands Off"
+                          }}
+                        />
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                       <TaskList
