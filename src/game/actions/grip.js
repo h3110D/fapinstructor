@@ -5,6 +5,9 @@ import { GripStrengthEnum, GripStrengthString } from "game/enums/GripStrength";
 import play from "engine/audio";
 import audioLibrary from "audio";
 
+/**
+ * set the default / initial Grip again
+ */
 export const setDefaultGrip = () => {
   const currentGrip = store.game.gripStrength;
   const defaultGrip = store.config.initialGripStrength;
