@@ -155,7 +155,7 @@ export const edge = async () => {
 const determineEdge = async () => {
   let action = edge;
   if (store.config.advancedEdging) { // Determine further chances only if advancedEdging is active
-    action = getRandomEdge();
+    action = getRandomEdge()();
   }
   return action;
 };

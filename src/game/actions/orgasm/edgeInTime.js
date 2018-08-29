@@ -91,7 +91,13 @@ export const initializeEdgingLadder = async () => {
   } else {
     store.game.edgingLadderLength = 3;
   }
-  return createNotification(getRandom_edgeLadder_message());
+  const messageID = createNotification(getRandom_edgeLadder_message());
+
+  const trigger_ok = async () => {
+    dismissNotification(messageID);
+  };
+  trigger_ok.label = "Okay";
+  return trigger_ok;
 };
 
 /**
@@ -190,9 +196,9 @@ export const initializeEdges = () =>
     // list of all available edges
     createProbability(edge, 25),
     createProbability(edgeAdvanced, 25),
-    createProbability(edgeInTime, 5),
-    createProbability(edgeAdvancedInTime, 5),
-    !store.game.edgingLadder && createProbability(initializeEdgingLadder, 1)  // Chose only if not already in edgeLadder
+    createProbability(edgeInTime, 25),
+    createProbability(edgeAdvancedInTime, 15),
+    !store.game.edgingLadder && createProbability(initializeEdgingLadder, 5)  // Chose only if not already in edgeLadder
   ].filter(action => !!action);
 
 /**

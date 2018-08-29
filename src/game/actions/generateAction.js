@@ -78,7 +78,7 @@ const generateAction = () => {
   }
 
   else if (shouldEdge()) {
-    action = determineEdge();
+    action = determineEdge;
   }
 
   else if (shouldRuin()) {
