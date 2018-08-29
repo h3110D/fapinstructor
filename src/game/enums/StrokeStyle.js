@@ -22,10 +22,21 @@ const StrokeStyleEnum = {
   handsOff: 6,
 };
 
-const StrokeStyleArray = Object.entries(StrokeStyleEnum);
+export const StrokeStyleArray = Object.entries(StrokeStyleEnum);
+
+/**
+ * Access to the StrokeStyleEnum in reverse direction.
+ *
+ * @param index
+ *   the index according to the StrokeStyleEnum
+ * @returns {string} the __name__ of the stroke Style
+ */
+export const getStrokeStyleName = (index) => {
+  return StrokeStyleArray[index][0]
+};
 
 export const setDefaultStrokeStyle = async () => {
-  //TODO: Create DropDown menu for default Stroke Style
+  await setStrokeStyle(store.game.defaultStrokeStyle);
 };
 
 export const setStrokeStyleDominant = async () => {
@@ -113,8 +124,8 @@ const StrokeStyleSetterArray = Object.entries(StrokeStyleSetterEnum);
  * @author the1nstructor
  * @since 15.07.2018
  */
-export const setStrokeStyle = (strokeStyle = StrokeStyleEnum.dominant) => {
-  StrokeStyleSetterArray[strokeStyle][1]();
+export const setStrokeStyle = async (strokeStyle = StrokeStyleEnum.dominant) => {
+  await StrokeStyleSetterArray[strokeStyle][1]();
 };
 
 /**
