@@ -1,7 +1,6 @@
 import store from "store";
 import moment from "moment";
 import { randomStrokeSpeed } from "game/utils/strokeSpeed";
-import { StrokeStyleEnum } from "game/enums/StrokeStyle";
 
 export default () => {
   store.game = {
@@ -21,7 +20,7 @@ export default () => {
     orgasms: 0,
     strokes: 0,
     strokeWave: [],
-    strokeStyle: StrokeStyleEnum.dominant,
+    strokeStyle: store.config.defaultStrokeStyle,
     buttPlugInserted: false,
 
     // even if only chosen orgasm one may be denied in the end
