@@ -1,5 +1,6 @@
 import store from "store";
 import { GripStrengthEnum } from "game/enums/GripStrength";
+import { StrokeStyleEnum } from "./game/enums/StrokeStyle";
 
 /**
  * A big enum containing all setup information of the game.
@@ -40,6 +41,7 @@ const defaultConfig = {
   slowestStrokeSpeed: 0.25, // sec
   fastestStrokeSpeed: 5, // sec
   initialGripStrength: GripStrengthEnum.Normal,
+  defaultStrokeStyle: StrokeStyleEnum.dominant,
   actionFrequency: 5, // sec
   tasks: {
     //Stroke Speed
@@ -51,7 +53,6 @@ const defaultConfig = {
     randomStrokeSpeed: true,
     redLightGreenLight: true,
     clusterStrokes: true,
-    handsOff: true,
     //Stroke Style
     dominant: true,
     nondominant: true,
@@ -59,6 +60,7 @@ const defaultConfig = {
     shaftOnly: true,
     overhandGrip: true,
     bothHands: true,
+    handsOff: true,
     //Grip Strength
     gripAdjustments: true,
     //CBT
