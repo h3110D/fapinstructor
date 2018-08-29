@@ -4,15 +4,15 @@ import audioLibrary from "audio";
 import elapsedGameTime from "game/utils/elapsedGameTime";
 import { randomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
 import { setDefaultGrip } from "game/actions/grip";
-import { setStrokeStyleDominant } from "game/enums/StrokeStyle";
+import { setDefaultStrokeStyle } from "game/enums/StrokeStyle";
 import createNotification, { dismissNotification } from "engine/createNotification";
-import { chance, getRandomBoolean, getRandomInclusiveInteger } from "utils/math";
+import { getRandomBoolean, getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
 import handsOff from "game/actions/speed/handsOff";
 import { getRandom_edge_message } from "game/texts/messages";
 import punishment from "../punishment";
-import { edgeAdvanced, edgeAdvancedInTime, edgeInTime, introduceEdgingLadder } from "./edgeInTime";
+import { getRandomEdge } from "./edgeInTime";
 
 /**
  * Determines if the user should edge.
@@ -117,8 +117,8 @@ export const getToTheEdge = async (message = getRandom_edge_message()) => {
 
   setStrokeSpeed(fastestStrokeSpeed);
 
-  setDefaultGrip(); //TODO: implement
-  setStrokeStyleDominant();
+  setDefaultGrip();
+  setDefaultStrokeStyle();
 
   return createNotification(message, { autoDismiss: false });
 };
@@ -154,22 +154,8 @@ export const edge = async () => {
  */
 const determineEdge = async () => {
   let action = edge;
-  if (store.config.advancedEdging && chance(75)) { // Determine further chances only if advancedEdging is active
-    if (chance(60)) {
-      action = edgeAdvanced;
-    } else if (chance(60)) {
-      action = edgeInTime;
-    } else if (chance(60)) {
-      action = edgeAdvancedInTime;
-    } else {
-      store.game.edgingLadder = true;
-      if (store.config.minimumEdges > 3) {
-        store.game.edgingLadderLength = getRandomInclusiveInteger(3, store.config.minimumEdges);
-      } else {
-        store.game.edgingLadderLength = 3;
-      }
-      action = introduceEdgingLadder;
-    }
+  if (store.config.advancedEdging) { // Determine further chances only if advancedEdging is active
+    action = getRandomEdge();
   }
   return action;
 };

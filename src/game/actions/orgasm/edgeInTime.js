@@ -24,7 +24,7 @@ import handsOff from "../speed/handsOff";
  * @returns {action}
  *   A random action
  */
-const getRandomEdge = () => {
+export const getRandomEdge = () => {
   const chosenActions = initializeEdges();
   return applyProbability(chosenActions, 1)[0];
 };
@@ -35,8 +35,8 @@ const getRandomEdge = () => {
  * @returns {action}
  *   A random action
  */
-const getRandomFinalLadderEdge = () => {
-  const chosenActions = initializeEdges();
+export const getRandomFinalLadderEdge = () => {
+  const chosenActions = initializeFinalLadderEdges();
   return applyProbability(chosenActions, 1)[0];
 };
 
@@ -78,8 +78,20 @@ export const edgeAdvanced = async () => {
 };
 
 
-export const introduceEdgingLadder = async () => {
-  createNotification(getRandom_edgeLadder_message());
+/**
+ * Initializes the edging ladder.
+ *
+ * @returns {Promise} action
+ *   - the action that may be executed next.
+ */
+export const initializeEdgingLadder = async () => {
+  store.game.edgingLadder = true;
+  if (store.config.minimumEdges > 3) {
+    store.game.edgingLadderLength = getRandomInclusiveInteger(3, store.config.minimumEdges);
+  } else {
+    store.game.edgingLadderLength = 3;
+  }
+  return createNotification(getRandom_edgeLadder_message());
 };
 
 /**
@@ -176,10 +188,11 @@ export const edgeAdvancedInTime = async (timer = getRandomInclusiveInteger(20, 6
 export const initializeEdges = () =>
   [
     // list of all available edges
-    createProbability(edge, 50),
-    createProbability(edgeAdvanced, 50),
-    createProbability(edgeInTime, 10),
-    createProbability(edgeAdvancedInTime, 10),
+    createProbability(edge, 25),
+    createProbability(edgeAdvanced, 25),
+    createProbability(edgeInTime, 5),
+    createProbability(edgeAdvancedInTime, 5),
+    !store.game.edgingLadder && createProbability(initializeEdgingLadder, 1)  // Chose only if not already in edgeLadder
   ].filter(action => !!action);
 
 /**
