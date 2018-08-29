@@ -260,7 +260,7 @@ class ConfigPage extends React.Component {
     event.stopPropagation();
   };
 
-  static generateLink(isAbsolute = true) {
+  generateLink(isAbsolute = true) {
     const encodedValues = Base64.encodeURI(JSON.stringify(store.config));
 
     let url = "";
