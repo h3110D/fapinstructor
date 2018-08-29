@@ -5,10 +5,9 @@ import delay from "utils/delay";
 import play from "engine/audio";
 import audioLibrary, { getRandomAudioVariation } from "audio";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
-import { edging, getToTheEdge } from "./edge";
 import { chance, getRandomInclusiveInteger } from "utils/math";
 import { stopGame } from "game";
-import { doOrgasm, doRuin, postOrgasmTorture, skip } from "./orgasm";
+import { doOrgasm, postOrgasmTorture, skip } from "./orgasm";
 import punishment from "game/actions/punishment";
 import {
   getRandom_hurryUp_message,
@@ -16,7 +15,7 @@ import {
   getRandom_orgasmAdvanced_message
 } from "game/texts/messages";
 import { setDefaultGrip } from "../grip";
-import { setDefaultStrokeStyle, setStrokeStyleDominant } from "game/enums/StrokeStyle";
+import { setDefaultStrokeStyle } from "game/enums/StrokeStyle";
 import { getRandom_orgasmInTime_message } from "../../texts/messages";
 import executeAction from "engine/executeAction";
 import { applyProbability } from "../generateAction";
@@ -41,8 +40,8 @@ export const getToTheOrgasm = (message = getRandom_orgasm_message()) => {
 
   setStrokeSpeed(fastestStrokeSpeed);
   setDefaultGrip();
-  setStrokeStyleDominant();
-  setDefaultStrokeStyle(); // TODO implement
+  setDefaultStrokeStyle();
+
   return createNotification(message, { autoDismiss: false });
 };
 
@@ -64,7 +63,7 @@ export const getToTheOrgasmAdvanced = (message = getRandom_orgasmAdvanced_messag
 /**
  * Allow the user to cum. But only if he can do it in time.
  *
- * Recommendation: An doEdge before this action would make sense.
+ * Recommendation: An edge before this action would make sense.
  *
  * @returns {Promise<*[]>}
  *   the trigger to display
@@ -225,48 +224,6 @@ export const doRuinAdvanced = async () => {
   return done;
 };
 
-/**
- * The game end can be chosen at random by using this function.
- *
- * @returns {Promise<*[]>}
- */
-export const determineOrgasm = async () => {
-  const {
-    config: {
-      finalOrgasmAllowed,
-      finalOrgasmDenied,
-      finalOrgasmRuined,
-      finalOrgasmRandom
-    }
-  } = store;
-
-  let trigger;
-
-  if (finalOrgasmRandom) {
-    let options = [];
-
-    if (finalOrgasmAllowed) {
-      options.push(doOrgasmAdvanced);
-    }
-    if (finalOrgasmDenied) {
-      options.push(doDenied);
-    }
-    if (finalOrgasmRuined) {
-      options.push(doRuinAdvanced);
-    }
-    trigger = options[getRandomInclusiveInteger(0, options.length - 1)];
-  } else {
-    if (finalOrgasmAllowed) {
-      trigger = doOrgasmAdvanced;
-    } else if (finalOrgasmDenied) {
-      trigger = doDenied;
-    } else if (finalOrgasmRuined) {
-      trigger = doRuin;
-    }
-  }
-
-  return [await trigger(), skipAdvanced];
-};
 
 /**
  * Let the game go on by increasing the maximum game time by 20%.
@@ -308,18 +265,6 @@ export const endAdvanced = async () => {
   }
 };
 
-export const orgasmInTime = async () => {
-  const notificationId = await getToTheEdge();
-
-  const trigger = async () => {
-    dismissNotification(notificationId);
-    await edging(30);
-    return await determineOrgasm();
-  };
-  trigger.label = "Edging";
-
-  return trigger;
-};
 
 /**
  * Fetches one of all orgasms.
@@ -342,12 +287,10 @@ export const getRandomOrgasm = () => {
  */
 export const initializeOrgasms = () =>
   [
-    // list of all available edges
+    // list of all available orgasms
     createProbability(doOrgasmAdvancedInTime, 10),
     createProbability(doOrgasmInTime, 10),
     createProbability(doOrgasmAdvanced, 10),
     createProbability(doOrgasmInTime, 10),
     createProbability(doOrgasm, 1),
   ].filter(action => !!action);
-
-export default orgasmInTime;

@@ -102,7 +102,7 @@ export const stopEdging = async () => {
 };
 
 /**
- * Sets the Speed to Maximum, the Grip to default and the StrokeStyle to Dominant. Displays message.
+ * Sets the Speed to Maximum, the Grip and the StrokeStyle to default. Displays message.
  *
  * @param message
  *   the message that is displayed.

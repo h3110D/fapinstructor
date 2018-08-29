@@ -207,12 +207,14 @@ export const determineOrgasm = async () => {
     if (finalOrgasmAllowed) {
       if (store.config.advancedOrgasm) {
         trigger = getRandomOrgasm();
+
+        // Overwrite if user should be denied instead - only applies to advanced orgasm games
+        // denial Chance may increase if user does not behave as expected.
+        if (chance(store.game.chanceForDenial)) {
+          trigger = doDenied;
+        }
       } else {
         trigger = doOrgasm;
-      }
-      // Overwrite if user should be denied instead
-      if (chance(store.game.chanceForDenial)) {
-        trigger = doDenied;
       }
     } else if (finalOrgasmDenied) {
       trigger = doDenied;
@@ -221,7 +223,7 @@ export const determineOrgasm = async () => {
     }
   }
 
-  return trigger();
+  return await trigger();
 };
 
 /**
@@ -234,6 +236,9 @@ export const skip = async () => {
 
   // extend the game by 20%
   store.config.maximumGameTime *= 1.2;
+
+  // Mistress did not like that. 10% Denial Chance Increase!
+  store.config.chanceForDenial += 10;
 };
 skip.label = "Skip & Add Time";
 
@@ -264,17 +269,18 @@ export const end = async () => {
 };
 
 /**
- * let the user do edge and hold 30s and then let him have
+ * let the user do edge and hold edgingTime seconds and then let him have
  * the initially specified ending (ruin, denied or orgasm)
- *
+ * @param edgingTime
+ *   how long the final edge will last
  * @returns {Promise<function(): *[]>}
  */
-const edgeAndOrgasm = async () => {
+const edgeAndOrgasm = async (edgingTime = getRandomInclusiveInteger(15, 40)) => {
   const notificationId = await getToTheEdge(getRandom_edgeAndHold_message());
 
   const trigger = async () => {
     dismissNotification(notificationId);
-    await edging(30);
+    await edging(edgingTime);
     return await determineOrgasm();
   };
   trigger.label = "Edging";
