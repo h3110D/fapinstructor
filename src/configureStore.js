@@ -21,8 +21,11 @@ const defaultConfig = {
   enableMoans: true,
   videoMuted: false,
   finalOrgasmAllowed: true,
+  allowedProbability: 100,  // percent
   finalOrgasmDenied: false,
+  deniedProbability: 0,  // percent
   finalOrgasmRuined: false,
+  ruinedProbability: 0,  // percent
   finalOrgasmRandom: false,
   minimumGameTime: 5, // min
   maximumGameTime: 20, // min

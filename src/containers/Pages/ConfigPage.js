@@ -116,8 +116,7 @@ class ConfigPage extends React.Component {
         }
         case "finalOrgasmAllowed":
         case "finalOrgasmDenied":
-        case "finalOrgasmRuined":
-        case "finalOrgasmRandom": {
+        case "finalOrgasmRuined": {
           delete errors.finialOrgasm;
           if (
             !store.config.finalOrgasmAllowed &&
@@ -125,6 +124,31 @@ class ConfigPage extends React.Component {
             !store.config.finalOrgasmRuined
           ) {
             errors.finialOrgasm = "Must select at least one value";
+          }
+
+          break;
+        }
+        case "allowedProbability":
+        case "deniedProbability":
+        case "ruinedProbability": {
+          delete errors[name];
+          value = parseInt(value, 10);
+          if (isNaN(value) || value < 0 || value > 100) {
+            errors[name] = "Please insert a valid number between 0 and 100";
+          }
+          break;
+        }
+        case "finalOrgasmRandom": {
+          delete errors.finalOrgasmRandom;
+          const {
+            config: {
+              allowedProbability,
+              deniedProbability,
+              ruinedProbability,
+            }
+          } = store;
+          if (parseInt(deniedProbability, 10) + parseInt(ruinedProbability, 10) + parseInt(allowedProbability, 10) !== 100) {
+            errors.finalOrgasmRandom = "The probabilities have to sum up to 100%"
           }
           break;
         }
@@ -242,6 +266,69 @@ class ConfigPage extends React.Component {
 
   handleChange = name => event => {
     store.config[name] = event.target.value;
+    this.setState({ errors: this.validateConfig() });
+  };
+
+  handleFinalOrgasmGroupCheck = name => event => {
+    store.config[name] = event.target.value;
+    this.setState({ errors: this.validateConfig() });
+  };
+
+  handleFinalOrgasmGroupCheckChange = name => (event, checked) => {
+    store.config[name] = checked;
+
+    const {
+      config: {
+        finalOrgasmAllowed,
+        finalOrgasmDenied,
+        finalOrgasmRuined,
+        finalOrgasmRandom
+      }
+    } = store;
+
+    if (finalOrgasmRandom) {
+      let options = [];
+      if (finalOrgasmAllowed) {
+        options.push("allowedProbability");
+      } else {
+        store.config.allowedProbability = 0;
+      }
+      if (finalOrgasmDenied) {
+        options.push("deniedProbability");
+      } else {
+        store.config.deniedProbability = 0;
+      }
+      if (finalOrgasmRuined) {
+        options.push("ruinedProbability");
+      } else {
+        store.config.ruinedProbability = 0;
+      }
+      // equalize share of options
+      let sum = 0;
+      for (let i = 1; i < options.length; i++) {
+        let o = options[i];
+        store.config[o] = Math.floor(100 / options.length);
+        sum += store.config[o];
+      }
+      store.config[options[0]] = 100 - sum;
+    }
+    else if (finalOrgasmAllowed) {
+      store.config.allowedProbability = 100;
+      store.config.deniedProbability = 0;
+      store.config.ruinedProbability = 0;
+    } else if (finalOrgasmDenied) {
+      store.config.allowedProbability = 100;
+      store.config.allowedProbability = 0;
+      store.config.deniedProbability = 100;
+      store.config.ruinedProbability = 0;
+    } else if (finalOrgasmRuined) {
+      store.config.allowedProbability = 100;
+      store.config.allowedProbability = 0;
+      store.config.deniedProbability = 0;
+      store.config.ruinedProbability = 100;
+
+    }
+
     this.setState({ errors: this.validateConfig() });
   };
 
@@ -477,69 +564,140 @@ class ConfigPage extends React.Component {
               </Grid>
             </Group>
             <Group title="Orgasm">
-              <Grid container spacing={16}>
+              <Grid container xs={12} spacing={16}>
                 <Grid item xs={12}>
                   <FormControl
+                    fullWidth
                     component="fieldset"
                     required
-                    error={!!errors.finialOrgasm}
+                    error={!!errors.finialOrgasm || !!errors.finalOrgasmRandom}
                   >
                     <FormLabel component="legend">Final Orgasm</FormLabel>
-                    <FormGroup row={1}>
-                      <FormControlLabel
-                        title={"Whether you will be allowed to have a full orgasm in the end"}
-                        control={
-                          <Switch
-                            checked={store.config.finalOrgasmAllowed}
-                            onChange={this.handleCheckChange(
-                              "finalOrgasmAllowed"
-                            )}
-                            value="finalOrgasmAllowed"
+                    <Grid container xs={12} direction={"row"} alignItems={"center"}>
+
+                      <Grid container xs={12} md={3} direction={"column"}>
+                        <Grid item xs={10}>
+                          <FormControlLabel
+                            title={"Whether you will be allowed to have a full orgasm in the end"}
+                            control={
+                              <Switch
+                                checked={store.config.finalOrgasmAllowed}
+                                onChange={this.handleFinalOrgasmGroupCheckChange("finalOrgasmAllowed")}
+                                value="finalOrgasmAllowed"
+                              />
+                            }
+                            label="Allowed"
                           />
-                        }
-                        label="Allowed"
-                      />
-                      <FormControlLabel
-                        title={"Whether you will be denied in the end"}
-                        control={
-                          <Switch
-                            checked={store.config.finalOrgasmDenied}
-                            onChange={this.handleCheckChange(
-                              "finalOrgasmDenied"
-                            )}
-                            value="finalOrgasmDenied"
+                        </Grid>
+                        <Grid item xs={10}>
+                          <FormControl
+                            className={classes.control}
+                            required={!!store.config.finalOrgasmRandom}
+                            error={!!errors.allowedProbability || (!!store.config.finalOrgasmRandom && !!errors.finialOrgasm)}
+                          >
+                            <InputLabel>Probability</InputLabel>
+                            <Input
+                              id="allowedProbability"
+                              value={store.config.allowedProbability}
+                              onChange={this.handleFinalOrgasmGroupCheck("allowedProbability")}
+                              disabled={!store.config.finalOrgasmRandom || !store.config.finalOrgasmAllowed}
+                              endAdornment={
+                                <InputAdornment position="end">%</InputAdornment>
+                              }
+                            />
+                          </FormControl>
+                          <FormHelperText>{errors.allowedProbability}</FormHelperText>
+                        </Grid>
+                      </Grid>
+                      <Grid container xs={12} md={3} direction={"column"}>
+                        <Grid item xs={10}>
+                          <FormControlLabel
+                            title={"Whether you will be denied in the end"}
+                            control={
+                              <Switch
+                                checked={store.config.finalOrgasmDenied}
+                                onChange={this.handleFinalOrgasmGroupCheckChange("finalOrgasmDenied")}
+                                value="finalOrgasmDenied"
+                              />
+                            }
+                            label="Denied"
                           />
-                        }
-                        label="Denied"
-                      />
-                      <FormControlLabel
-                        title={"Whether you will be asked to ruin in the end"}
-                        control={
-                          <Switch
-                            checked={store.config.finalOrgasmRuined}
-                            onChange={this.handleCheckChange(
-                              "finalOrgasmRuined"
-                            )}
-                            value="finalOrgasmRuined"
+                        </Grid>
+                        <Grid item xs={10}>
+                          <FormControl
+                            className={classes.control}
+                            required={!!store.config.finalOrgasmRandom}
+                            error={!!errors.deniedProbability || (!!store.config.finalOrgasmRandom && !!errors.finialOrgasm)}
+                          >
+                            <InputLabel>Probability</InputLabel>
+                            <Input
+                              id="deniedProbability"
+                              value={store.config.deniedProbability}
+                              onChange={this.handleFinalOrgasmGroupCheck("deniedProbability")}
+                              disabled={!store.config.finalOrgasmRandom || !store.config.finalOrgasmDenied}
+                              endAdornment={
+                                <InputAdornment position="end">%</InputAdornment>
+                              }
+                            />
+                            <FormHelperText>{errors.deniedProbability}</FormHelperText>
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                      <Grid container xs={12} md={3} direction={"column"}>
+                        <Grid container xs={10}>
+                          <FormControlLabel
+                            title={"Whether you will be asked to ruin in the end"}
+                            control={
+                              <Switch
+                                checked={store.config.finalOrgasmRuined}
+                                onChange={this.handleFinalOrgasmGroupCheckChange("finalOrgasmRuined")}
+                                value="finalOrgasmRuined"
+                              />
+                            }
+                            label="Ruined"
                           />
-                        }
-                        label="Ruined"
-                      />
-                      <FormControlLabel
-                        title={"Chooses at random from the left hand side selected game ends"}
-                        control={
-                          <Switch
-                            checked={store.config.finalOrgasmRandom}
-                            onChange={this.handleCheckChange(
-                              "finalOrgasmRandom"
-                            )}
-                            value="finalOrgasmRandom"
-                          />
-                        }
-                        label="Random (applies to selected)"
-                      />
-                    </FormGroup>
-                    <FormHelperText>{errors.finialOrgasm}</FormHelperText>
+                        </Grid>
+                        <Grid container xs={10}>
+                          <FormControl
+                            className={classes.control}
+                            required={!!store.config.finalOrgasmRandom}
+                            error={!!errors.ruinedProbability || (!!store.config.finalOrgasmRandom && !!errors.finialOrgasm)}
+                          >
+                            <InputLabel>Probability</InputLabel>
+                            <Input
+                              id="ruinedProbability"
+                              value={store.config.ruinedProbability}
+                              onChange={this.handleFinalOrgasmGroupCheck("ruinedProbability")}
+                              disabled={!store.config.finalOrgasmRandom || !store.config.finalOrgasmRuined}
+                              endAdornment={
+                                <InputAdornment position="end">%</InputAdornment>
+                              }
+                            />
+                            <FormHelperText>{errors.ruinedProbability}</FormHelperText>
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                      <Grid container xs={12} md={3} direction={"column"}>
+                        <FormControlLabel
+                          title={"Chooses at random from the left hand side selected game ends"}
+                          control={
+                            <Switch
+                              checked={store.config.finalOrgasmRandom}
+                              onChange={this.handleFinalOrgasmGroupCheckChange(
+                                "finalOrgasmRandom"
+                              )}
+                              value="finalOrgasmRandom"
+                            />
+                          }
+                          label={"Random (applies to selected)"}
+                        />
+                      </Grid>
+                      {errors.finalOrgasmRandom ?
+                        <FormHelperText>{errors.finalOrgasmRandom}</FormHelperText>
+                        :
+                        <FormHelperText>{errors.finialOrgasm}</FormHelperText>
+                      }
+                    </Grid>
                   </FormControl>
                 </Grid>
               </Grid>

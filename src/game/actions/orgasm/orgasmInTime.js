@@ -3,11 +3,9 @@ import createNotification, { dismissNotification } from "engine/createNotificati
 import { randomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
 import delay from "utils/delay";
 import play from "engine/audio";
-import audioLibrary, { getRandomAudioVariation } from "audio";
-import { strokerRemoteControl } from "game/loops/strokerLoop";
-import { chance, getRandomInclusiveInteger } from "utils/math";
-import { stopGame } from "game";
-import { doOrgasm, postOrgasmTorture, skip } from "./orgasm";
+import { getRandomAudioVariation } from "audio";
+import { getRandomInclusiveInteger } from "utils/math";
+import { doOrgasm, end, postOrgasmTorture, skip } from "./orgasm";
 import punishment from "game/actions/punishment";
 import {
   getRandom_hurryUp_message,
@@ -80,7 +78,7 @@ export const doOrgasmInTime = async (timer = getRandomInclusiveInteger(5, 60), o
     dismissNotification(timerId);
 
     await postOrgasmTorture();
-    await endAdvanced();
+    await end();
   };
   trigger_done.label = "Orgasmed";
 
@@ -122,7 +120,7 @@ export const doOrgasmAdvanced = async () => {
     dismissNotification(notificationId);
 
     await postOrgasmTorture();
-    await endAdvanced();
+    await end();
   };
   trigger_done.label = "Orgasmed";
 
@@ -190,36 +188,9 @@ export const doDenied = async () => {
 
   const done = async () => {
     dismissNotification(nid);
-    endAdvanced();
+    await end();
   };
   done.label = "Denied";
-
-  return done;
-};
-
-/**
- * Makes the user ruin their orgasm.
- * Duplicate code is necessary due to game end functionality.
- *
- * @returns {Promise<done>}
- */
-export const doRuinAdvanced = async () => {
-  const { config: { fastestStrokeSpeed } } = store;
-
-  setStrokeSpeed(fastestStrokeSpeed);
-
-  if (store.config.enableVoice) {
-    play(audioLibrary.RuinItForMe);
-  }
-
-  const nid = createNotification("Ruin it");
-
-  const done = async () => {
-    dismissNotification(nid);
-    store.game.ruins++;
-    endAdvanced();
-  };
-  done.label = "Ruined";
 
   return done;
 };
@@ -237,33 +208,6 @@ export const skipAdvanced = async () => {
   setStrokeSpeed(randomStrokeSpeed());
 };
 skipAdvanced.label = "Skip & Add Time";
-
-/**
- * "Should I stay or should I go now?"
- *
- * Increases number of orgasms.
- * If the maximum number of orgasms is not reached yet, the game will at a chance of 70% go on.
- * Else it will end at this point.
- *
- * @returns {Promise<void>}
- */
-export const endAdvanced = async () => {
-  const { maximumOrgasms } = store.config;
-  strokerRemoteControl.pause();
-  store.game.orgasms++;
-
-  // should continue?
-  if (store.game.orgasms < maximumOrgasms && chance(70)) {
-    setStrokeSpeed(randomStrokeSpeed());
-    strokerRemoteControl.play();
-    createNotification("Start stroking again");
-    play(audioLibrary.StartStrokingAgain);
-    await delay(3000);
-  } else {
-    setStrokeSpeed(0);
-    stopGame();
-  }
-};
 
 
 /**

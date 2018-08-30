@@ -6,12 +6,17 @@ import play from "engine/audio";
 import audioLibrary, { getRandomAudioVariation } from "audio";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
 import { edging, getToTheEdge } from "./edge";
-import { getRandomInclusiveInteger } from "utils/math";
+import { chance, getRandomInclusiveInteger } from "utils/math";
 import elapsedGameTime from "game/utils/elapsedGameTime";
 import { stopGame } from "game";
-import { chance } from "../../../utils/math";
 import { getRandomOrgasm } from "./orgasmInTime";
-import { getRandom_edgeAndHold_message } from "game/texts/messages";
+import {
+  getRandom_denied_message,
+  getRandom_edgeAndHold_message,
+  getRandom_ruinOrgasm_message
+} from "game/texts/messages";
+import createProbability from "game/utils/createProbability";
+import { applyProbability } from "game/actions/generateAction";
 
 /**
  * Determines whether all initially specified bounds that are necessary to be fulfilled before orgasm are fulfilled.
@@ -72,7 +77,7 @@ export const doRuin = async () => {
     play(audioLibrary.RuinItForMe);
   }
 
-  const nid = createNotification("Ruin it");
+  const nid = createNotification(getRandom_ruinOrgasm_message());
 
   const done = async () => {
     dismissNotification(nid);
@@ -82,6 +87,27 @@ export const doRuin = async () => {
   done.label = "Ruined";
 
   return done;
+};
+
+/**
+ * Selects the standard orgasm or a random advanced if enabled
+ *
+ * @returns {Promise<*>} action - the action to be executed next
+ */
+export const advancedOrNotOrgasm = async () => {
+  let trigger;
+  if (store.config.advancedOrgasm) {
+    trigger = getRandomOrgasm();
+
+    // Overwrite if user should be denied instead - only applies to advanced orgasm games
+    // denial Chance may increase if user does not behave as expected.
+    if (chance(store.game.chanceForDenial)) {
+      trigger = doDenied;
+    }
+  } else {
+    trigger = doOrgasm;
+  }
+  return await trigger();
 };
 
 /**
@@ -158,7 +184,7 @@ export const doDenied = async () => {
     play(getRandomAudioVariation("Denied"));
   }
 
-  const nid = createNotification("Denied an orgasm");
+  const nid = createNotification(getRandom_denied_message());
 
   const done = async () => {
     dismissNotification(nid);
@@ -169,62 +195,7 @@ export const doDenied = async () => {
   return done;
 };
 
-/**
- * The game end can be chosen at random by using this function.
- *
- * @returns {Promise<*[]>}
- */
-export const determineOrgasm = async () => {
-  const {
-    config: {
-      finalOrgasmAllowed,
-      finalOrgasmDenied,
-      finalOrgasmRuined,
-      finalOrgasmRandom
-    }
-  } = store;
 
-  let trigger;
-
-  if (finalOrgasmRandom) {
-    let options = [];
-
-    if (finalOrgasmAllowed) {
-      if (store.config.advancedOrgasm) {
-        options.push(getRandomOrgasm());
-      } else {
-        options.push(doOrgasm);
-      }
-    }
-    if (finalOrgasmDenied) {
-      options.push(doDenied);
-    }
-    if (finalOrgasmRuined) {
-      options.push(doRuin);
-    }
-    trigger = options[getRandomInclusiveInteger(0, options.length - 1)];
-  } else {
-    if (finalOrgasmAllowed) {
-      if (store.config.advancedOrgasm) {
-        trigger = getRandomOrgasm();
-
-        // Overwrite if user should be denied instead - only applies to advanced orgasm games
-        // denial Chance may increase if user does not behave as expected.
-        if (chance(store.game.chanceForDenial)) {
-          trigger = doDenied;
-        }
-      } else {
-        trigger = doOrgasm;
-      }
-    } else if (finalOrgasmDenied) {
-      trigger = doDenied;
-    } else if (finalOrgasmRuined) {
-      trigger = doRuin;
-    }
-  }
-
-  return await trigger();
-};
 
 /**
  * Let the game go on by increasing the maximum game time by 20%.
@@ -269,8 +240,9 @@ export const end = async () => {
 };
 
 /**
- * let the user do edge and hold edgingTime seconds and then let him have
- * the initially specified ending (ruin, denied or orgasm)
+ * Let the user do edge and hold edgingTime seconds and then let him have
+ * the initially specified ending (ruin, denied or orgasm).
+ *
  * @param edgingTime
  *   how long the final edge will last
  * @returns {Promise<function(): *[]>}
@@ -281,11 +253,37 @@ const edgeAndOrgasm = async (edgingTime = getRandomInclusiveInteger(15, 40)) => 
   const trigger = async () => {
     dismissNotification(notificationId);
     await edging(edgingTime);
-    return await determineOrgasm();
+    return await getRandomGameEnd();
   };
   trigger.label = "Edging";
 
   return trigger;
 };
+
+/**
+ * The game end can be chosen at random by using this function.
+ * Fetches one of all game ends.
+ * @returns {action}
+ *   A random game end.
+ */
+export const getRandomGameEnd = async () => {
+  const chosenActions = determineGameEnd();
+  return await applyProbability(chosenActions, 1)[0]();
+};
+
+/**
+ * Manually created list of all game ends with probabilities required in final game phase.
+ *
+ * @returns {*[]}
+ *   an array with all the function-probability pairs: {func, probability}
+ */
+export const determineGameEnd = () =>
+  [
+    // list of all available orgasms
+    !!store.config.finalOrgasmAllowed && createProbability(advancedOrNotOrgasm, store.config.allowedProbability),
+    !!store.config.finalOrgasmDenied && createProbability(doDenied, store.config.deniedProbability),
+    !!store.config.finalOrgasmRuined && createProbability(doRuin, store.config.ruinedProbability),
+  ].filter(action => !!action);
+
 
 export default edgeAndOrgasm;
