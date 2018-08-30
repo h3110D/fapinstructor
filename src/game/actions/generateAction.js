@@ -1,12 +1,12 @@
 import store from "store";
 import ActionIterator from "engine/actionIterator";
 import { getRandomInclusiveInteger } from "utils/math";
-import initializeActions from "./index";
+import initializeActions from "game/actions/index";
 import determineEdge, { shouldEdge } from "./orgasm/edge";
-import ruin, { shouldRuin } from "./orgasm/ruin";
-import edgeAndOrgasm, { shouldOrgasm } from "./orgasm/orgasm";
+import ruin, { shouldRuin } from "game/actions/orgasm/ruin";
+import edgeAndOrgasm, { shouldOrgasm } from "game/actions/orgasm/orgasm";
 import _ from "lodash";
-import { edgingLadder } from "./orgasm/edgeInTime";
+import { edgingLadder } from "game/actions/orgasm/edgeInTime";
 
 
 /**

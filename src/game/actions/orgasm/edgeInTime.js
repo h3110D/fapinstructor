@@ -5,7 +5,7 @@ import createNotification, { dismissNotification } from "engine/createNotificati
 import { getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
 import { edging, getToTheEdge, stopEdging } from "game/actions/orgasm/edge";
-import punishment from "../punishment";
+import punishment from "game/actions/punishment";
 import {
   getRandom_edgeAdvanced_message,
   getRandom_edgeInTime_message,
@@ -16,7 +16,7 @@ import executeAction from "engine/executeAction";
 import { edge } from "./edge";
 import createProbability from "game/utils/createProbability";
 import { applyProbability } from "game/actions/generateAction";
-import handsOff from "../speed/handsOff";
+import handsOff from "game/actions/speed/handsOff";
 
 /**
  * Fetches one of all edges.

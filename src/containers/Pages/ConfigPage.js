@@ -21,7 +21,7 @@ import TaskList from "containers/TaskList";
 import { GripStrengthEnum, GripStrengthString } from "game/enums/GripStrength";
 import copyToClipboard from "utils/copyToClipboard";
 import connect from "hoc/connect";
-import { getStrokeStyleName, StrokeStyleArray, StrokeStyleEnum, StrokeStyleString } from "../../game/enums/StrokeStyle";
+import { getStrokeStyleName, StrokeStyleArray, StrokeStyleEnum, StrokeStyleString } from "game/enums/StrokeStyle";
 
 const styles = theme => ({
   control: {

@@ -5,19 +5,19 @@ import delay from "utils/delay";
 import play from "engine/audio";
 import { getRandomAudioVariation } from "audio";
 import { getRandomInclusiveInteger } from "utils/math";
-import { doOrgasm, end, postOrgasmTorture, skip } from "./orgasm";
+import { doOrgasm, end, postOrgasmTorture, skip } from "game/actions/orgasm/orgasm";
 import punishment from "game/actions/punishment";
 import {
   getRandom_hurryUp_message,
   getRandom_orgasm_message,
-  getRandom_orgasmAdvanced_message
+  getRandom_orgasmAdvanced_message,
+  getRandom_orgasmInTime_message
 } from "game/texts/messages";
-import { setDefaultGrip } from "../grip";
+import { setDefaultGrip } from "game/actions/grip";
 import { setDefaultStrokeStyle } from "game/enums/StrokeStyle";
-import { getRandom_orgasmInTime_message } from "../../texts/messages";
 import executeAction from "engine/executeAction";
-import { applyProbability } from "../generateAction";
-import createProbability from "../../utils/createProbability";
+import { applyProbability } from "game/actions/generateAction";
+import createProbability from "game/utils/createProbability";
 
 
 /**

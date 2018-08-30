@@ -9,7 +9,7 @@ import { edging, getToTheEdge } from "./edge";
 import { chance, getRandomInclusiveInteger } from "utils/math";
 import elapsedGameTime from "game/utils/elapsedGameTime";
 import { stopGame } from "game";
-import { getRandomOrgasm } from "./orgasmInTime";
+import { getRandomOrgasm } from "game/actions/orgasm/orgasmInTime";
 import {
   getRandom_denied_message,
   getRandom_edgeAndHold_message,
