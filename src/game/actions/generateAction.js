@@ -60,8 +60,14 @@ export const applyProbability = (actions, count = 0) => {
 
 
 /**
- * Determines whether the user should orgasm, edge or ruin. If none of the three applies a random action from the
+ * Determines whether the user should orgasm, edge or ruin. 
+ * It is also responsible for determing following:
+ * - store.game.edgingLadder: we are in the middle of an edgingLadder, next action has to be next ladder rung.
+ * - store.game.orgasm: we have passed the final edge and the next action has to be a game end.
+ * If none of the above applies a random action from the
  * initial setup is chosen.
+ *
+ * @since 02.09.2018
  *
  * @returns {*} action - the next action that will be executed and displayed
  */
