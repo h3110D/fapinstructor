@@ -3,7 +3,7 @@ import { randomStrokeSpeed, setStrokeSpeed, } from "game/utils/strokeSpeed";
 import { getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
 import { getCurrentStrokeStyle, setStrokeStyle, setStrokeStyleHandsOff } from "game/enums/StrokeStyle";
-import { getRandom_handsOff_message } from "../../texts/messages";
+import { getRandom_handsOff_message } from "game/texts/messages";
 
 /**
  * Task to not touch ones cock
