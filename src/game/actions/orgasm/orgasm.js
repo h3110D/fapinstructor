@@ -227,7 +227,7 @@ export const end = async () => {
   store.game.orgasms++;
 
   // should continue?
-  if (store.game.orgasms < maximumOrgasms) {
+  if (parseInt(store.game.orgasms, 10) < parseInt(maximumOrgasms, 10)) {
     setStrokeSpeed(randomStrokeSpeed());
     strokerRemoteControl.play();
     createNotification("Start stroking again");
