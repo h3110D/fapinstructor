@@ -23,6 +23,8 @@ export default () => {
     strokeStyle: store.config.defaultStrokeStyle,
     buttPlugInserted: false,
 
+    // orgasm
+    orgasm: false,
     // even if only chosen orgasm one may be denied in the end
     chanceForDenial: 0, //percent
     // edging Ladder

@@ -4,7 +4,7 @@ import { getRandomInclusiveInteger } from "utils/math";
 import initializeActions from "game/actions/index";
 import determineEdge, { shouldEdge } from "./orgasm/edge";
 import ruin, { shouldRuin } from "game/actions/orgasm/ruin";
-import edgeAndOrgasm, { shouldOrgasm } from "game/actions/orgasm/orgasm";
+import finalEdgeAndHold, { getRandomGameEnd, shouldOrgasm } from "game/actions/orgasm/orgasm";
 import _ from "lodash";
 import { edgingLadder } from "game/actions/orgasm/edgeInTime";
 
@@ -68,15 +68,16 @@ export const applyProbability = (actions, count = 0) => {
 const generateAction = () => {
 
   let action = null;
-
-  if (shouldOrgasm()) {
-    action = edgeAndOrgasm;
-  }
-
-  else if (store.game.edgingLadder) {
+  if (store.game.edgingLadder) {
     action = edgingLadder;
   }
-
+  else if (store.game.orgasm) {
+    action = getRandomGameEnd;
+  }
+  else if (shouldOrgasm()) {
+    store.game.orgasm = true;
+    action = finalEdgeAndHold;
+  }
   else if (shouldEdge()) {
     action = determineEdge;
   }

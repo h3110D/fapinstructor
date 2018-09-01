@@ -49,6 +49,7 @@ const punishment = async () => {
   const message = getRandom_punishment_message();
   createNotification(message);
 
+  store.game.orgasm = false; // Task was not fulfilled properly -> no orgasm this round
   store.game.chanceForDenial += 5;
 
   await delay(6000);

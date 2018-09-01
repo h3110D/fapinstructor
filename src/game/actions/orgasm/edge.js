@@ -85,20 +85,23 @@ export const edging = async time => {
  */
 export const stopEdging = async () => {
   const { config: { edgeCooldown } } = store;
+  if (store.game.orgasm && !store.game.edgingLadder) {
 
-  strokerRemoteControl.pause();
-  await handsOff(edgeCooldown + getRandomInclusiveInteger(0, edgeCooldown));
+  } else {
 
-  setStrokeSpeed(randomStrokeSpeed());
+    strokerRemoteControl.pause();
+    await handsOff(edgeCooldown + getRandomInclusiveInteger(0, edgeCooldown));
 
-  strokerRemoteControl.play();
+    setStrokeSpeed(randomStrokeSpeed());
+
+    strokerRemoteControl.play();
 
 
-  if (store.config.enableVoice) {
-    play(audioLibrary.StartStrokingAgain);
+    if (store.config.enableVoice) {
+      play(audioLibrary.StartStrokingAgain);
+    }
+    await delay(2000);
   }
-
-  await delay(3000);
 };
 
 /**
@@ -128,12 +131,12 @@ export const getToTheEdge = async (message = getRandom_edge_message()) => {
  *
  * @returns {Promise<*[]>}
  */
-export const edge = async () => {
-  const notificationId = await getToTheEdge();
+export const edge = async (time, message = getRandom_edge_message()) => {
+  const notificationId = await getToTheEdge(message);
 
   const trigger = async () => {
     dismissNotification(notificationId);
-    await edging();
+    await edging(time);
     await stopEdging();
   };
   trigger.label = "Edging";
@@ -152,12 +155,14 @@ export const edge = async () => {
  *
  * @returns {Promise<function(): *[]>} the action to be executed next.
  */
-const determineEdge = async () => {
-  let action = edge;
+const determineEdge = async (time, message) => {
+  let action;
   if (store.config.advancedEdging) { // Determine further chances only if advancedEdging is active
-    action = getRandomEdge()();
+    action = await getRandomEdge()(time, message);
+  } else {
+    action = await edge(time);
   }
-  return action;
+  return await action;
 };
 
 export default determineEdge;

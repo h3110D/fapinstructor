@@ -5,7 +5,7 @@ import delay from "utils/delay";
 import play from "engine/audio";
 import audioLibrary, { getRandomAudioVariation } from "audio";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
-import { edging, getToTheEdge } from "./edge";
+import determineEdge from "./edge";
 import { chance, getRandomInclusiveInteger } from "utils/math";
 import elapsedGameTime from "game/utils/elapsedGameTime";
 import { stopGame } from "game";
@@ -82,7 +82,7 @@ export const doRuin = async () => {
   const done = async () => {
     dismissNotification(nid);
     store.game.ruins++;
-    end();
+    await end();
   };
   done.label = "Ruined";
 
@@ -130,7 +130,7 @@ export const doOrgasm = async () => {
     dismissNotification(nid);
 
     await postOrgasmTorture();
-    end();
+    await end();
   };
   done.label = "Orgasmed";
 
@@ -171,7 +171,7 @@ export const postOrgasmTorture = async () => {
 };
 
 /**
- * The user is not allowed to cum and has to end the session.
+ * The user is __not__ allowed to cum and has to end the session.
  *
  * @returns {Promise<done>}
  */
@@ -188,7 +188,7 @@ export const doDenied = async () => {
 
   const done = async () => {
     dismissNotification(nid);
-    end();
+    await end();
   };
   done.label = "Denied";
 
@@ -240,33 +240,28 @@ export const end = async () => {
 };
 
 /**
- * Let the user do edge and hold edgingTime seconds and then let him have
- * the initially specified ending (ruin, denied or orgasm).
+ * Let the user do edge and hold edgingTime seconds
  *
  * @param edgingTime
  *   how long the final edge will last
  * @returns {Promise<function(): *[]>}
  */
-const edgeAndOrgasm = async (edgingTime = getRandomInclusiveInteger(15, 40)) => {
-  const notificationId = await getToTheEdge(getRandom_edgeAndHold_message());
-
-  const trigger = async () => {
-    dismissNotification(notificationId);
-    await edging(edgingTime);
-    return await getRandomGameEnd();
-  };
-  trigger.label = "Edging";
-
-  return trigger;
+const finalEdgeAndHold = async (edgingTime = getRandomInclusiveInteger(15, 60)) => {
+  //const notificationId = await getToTheEdge(getRandom_edgeAndHold_message());
+  return determineEdge(edgingTime, getRandom_edgeAndHold_message());
 };
 
 /**
+ * let the user have the initially specified ending (ruin, denied or orgasm).
+ *
  * The game end can be chosen at random by using this function.
  * Fetches one of all game ends.
  * @returns {action}
  *   A random game end.
  */
 export const getRandomGameEnd = async () => {
+  //reset in case of multiple ends.
+  store.game.orgasm = false;
   const chosenActions = determineGameEnd();
   return await applyProbability(chosenActions, 1)[0]();
 };
@@ -286,4 +281,4 @@ export const determineGameEnd = () =>
   ].filter(action => !!action);
 
 
-export default edgeAndOrgasm;
+export default finalEdgeAndHold;
