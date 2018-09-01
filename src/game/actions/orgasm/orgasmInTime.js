@@ -1,6 +1,6 @@
 import store from "store";
 import createNotification, { dismissNotification } from "engine/createNotification";
-import { randomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
+import { setStrokeSpeed } from "game/utils/strokeSpeed";
 import delay from "utils/delay";
 import play from "engine/audio";
 import { getRandomAudioVariation } from "audio";
@@ -137,10 +137,10 @@ export const doOrgasmAdvanced = async () => {
 /**
  * Hardest task. User has to cum without changing style, pace or grip and has a time limit.
  *
- * @returns {Promise<void>}
+ * @returns {Promise<*[]>}
  */
 export const doOrgasmAdvancedInTime = async () => {
-  await doOrgasmInTime(getRandomInclusiveInteger(30, 90), getToTheOrgasmAdvanced);
+  return await doOrgasmInTime(getRandomInclusiveInteger(30, 90), getToTheOrgasmAdvanced);
 };
 
 /**
@@ -169,45 +169,6 @@ export const doOrgasmCountdown = async () => {
 export const doOrgasmAdvancedCountdown = async () => {
 
 };
-
-/**
- * The user is __not__ allowed to cum and has to end the session.
- *
- * @returns {Promise<done>}
- */
-export const doDenied = async () => {
-  const { config: { fastestStrokeSpeed } } = store;
-
-  setStrokeSpeed(fastestStrokeSpeed);
-
-  if (store.config.enableVoice) {
-    play(getRandomAudioVariation("Denied"));
-  }
-
-  const nid = createNotification("Denied an orgasm");
-
-  const done = async () => {
-    dismissNotification(nid);
-    await end();
-  };
-  done.label = "Denied";
-
-  return done;
-};
-
-
-/**
- * Let the game go on by increasing the maximum game time by 20%.
- *
- * @returns {Promise<void>}
- */
-export const skipAdvanced = async () => {
-  // extend the game by 20%
-  store.config.maximumGameTime *= 1.2;
-
-  setStrokeSpeed(randomStrokeSpeed());
-};
-skipAdvanced.label = "Skip & Add Time";
 
 
 /**
