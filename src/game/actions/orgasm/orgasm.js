@@ -275,9 +275,9 @@ export const getRandomGameEnd = async () => {
 export const determineGameEnd = () =>
   [
     // list of all available orgasms
-    !!store.config.finalOrgasmAllowed && createProbability(advancedOrNotOrgasm, store.config.allowedProbability),
-    !!store.config.finalOrgasmDenied && createProbability(doDenied, store.config.deniedProbability),
-    !!store.config.finalOrgasmRuined && createProbability(doRuin, store.config.ruinedProbability),
+    !!store.config.finalOrgasmAllowed && createProbability(advancedOrNotOrgasm, parseInt(store.config.allowedProbability, 10)),
+    !!store.config.finalOrgasmDenied && createProbability(doDenied, parseInt(store.config.deniedProbability, 10)),
+    !!store.config.finalOrgasmRuined && createProbability(doRuin, parseInt(store.config.ruinedProbability, 10)),
   ].filter(action => !!action);
 
 
