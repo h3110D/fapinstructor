@@ -209,7 +209,7 @@ export const skip = async () => {
   store.config.maximumGameTime *= 1.2;
 
   // Mistress did not like that. 10% Denial Chance Increase!
-  store.config.chanceForDenial += 10;
+  store.config.chanceForDenial += 5;
 };
 skip.label = "Skip & Add Time";
 

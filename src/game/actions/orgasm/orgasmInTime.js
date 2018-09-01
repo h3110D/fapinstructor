@@ -90,6 +90,7 @@ export const doOrgasmInTime = async (timer = getRandomInclusiveInteger(5, 60), o
       dismissNotification(notificationId);
       dismissNotification(timerId);
       await executeAction(punishment, true);  // Interrupt other action (trigger_done)
+      await skip();
     }
 
   };
