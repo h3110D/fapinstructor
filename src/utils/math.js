@@ -13,6 +13,18 @@ export const getRandomInclusiveInteger = (min, max) => {
 };
 
 /**
+ * Returns true only at a percent percentage chance.
+ *
+ * @param percent
+ *   the percentage of cases the function will evaluate to true.
+ * @returns {boolean}
+ *   in percent of all cases the function will return true.
+ */
+export const chance = (percent) => {
+  return getRandomInclusiveInteger(1, 100) < percent;
+};
+
+/**
  * Returns a random boolean
  */
 export const getRandomBoolean = () => Math.random() >= 0.5;

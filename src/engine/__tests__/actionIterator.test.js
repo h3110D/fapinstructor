@@ -1,4 +1,4 @@
-import actionIterator from "./actionIterator";
+import actionIterator from "../actionIterator";
 
 const generator = () => () => {
   return "action";

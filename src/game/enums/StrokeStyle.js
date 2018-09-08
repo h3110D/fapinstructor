@@ -22,7 +22,22 @@ const StrokeStyleEnum = {
   handsOff: 6,
 };
 
-const StrokeStyleArray = Object.entries(StrokeStyleEnum);
+export const StrokeStyleArray = Object.entries(StrokeStyleEnum);
+
+/**
+ * Access to the StrokeStyleEnum in reverse direction.
+ *
+ * @param index
+ *   the index according to the StrokeStyleEnum
+ * @returns {string} the __name__ of the stroke Style
+ */
+export const getStrokeStyleName = (index) => {
+  return StrokeStyleArray[index][0]
+};
+
+export const setDefaultStrokeStyle = async () => {
+  await setStrokeStyle(store.game.defaultStrokeStyle);
+};
 
 export const setStrokeStyleDominant = async () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.dominant) {
@@ -39,6 +54,7 @@ export const setStrokeStyleNondominant = async () => {
   }
 };
 setStrokeStyleNondominant.label = "nondominant Hand";
+
 
 export const setStrokeStyleHeadOnly = async () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.headOnly) {
@@ -79,7 +95,7 @@ setStrokeStyleBothHands.label = "Both Hands";
  */
 export const setStrokeStyleHandsOff = async () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.handsOff) {
-    createNotification(`Hands off your cock!`);
+    // createNotification(`Hands off your cock!`); // Not needed any longer
     store.game.strokeStyle = StrokeStyleEnum.handsOff;
   }
 };
@@ -108,8 +124,8 @@ const StrokeStyleSetterArray = Object.entries(StrokeStyleSetterEnum);
  * @author the1nstructor
  * @since 15.07.2018
  */
-export const setStrokeStyle = (strokeStyle = StrokeStyleEnum.dominant) => {
-  StrokeStyleSetterArray[strokeStyle][1]();
+export const setStrokeStyle = async (strokeStyle = StrokeStyleEnum.dominant) => {
+  await StrokeStyleSetterArray[strokeStyle][1]();
 };
 
 /**

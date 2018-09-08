@@ -1,10 +1,11 @@
 import store from "store";
 import { GripStrengthEnum } from "game/enums/GripStrength";
+import { StrokeStyleEnum } from "./game/enums/StrokeStyle";
 
 /**
  * A big enum containing all setup information of the game.
  *
- * @since 08.07.2018
+ * @since 03.08.2018
  */
 const defaultConfig = {
   version: 2,
@@ -20,8 +21,11 @@ const defaultConfig = {
   enableMoans: true,
   videoMuted: false,
   finalOrgasmAllowed: true,
+  allowedProbability: 100,  // percent
   finalOrgasmDenied: false,
+  deniedProbability: 0,  // percent
   finalOrgasmRuined: false,
+  ruinedProbability: 0,  // percent
   finalOrgasmRandom: false,
   minimumGameTime: 5, // min
   maximumGameTime: 20, // min
@@ -32,12 +36,15 @@ const defaultConfig = {
   postOrgasmTorture: false,
   postOrgasmTortureMinimumTime: 10,
   postOrgasmTortureMaximumTime: 90,
+  advancedEdging: true,
+  advancedOrgasm: true,
   edgeCooldown: 5, // sec
   edgeFrequency: 0, // percent
   ruinCooldown: 20, // sec
   slowestStrokeSpeed: 0.25, // sec
   fastestStrokeSpeed: 5, // sec
   initialGripStrength: GripStrengthEnum.Normal,
+  defaultStrokeStyle: StrokeStyleEnum.dominant,
   actionFrequency: 5, // sec
   tasks: {
     //Stroke Speed
@@ -49,7 +56,6 @@ const defaultConfig = {
     randomStrokeSpeed: true,
     redLightGreenLight: true,
     clusterStrokes: true,
-    handsOff: true,
     //Stroke Style
     dominant: true,
     nondominant: true,
@@ -57,6 +63,7 @@ const defaultConfig = {
     shaftOnly: true,
     overhandGrip: true,
     bothHands: true,
+    handsOff: true,
     //Grip Strength
     gripAdjustments: true,
     //CBT
@@ -71,6 +78,7 @@ const defaultConfig = {
     scratching: true,
     flicking: true,
     cbtIce: true,
+    //CEI
     precum: true,
     //Anal
     buttplug: true,

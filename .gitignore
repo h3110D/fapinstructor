@@ -5,6 +5,8 @@
 
 # testing
 /coverage
+configureStore_backup.js
+configureStore_testing.js
 
 # production
 /build
