@@ -566,7 +566,7 @@ class ConfigPage extends React.Component {
               </Grid>
             </Group>
             <Group title="Orgasm">
-              <Grid container xs={12} spacing={16}>
+              <Grid container xs={12}>
                 <Grid item xs={12}>
                   <FormControl
                     fullWidth
@@ -646,7 +646,7 @@ class ConfigPage extends React.Component {
                         </Grid>
                       </Grid>
                       <Grid container xs={12} md={3} direction={"column"}>
-                        <Grid container xs={10}>
+                        <Grid item xs={10}>
                           <FormControlLabel
                             title={"Whether you will be asked to ruin in the end"}
                             control={
@@ -659,7 +659,7 @@ class ConfigPage extends React.Component {
                             label="Ruined"
                           />
                         </Grid>
-                        <Grid container xs={10}>
+                        <Grid item xs={10}>
                           <FormControl
                             className={classes.control}
                             required={!!store.config.finalOrgasmRandom}
@@ -679,7 +679,7 @@ class ConfigPage extends React.Component {
                           </FormControl>
                         </Grid>
                       </Grid>
-                      <Grid container xs={12} md={3} direction={"column"}>
+                      <Grid item xs={12} md={3}>
                         <FormControlLabel
                           title={"Chooses at random from the left hand side selected game ends"}
                           control={
