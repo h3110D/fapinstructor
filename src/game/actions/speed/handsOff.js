@@ -1,5 +1,5 @@
 import createNotification from "engine/createNotification";
-import { randomStrokeSpeed, setStrokeSpeed, } from "game/utils/strokeSpeed";
+import { getRandomStrokeSpeed, setStrokeSpeed, } from "game/utils/strokeSpeed";
 import { getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
 import { getCurrentStrokeStyle, setStrokeStyle, setStrokeStyleHandsOff } from "game/enums/StrokeStyle";
@@ -32,7 +32,7 @@ const handsOff = async (duration = getRandomInclusiveInteger(10, 25)) => {
 
   createNotification("Start stroking again");
 
-  setStrokeSpeed(randomStrokeSpeed());
+  setStrokeSpeed(getRandomStrokeSpeed());
   await setStrokeStyle(style);
   await delay(1000);
 

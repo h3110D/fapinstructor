@@ -2,7 +2,7 @@ import store from "store";
 import play from "engine/audio";
 import audioLibrary from "audio";
 import elapsedGameTime from "game/utils/elapsedGameTime";
-import { randomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
+import { getRandomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
 import { setDefaultGrip } from "game/actions/grip";
 import { setDefaultStrokeStyle } from "game/enums/StrokeStyle";
 import createNotification, { dismissNotification } from "engine/createNotification";
@@ -96,7 +96,7 @@ export const stopEdging = async () => {
     alert("approx = " + approx);
     await handsOff(approx);
 
-    setStrokeSpeed(randomStrokeSpeed());
+    setStrokeSpeed(getRandomStrokeSpeed());
 
     strokerRemoteControl.play();
 

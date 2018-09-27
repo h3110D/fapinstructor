@@ -1,6 +1,6 @@
 import store from "store";
 import createNotification, { dismissNotification } from "engine/createNotification";
-import { randomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
+import { getRandomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
 import delay from "utils/delay";
 import play from "engine/audio";
 import audioLibrary, { getRandomAudioVariation } from "audio";
@@ -203,7 +203,7 @@ export const doDenied = async () => {
  * @returns {Promise<void>}
  */
 export const skip = async () => {
-  setStrokeSpeed(randomStrokeSpeed());
+  setStrokeSpeed(getRandomStrokeSpeed());
 
   // extend the game by 20%
   store.config.maximumGameTime *= 1.2;
@@ -228,7 +228,7 @@ export const end = async () => {
 
   // should continue?
   if (parseInt(store.game.orgasms, 10) < parseInt(maximumOrgasms, 10)) {
-    setStrokeSpeed(randomStrokeSpeed());
+    setStrokeSpeed(getRandomStrokeSpeed());
     strokerRemoteControl.play();
     createNotification("Start stroking again");
     play(audioLibrary.StartStrokingAgain);
