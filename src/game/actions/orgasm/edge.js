@@ -84,7 +84,7 @@ export const edging = async time => {
  * The whole cooldown stuff after edging and setting up the stroking task again.
  */
 export const stopEdging = async () => {
-  let edgeCooldown = parseInt(store.config.edgeCooldown);
+  let edgeCooldown = parseInt(store.config.edgeCooldown, 10);
   if (store.game.orgasm && !store.game.edgingLadder) {
 
   } else {
