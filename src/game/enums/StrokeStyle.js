@@ -36,7 +36,7 @@ export const getStrokeStyleName = (index) => {
 };
 
 export const setDefaultStrokeStyle = async () => {
-  await setStrokeStyle(store.game.defaultStrokeStyle);
+  await setStrokeStyle(store.config.defaultStrokeStyle);
 };
 
 export const setStrokeStyleDominant = async () => {
@@ -95,7 +95,6 @@ setStrokeStyleBothHands.label = "Both Hands";
  */
 export const setStrokeStyleHandsOff = async () => {
   if (store.game.strokeStyle !== StrokeStyleEnum.handsOff) {
-    // createNotification(`Hands off your cock!`); // Not needed any longer
     store.game.strokeStyle = StrokeStyleEnum.handsOff;
   }
 };
