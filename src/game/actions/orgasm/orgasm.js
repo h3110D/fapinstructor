@@ -247,7 +247,6 @@ export const end = async () => {
  * @returns {Promise<function(): *[]>}
  */
 const finalEdgeAndHold = async (edgingTime = getRandomInclusiveInteger(15, 60)) => {
-  //const notificationId = await getToTheEdge(getRandom_edgeAndHold_message());
   return determineEdge(edgingTime, getRandom_edgeAndHold_message());
 };
 
