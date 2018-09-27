@@ -566,7 +566,7 @@ class ConfigPage extends React.Component {
               </Grid>
             </Group>
             <Group title="Orgasm">
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={12}>
                   <FormControl
                     fullWidth
