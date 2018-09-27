@@ -39,50 +39,62 @@ export const setDefaultStrokeStyle = async () => {
   await setStrokeStyle(store.config.defaultStrokeStyle);
 };
 
-export const setStrokeStyleDominant = async () => {
+export const setStrokeStyleDominant = async (quiet = false) => {
   if (store.game.strokeStyle !== StrokeStyleEnum.dominant) {
-    createNotification(`Use your dominant hand`);
+    if (!quiet) {
+      createNotification(`Use your dominant hand`);
+    }
     store.game.strokeStyle = StrokeStyleEnum.dominant;
   }
 };
-setStrokeStyleDominant.label = "dominant Hand";
+setStrokeStyleDominant.label = "Dominant Hand";
 
-export const setStrokeStyleNondominant = async () => {
+export const setStrokeStyleNondominant = async (quiet = false) => {
   if (store.game.strokeStyle !== StrokeStyleEnum.nondominant) {
-    createNotification(`Use your nondominant hand`);
+    if (!quiet) {
+      createNotification(`Use your nondominant hand`);
+    }
     store.game.strokeStyle = StrokeStyleEnum.nondominant;
   }
 };
-setStrokeStyleNondominant.label = "nondominant Hand";
+setStrokeStyleNondominant.label = "Nondominant Hand";
 
 
-export const setStrokeStyleHeadOnly = async () => {
+export const setStrokeStyleHeadOnly = async (quiet = false) => {
   if (store.game.strokeStyle !== StrokeStyleEnum.headOnly) {
-    createNotification(`Stroke only the head`);
+    if (!quiet) {
+      createNotification(`Stroke only the head`);
+    }
     store.game.strokeStyle = StrokeStyleEnum.headOnly;
   }
 };
 setStrokeStyleHeadOnly.label = "Head Stroking";
 
-export const setStrokeStyleShaftOnly = async () => {
+export const setStrokeStyleShaftOnly = async (quiet = false) => {
   if (store.game.strokeStyle !== StrokeStyleEnum.shaftOnly) {
-    createNotification(`Stroke only the shaft`);
+    if (!quiet) {
+      createNotification(`Stroke only the shaft`);
+    }
     store.game.strokeStyle = StrokeStyleEnum.shaftOnly;
   }
 };
 setStrokeStyleShaftOnly.label = "Shaft Stroking";
 
-export const setStrokeStyleOverhandGrip = async () => {
+export const setStrokeStyleOverhandGrip = async (quiet = false) => {
   if (store.game.strokeStyle !== StrokeStyleEnum.overhandGrip) {
-    createNotification(`Stroke with the overhand grip`);
+    if (!quiet) {
+      createNotification(`Stroke with the overhand grip`);
+    }
     store.game.strokeStyle = StrokeStyleEnum.overhandGrip;
   }
 };
 setStrokeStyleOverhandGrip.label = "Overhand Grip";
 
-export const setStrokeStyleBothHands = async () => {
+export const setStrokeStyleBothHands = async (quiet = false) => {
   if (store.game.strokeStyle !== StrokeStyleEnum.bothHands) {
-    createNotification(`Use both of your hands`);
+    if (!quiet) {
+      createNotification(`Use both of your hands`);
+    }
     store.game.strokeStyle = StrokeStyleEnum.bothHands;
   }
 };
@@ -125,6 +137,20 @@ const StrokeStyleSetterArray = Object.entries(StrokeStyleSetterEnum);
  */
 export const setStrokeStyle = async (strokeStyle = StrokeStyleEnum.dominant) => {
   await StrokeStyleSetterArray[strokeStyle][1]();
+};
+
+/**
+ * sets the Stroke style without forcing a notification
+ * Is required for the punishments. The Stroke Style currently needs to be set before the actually punish
+ * action is over.
+ *
+ * @param strokeStyle   a strokeStyle from StrokeStyleEnum to be applied
+ *
+ * @author the1nstructor
+ * @since 27.09.2018
+ */
+export const setStrokeStyleQuiet = async (strokeStyle = StrokeStyleEnum.dominant) => {
+  await StrokeStyleSetterArray[strokeStyle][1](true);
 };
 
 /**
