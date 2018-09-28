@@ -90,10 +90,8 @@ export const stopEdging = async () => {
   } else {
 
     strokerRemoteControl.pause();
-    alert("Edge Cooldown = " + edgeCooldown);
     //Just to make it a little bit random. So one does not get exactly XY seconds cooldown every time.
     let approx = getRandomInclusiveInteger(Math.floor(edgeCooldown / 2), Math.floor(edgeCooldown * 3 / 2));
-    alert("approx = " + approx);
     await handsOff(approx);
 
     setStrokeSpeed(getRandomStrokeSpeed());
