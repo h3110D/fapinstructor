@@ -452,7 +452,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="slideDuration"
                       value={store.config.slideDuration}
-                      onChange={this.handleChange("slideDuration")}
+                      onChange={this.handleChange("slideDuration", Number)}
                       type="number"
                       inputProps={{ step: "1", min: "3" }}
                       endAdornment={
@@ -525,7 +525,7 @@ class ConfigPage extends React.Component {
                       id="minimumGameTime"
                       value={store.config.minimumGameTime}
                       required
-                      onChange={this.handleChange("minimumGameTime")}
+                      onChange={this.handleChange("minimumGameTime", Number)}
                       type="number"
                       inputProps={{ step: "1", min: "3" }}
                       endAdornment={
@@ -546,7 +546,7 @@ class ConfigPage extends React.Component {
                       id="maximumGameTime"
                       value={store.config.maximumGameTime}
                       required
-                      onChange={this.handleChange("maximumGameTime")}
+                      onChange={this.handleChange("maximumGameTime", Number)}
                       type="number"
                       inputProps={{ step: "1", min: "5" }}
                       endAdornment={
@@ -730,7 +730,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="maximumOrgasms"
                       value={store.config.maximumOrgasms}
-                      onChange={this.handleChange("maximumOrgasms")}
+                      onChange={this.handleChange("maximumOrgasms", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "1" }}
@@ -771,7 +771,8 @@ class ConfigPage extends React.Component {
                       id="postOrgasmTortureMinimumTime"
                       value={store.config.postOrgasmTortureMinimumTime}
                       onChange={this.handleChange(
-                        "postOrgasmTortureMinimumTime"
+                        "postOrgasmTortureMinimumTime",
+                        Number
                       )}
                       fullWidth
                       type="number"
@@ -796,7 +797,8 @@ class ConfigPage extends React.Component {
                       id="postOrgasmTortureMaximumTime"
                       value={store.config.postOrgasmTortureMaximumTime}
                       onChange={this.handleChange(
-                        "postOrgasmTortureMaximumTime"
+                        "postOrgasmTortureMaximumTime",
+                        Number
                       )}
                       fullWidth
                       type="number"
@@ -819,7 +821,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="minimumRuinedOrgasms"
                       value={store.config.minimumRuinedOrgasms}
-                      onChange={this.handleChange("minimumRuinedOrgasms")}
+                      onChange={this.handleChange("minimumRuinedOrgasms", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "0" }}
@@ -838,7 +840,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="maximumRuinedOrgasms"
                       value={store.config.maximumRuinedOrgasms}
-                      onChange={this.handleChange("maximumRuinedOrgasms")}
+                      onChange={this.handleChange("maximumRuinedOrgasms", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "0" }}
@@ -857,7 +859,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="ruinCooldown"
                       value={store.config.ruinCooldown}
-                      onChange={this.handleChange("ruinCooldown")}
+                      onChange={this.handleChange("ruinCooldown", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "0" }}
@@ -897,7 +899,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="minimumEdges"
                       value={store.config.minimumEdges}
-                      onChange={this.handleChange("minimumEdges")}
+                      onChange={this.handleChange("minimumEdges", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "0" }}
@@ -914,7 +916,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="edgeCooldown"
                       value={store.config.edgeCooldown}
-                      onChange={this.handleChange("edgeCooldown")}
+                      onChange={this.handleChange("edgeCooldown", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "0" }}
@@ -934,7 +936,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="edgeFrequency"
                       value={store.config.edgeFrequency}
-                      onChange={this.handleChange("edgeFrequency")}
+                      onChange={this.handleChange("edgeFrequency", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "0" }}
@@ -996,7 +998,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="slowestStrokeSpeed"
                       value={store.config.slowestStrokeSpeed}
-                      onChange={this.handleChange("slowestStrokeSpeed")}
+                      onChange={this.handleChange("slowestStrokeSpeed", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "0.25", min: "0.25", max: "6" }}
@@ -1016,7 +1018,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="fastestStrokeSpeed"
                       value={store.config.fastestStrokeSpeed}
-                      onChange={this.handleChange("fastestStrokeSpeed")}
+                      onChange={this.handleChange("fastestStrokeSpeed", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "0.25", min: "0.25", max: "6" }}
