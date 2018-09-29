@@ -266,8 +266,8 @@ class ConfigPage extends React.Component {
     return errors;
   };
 
-  handleChange = name => event => {
-    store.config[name] = event.target.value;
+  handleChange = (name, cast) => event => {
+    store.config[name] = (cast || String)(event.target.value);
     this.setState({ errors: this.validateConfig() });
   };
 
