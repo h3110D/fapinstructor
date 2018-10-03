@@ -1,6 +1,6 @@
 import store from "store";
 import moment from "moment";
-import { randomStrokeSpeed } from "game/utils/strokeSpeed";
+import { getRandomStrokeSpeed } from "game/utils/strokeSpeed";
 
 export default () => {
   store.game = {
@@ -9,7 +9,7 @@ export default () => {
     pictureIndex: -1,
     mediaPlayerUrl: null,
     mediaFrozen: false,
-    strokeSpeed: randomStrokeSpeed(),
+    strokeSpeed: getRandomStrokeSpeed(),
     bookmarks: [],
     gripStrength: store.config.initialGripStrength,
     rubberBands: 0,

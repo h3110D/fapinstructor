@@ -250,7 +250,7 @@ class ConfigPage extends React.Component {
           }
           break;
         }
-        case "defaultStrokeStyle": { // New UI makes this case never happen :)
+        case "defaultStrokeStyle": { // New UI makes this error never happen :)
           delete errors[name];
           if (!store.config.tasks[StrokeStyleArray[value][0]]) {
             errors[name] = "You disabled '" + StrokeStyleString[value] + "' below. " +
@@ -566,7 +566,7 @@ class ConfigPage extends React.Component {
               </Grid>
             </Group>
             <Group title="Orgasm">
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={12}>
                   <FormControl
                     fullWidth

@@ -20,6 +20,8 @@ import { applyProbability } from "game/actions/generateAction";
 import createNotification from "engine/createNotification";
 import { getRandom_punishment_message } from "game/texts/teasing_messages";
 import delay from "utils/delay"
+import { getCurrentStrokeStyle, setStrokeStyleHandsOff, setStrokeStyleQuiet } from "game/enums/StrokeStyle";
+import { getRandomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
 
 
 /**
@@ -35,9 +37,9 @@ const getRandomPunishment = () => {
 
 /**
  * Task that chooses a random punishment from all available.
- * Every time a punishment is required the chance to be denied in the end is increased (AdvancedOrgasm only)
+ * Every time a punishment is required the chance to be denied in the end is increased (affects AdvancedOrgasm only)
  *
- * @since      03.08.2018
+ * @since      27.09.2018
  * @author     the1nstructor
  *
  * @alias      punishment
@@ -49,12 +51,20 @@ const punishment = async () => {
   const message = getRandom_punishment_message();
   createNotification(message);
 
-  store.game.orgasm = false; // Task was not fulfilled properly -> no orgasm this round
+  store.game.orgasm = false; // A (May be Any) Task was not fulfilled properly -> no orgasm this round
   store.game.chanceForDenial += 5;
+  let strokeStyle = getCurrentStrokeStyle();
+  await setStrokeStyleHandsOff();
+  setStrokeSpeed(0);
 
   await delay(6000);
 
   await executeAction(punish);
+
+  await setStrokeStyleQuiet(strokeStyle);
+  setStrokeSpeed(getRandomStrokeSpeed()); //since not every punishment does this ... it may happen twice sometimes.
+  await delay(1000);
+
 };
 punishment.label = "Punishment";
 
@@ -79,8 +89,8 @@ export const initializePunishments = (taskConfigs = store.config.tasks) =>
     taskConfigs.ballSlaps && createProbability(ballslaps, 10),
     taskConfigs.squeezeBalls && createProbability(squeezeBalls, 15),
     taskConfigs.headPalming && createProbability(headPalming, 5),
-    taskConfigs.bindCockBalls && createProbability(bindCockAndBalls, 50),
-    taskConfigs.rubberBands && createProbability(snapRubberBand, 33),
+    taskConfigs.bindCockBalls && (!store.game.cockAndBallsBound) && createProbability(bindCockAndBalls, 50),
+    taskConfigs.rubberBands && (parseInt(store.game.rubberBands, 10) > 0) && createProbability(snapRubberBand, 33),
     taskConfigs.breathPlay && createProbability(holdBreath, 20),
     taskConfigs.scratching && createProbability(scratchChest, 10),
     taskConfigs.scratching && createProbability(scratchThighs, 10),
