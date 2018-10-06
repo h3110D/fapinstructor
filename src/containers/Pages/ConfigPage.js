@@ -106,10 +106,10 @@ class ConfigPage extends React.Component {
           delete errors["minimumGameTime"];
           delete errors["maximumGameTime"];
           if (!value || store.config.minimumGameTime < 3) {
-            errors["minimumGameTime"] = "Minimum Game Time must be greater than 3 minutes";
+            errors["minimumGameTime"] = "Minimum Game Time must be greater than 2 minutes";
           }
           if (!value || value < 5) {
-            errors["maximumGameTime"] = "Maximum Game Time must be greater than 5 minutes";
+            errors["maximumGameTime"] = "Maximum Game Time must be greater than 4 minutes";
           }
           if (parseInt(store.config.maximumGameTime, 10) < parseInt(store.config.minimumGameTime, 10)) {
             errors["minimumGameTime"] = "Minimum Game Time has to be smaller than Maximum Game Time";
