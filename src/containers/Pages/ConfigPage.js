@@ -270,7 +270,12 @@ class ConfigPage extends React.Component {
   };
 
   handleChange = (name, cast) => event => {
-    store.config[name] = (cast || String)(event.target.value);
+    if (cast) {
+      store.config[name] = (cast)(event.target.value);
+    } else {
+      store.config[name] = event.target.value;
+    }
+
     this.setState({ errors: this.validateConfig() });
   };
 
@@ -772,10 +777,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="postOrgasmTortureMinimumTime"
                       value={store.config.postOrgasmTortureMinimumTime}
-                      onChange={this.handleChange(
-                        "postOrgasmTortureMinimumTime",
-                        Number
-                      )}
+                      onChange={this.handleChange("postOrgasmTortureMinimumTime", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "3" }}
@@ -798,10 +800,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="postOrgasmTortureMaximumTime"
                       value={store.config.postOrgasmTortureMaximumTime}
-                      onChange={this.handleChange(
-                        "postOrgasmTortureMaximumTime",
-                        Number
-                      )}
+                      onChange={this.handleChange("postOrgasmTortureMaximumTime", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "5" }}
