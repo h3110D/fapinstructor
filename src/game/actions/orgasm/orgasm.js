@@ -18,6 +18,12 @@ import {
 import createProbability from "game/utils/createProbability";
 import { applyProbability } from "game/actions/generateAction";
 
+const SIXTY_SECONDS = 60;  // That's what makes one minute
+const FINAL_EDGE_MIN = 15; // Seconds
+const FINAL_EDGE_MAX = 60; // Seconds
+const SECONDS_IN_MILLI_SECONDS = 1000; // Factor
+
+
 /**
  * Determines whether all initially specified bounds that are necessary to be fulfilled before orgasm are fulfilled.
  *
@@ -40,22 +46,21 @@ export const allowedOrgasm = () => {
  *   (`true`) if the user should orgasm now.
  */
 export const shouldOrgasm = () => {
-  const { config: { maximumGameTime, actionFrequency } } = store;
-
-  let result = false;
+  const actualGameTime = store.game.actualGameTime;
   const isAllowedChance = allowedOrgasm();
+  let result = false;
 
   if (isAllowedChance) {
     const rand = Math.random();
     const gameCompletionPercent =
-      elapsedGameTime("seconds") / (maximumGameTime * 60);
+      elapsedGameTime("seconds") / (actualGameTime * SIXTY_SECONDS);
 
-    if (elapsedGameTime("minutes") >= maximumGameTime) {
+    if (elapsedGameTime("minutes") >= actualGameTime) {
       // If the game time has gone over return true
       result = true;
     } else {
       // Probability Graph: https://www.desmos.com/calculator/xhyaj1gxuc
-      result = gameCompletionPercent ** 4 / actionFrequency > rand;
+      result = gameCompletionPercent ** 4 / store.config.actionFrequency > rand;
     }
   }
 
@@ -158,14 +163,14 @@ export const postOrgasmTorture = async () => {
       getRandomInclusiveInteger(
         postOrgasmTortureMinimumTime,
         postOrgasmTortureMaximumTime
-      ) * 1000
+      ) * SECONDS_IN_MILLI_SECONDS
     );
 
     dismissNotification(nid);
 
     createNotification("I guess you've had enough.  You may stop.");
     setStrokeSpeed(0);
-    await delay(3 * 1000);
+    await delay(3 * SECONDS_IN_MILLI_SECONDS);
   }
 
 };
@@ -232,7 +237,7 @@ export const end = async () => {
     strokerRemoteControl.play();
     createNotification("Start stroking again");
     play(audioLibrary.StartStrokingAgain);
-    await delay(3000);
+    await delay(3 * SECONDS_IN_MILLI_SECONDS);
   } else {
     setStrokeSpeed(0);
     stopGame();
@@ -246,7 +251,7 @@ export const end = async () => {
  *   how long the final edge will last
  * @returns {Promise<function(): *[]>}
  */
-const finalEdgeAndHold = async (edgingTime = getRandomInclusiveInteger(15, 60)) => {
+const finalEdgeAndHold = async (edgingTime = getRandomInclusiveInteger(FINAL_EDGE_MIN, FINAL_EDGE_MAX)) => {
   return determineEdge(edgingTime, getRandom_edgeAndHold_message());
 };
 
