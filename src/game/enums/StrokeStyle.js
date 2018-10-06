@@ -215,15 +215,18 @@ const getRandomStrokeStyleIndex = (activatedArray) => {
  * Sets a random Stroking Style for you. Only uses styles marked as active in the setup of the game. And does atm not
  * care about the probabilities set in game/actions/index.js
  *
+ * @param quiet
+ *    whether a message will be shown or not.
+ *
  * @author the1nstructor
  * @since 11.07.2018
  */
-export const setRandomStrokeStyle = async () => {
+export const setRandomStrokeStyle = async (quiet = false) => {
 
   const styles = getRandomActivatedStokeStyles();
   const index = getRandomStrokeStyleIndex(styles);
   // Set the style
-  StrokeStyleSetterArray[index][1]();
+  StrokeStyleSetterArray[index][1](quiet);
 };
 
 /**
