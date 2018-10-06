@@ -23,6 +23,9 @@ import copyToClipboard from "utils/copyToClipboard";
 import connect from "hoc/connect";
 import { getStrokeStyleName, StrokeStyleArray, StrokeStyleEnum, StrokeStyleString } from "game/enums/StrokeStyle";
 
+
+const ONE_HUNDRED_PERCENT = 100;  // Maximum Percentage that Can be achieved
+
 const styles = theme => ({
   control: {
     width: "100%"
@@ -314,21 +317,21 @@ class ConfigPage extends React.Component {
       }
       store.config[options[0]] = 100 - sum;
     }
-    else if (finalOrgasmAllowed) {
-      store.config.allowedProbability = 100;
-      store.config.deniedProbability = 0;
-      store.config.ruinedProbability = 0;
-    } else if (finalOrgasmDenied) {
-      store.config.allowedProbability = 100;
-      store.config.allowedProbability = 0;
-      store.config.deniedProbability = 100;
-      store.config.ruinedProbability = 0;
-    } else if (finalOrgasmRuined) {
-      store.config.allowedProbability = 100;
-      store.config.allowedProbability = 0;
-      store.config.deniedProbability = 0;
-      store.config.ruinedProbability = 100;
+    else {
+      if (finalOrgasmAllowed) {
+        store.config.allowedProbability = 100;
+        store.config.deniedProbability = 0;
+        store.config.ruinedProbability = 0;
+      } else if (finalOrgasmDenied) {
+        store.config.allowedProbability = 0;
+        store.config.deniedProbability = 100;
+        store.config.ruinedProbability = 0;
+      } else if (finalOrgasmRuined) {
+        store.config.allowedProbability = 0;
+        store.config.deniedProbability = 0;
+        store.config.ruinedProbability = 100;
 
+      }
     }
 
     this.setState({ errors: this.validateConfig() });
