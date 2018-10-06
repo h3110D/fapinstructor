@@ -136,7 +136,7 @@ class ConfigPage extends React.Component {
         case "ruinedProbability": {
           delete errors[name];
           value = parseInt(value, 10);
-          if (isNaN(value) || value < 0 || value > 100) {
+          if (isNaN(value) || value < 0 || value > ONE_HUNDRED_PERCENT) {
             errors[name] = "Please insert a valid number between 0 and 100";
           }
           break;
@@ -150,7 +150,7 @@ class ConfigPage extends React.Component {
               ruinedProbability,
             }
           } = store;
-          if (parseInt(deniedProbability, 10) + parseInt(ruinedProbability, 10) + parseInt(allowedProbability, 10) !== 100) {
+          if (parseInt(deniedProbability, 10) + parseInt(ruinedProbability, 10) + parseInt(allowedProbability, 10) !== ONE_HUNDRED_PERCENT) {
             errors.finalOrgasmRandom = "The probabilities have to sum up to 100%"
           }
           break;
@@ -308,29 +308,28 @@ class ConfigPage extends React.Component {
       } else {
         store.config.ruinedProbability = 0;
       }
-      // equalize share of options
+      // equalize share of options for initial display
       let sum = 0;
       for (let i = 1; i < options.length; i++) {
         let o = options[i];
-        store.config[o] = Math.floor(100 / options.length);
+        store.config[o] = Math.floor(ONE_HUNDRED_PERCENT / options.length);
         sum += store.config[o];
       }
-      store.config[options[0]] = 100 - sum;
+      store.config[options[0]] = ONE_HUNDRED_PERCENT - sum;
     }
     else {
       if (finalOrgasmAllowed) {
-        store.config.allowedProbability = 100;
+        store.config.allowedProbability = ONE_HUNDRED_PERCENT;
         store.config.deniedProbability = 0;
         store.config.ruinedProbability = 0;
       } else if (finalOrgasmDenied) {
         store.config.allowedProbability = 0;
-        store.config.deniedProbability = 100;
+        store.config.deniedProbability = ONE_HUNDRED_PERCENT;
         store.config.ruinedProbability = 0;
       } else if (finalOrgasmRuined) {
         store.config.allowedProbability = 0;
         store.config.deniedProbability = 0;
-        store.config.ruinedProbability = 100;
-
+        store.config.ruinedProbability = ONE_HUNDRED_PERCENT;
       }
     }
 
