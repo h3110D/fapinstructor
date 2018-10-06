@@ -2,14 +2,24 @@ import store from "store";
 import play from "engine/audio";
 import audioLibrary from "audio";
 import elapsedGameTime from "game/utils/elapsedGameTime";
-import { randomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
+import { getRandomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
 import { setDefaultGrip } from "game/actions/grip";
-import { setStrokeStyleDominant } from "game/enums/StrokeStyle";
+import { setDefaultStrokeStyle } from "game/enums/StrokeStyle";
 import createNotification, { dismissNotification } from "engine/createNotification";
 import { getRandomBoolean, getRandomInclusiveInteger } from "utils/math";
 import delay from "utils/delay";
 import { strokerRemoteControl } from "game/loops/strokerLoop";
+import handsOff from "game/actions/speed/handsOff";
+import { getRandom_edge_message } from "game/texts/messages";
+import punishment from "../punishment";
+import { getRandomEdge } from "./edgeInTime";
 
+/**
+ * Determines if the user should edge.
+ *
+ * @returns {boolean}
+ *   true when the user should edge now
+ */
 export const shouldEdge = () => {
   const {
     config: { minimumGameTime, maximumGameTime, actionFrequency, edgeFrequency }
@@ -32,7 +42,14 @@ export const shouldEdge = () => {
   return result;
 };
 
+/**
+ * lets you ride the edge for time seconds.
+ *
+ * @param time
+ *   How long to ride the edge
+ */
 export const rideTheEdge = async (time = getRandomInclusiveInteger(5, 30)) => {
+  const strokeSpeed = store.game.strokeSpeed;
   setStrokeSpeed(0);
   const notificationId = createNotification("Ride the edge", {
     autoDismiss: false
@@ -44,8 +61,15 @@ export const rideTheEdge = async (time = getRandomInclusiveInteger(5, 30)) => {
 
   await delay(time * 1000);
   dismissNotification(notificationId);
+  setStrokeSpeed(strokeSpeed);
 };
 
+/**
+ * Decides whether to ride the edge or not and increases edge counter.
+ *
+ * @param time
+ *   How long to ride the edge
+ */
 export const edging = async time => {
   store.game.edges++;
 
@@ -56,29 +80,42 @@ export const edging = async time => {
   }
 };
 
+/**
+ * The whole cooldown stuff after edging and setting up the stroking task again.
+ */
 export const stopEdging = async () => {
-  const { config: { edgeCooldown } } = store;
+  let edgeCooldown = parseInt(store.config.edgeCooldown, 10);
+  if (store.game.orgasm && !store.game.edgingLadder) {
 
-  createNotification("Let go of your cock");
-  strokerRemoteControl.pause();
+  } else {
 
-  await delay(edgeCooldown * 1000);
+    strokerRemoteControl.pause();
+    //Just to make it a little bit random. So one does not get exactly XY seconds cooldown every time.
+    let approx = getRandomInclusiveInteger(Math.floor(edgeCooldown / 2), Math.floor(edgeCooldown * 3 / 2));
+    await handsOff(approx);
 
-  strokerRemoteControl.play();
+    setStrokeSpeed(getRandomStrokeSpeed());
 
-  setStrokeSpeed(randomStrokeSpeed());
-  createNotification("Start stroking again");
+    strokerRemoteControl.play();
 
-  if (store.config.enableVoice) {
-    play(audioLibrary.StartStrokingAgain);
+
+    if (store.config.enableVoice) {
+      play(audioLibrary.StartStrokingAgain);
+    }
+    await delay(2000);
   }
-
-  await delay(3000);
 };
 
-export const getToTheEdge = async () => {
+/**
+ * Sets the Speed to Maximum, the Grip and the StrokeStyle to default. Displays message.
+ *
+ * @param message
+ *   the message that is displayed.
+ * @returns {Promise<*>}
+ *   the notificationId
+ */
+export const getToTheEdge = async (message = getRandom_edge_message()) => {
   const { config: { fastestStrokeSpeed } } = store;
-
   if (store.config.enableVoice) {
     play(audioLibrary.Edge);
   }
@@ -86,25 +123,48 @@ export const getToTheEdge = async () => {
   setStrokeSpeed(fastestStrokeSpeed);
 
   setDefaultGrip();
-  setStrokeStyleDominant();
+  setDefaultStrokeStyle();
 
-  const notificationId = createNotification("Get to the edge for me", {
-    autoDismiss: false
-  });
-  return notificationId;
+  return createNotification(message, { autoDismiss: false });
 };
 
-const edge = async () => {
-  const notificationId = await getToTheEdge();
+/**
+ * Calls getToTheEdge() and displays an "Edging" button.
+ *
+ * @returns {Promise<*[]>}
+ */
+export const edge = async (time, message = getRandom_edge_message()) => {
+  const notificationId = await getToTheEdge(message);
 
   const trigger = async () => {
     dismissNotification(notificationId);
-    await edging();
+    await edging(time);
     await stopEdging();
   };
   trigger.label = "Edging";
 
-  return [trigger];
+  const trigger_fail = async () => {
+    dismissNotification(notificationId);
+    await punishment();
+  };
+  trigger_fail.label = "I can't";
+
+  return [trigger, trigger_fail];
 };
 
-export default edge;
+/**
+ * makes advanced Edges possible if active.
+ *
+ * @returns {Promise<function(): *[]>} the action to be executed next.
+ */
+const determineEdge = async (time, message) => {
+  let action;
+  if (store.config.advancedEdging) { // Determine further chances only if advancedEdging is active
+    action = await getRandomEdge()(time, message);
+  } else {
+    action = await edge(time);
+  }
+  return await action;
+};
+
+export default determineEdge;

@@ -26,7 +26,7 @@ export const addClothespin = async () => {
 addClothespin.label = "Add Clothespin";
 
 export const removeClothespin = async () => {
-  if (store.game.clothespins !== 0) {
+  if (store.game.clothespins > 0) {
     strokerRemoteControl.pause();
     const clothespins = store.game.clothespins - 1;
     const notificationId = createNotification(`Remove a clothespin`, {

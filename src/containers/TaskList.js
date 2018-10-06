@@ -1,16 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  FormGroup
-} from "material-ui/Form";
+import { FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel } from "material-ui/Form";
 import Switch from "material-ui/Switch";
 import store from "store";
 import connect from "hoc/connect";
 
+/**
+ * Implements advanced Button-List stuff.
+ */
 class TaskList extends React.Component {
+
   constructor(props) {
     super(props);
 
@@ -29,16 +28,29 @@ class TaskList extends React.Component {
 
   static propTypes = {
     title: PropTypes.string.isRequired,
-    tasks: PropTypes.object.isRequired
+    tasks: PropTypes.object.isRequired,
+    error: PropTypes.string,
+    except: PropTypes.array
   };
 
-  handleToggleAll = (event, checked) => {
+  /**
+   *
+   * @param except
+   *   the elements in the except array won't be changed.
+   * @returns {Function}
+   *   it actually returns a piece of HTML5
+   */
+  handleToggleAll = (except = []) => (event, checked) => {
     this.setState({
       [event.target.value]: checked
     });
     Object.keys(this.props.tasks).forEach(task => {
-      store.config.tasks[task] = checked;
+
+      if (!except.includes(task)) {
+        store.config.tasks[task] = checked;
+      }
     });
+
   };
 
   handleTaskCheck = name => (event, checked) => {
@@ -50,18 +62,19 @@ class TaskList extends React.Component {
   };
 
   render() {
-    const { title, tasks, config } = this.props;
+    const { title, tasks, except = [], error: errorMessage, config } = this.props;
     const { toggleAll } = this.state;
 
     return (
-      <FormControl component="fieldset">
+      <FormControl component="fieldset" error={!!errorMessage}>
         <FormLabel component="legend">{title}</FormLabel>
         <FormGroup>
+          <FormHelperText>{errorMessage}</FormHelperText>
           <FormControlLabel
             control={
               <Switch
                 checked={toggleAll}
-                onChange={this.handleToggleAll}
+                onChange={this.handleToggleAll(except)}
                 value="toggleAll"
               />
             }
@@ -70,6 +83,8 @@ class TaskList extends React.Component {
           {Object.keys(tasks).map(task => (
             <FormControlLabel
               key={task}
+              disabled={except.includes(task)}
+
               control={
                 <Switch
                   checked={config.tasks[task]}
@@ -81,6 +96,7 @@ class TaskList extends React.Component {
             />
           ))}
         </FormGroup>
+        <FormHelperText>{errorMessage}</FormHelperText>
       </FormControl>
     );
   }

@@ -151,7 +151,7 @@ class GamePage extends React.Component {
 
     return (
       <div className={this.props.classes.container}>
-        {maximumOrgasms === orgasms ? (
+        {parseInt(maximumOrgasms, 10) === parseInt(orgasms, 10) ? (
           <EndPage />
         ) : (
           <React.Fragment>

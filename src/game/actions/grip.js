@@ -5,9 +5,12 @@ import { GripStrengthEnum, GripStrengthString } from "game/enums/GripStrength";
 import play from "engine/audio";
 import audioLibrary from "audio";
 
+/**
+ * set the default / initial Grip again
+ */
 export const setDefaultGrip = () => {
   const currentGrip = store.game.gripStrength;
-  const defaultGrip = GripStrengthEnum.Normal;
+  const defaultGrip = store.config.initialGripStrength;
 
   if (currentGrip !== defaultGrip) {
     store.game.gripStrength = defaultGrip;
@@ -33,14 +36,14 @@ export const tightenGrip = () => {
   }
 };
 
-export const losenGrip = () => {
+export const loosenGrip = () => {
   const currentGrip = store.game.gripStrength;
   const lightestGrip = 0;
 
   if (currentGrip !== lightestGrip) {
     store.game.gripStrength = currentGrip - 1;
     createNotification(
-      `Losen your grip - ${GripStrengthString[store.game.gripStrength]}`
+      `Loosen your grip - ${GripStrengthString[store.game.gripStrength]}`
     );
   }
 };
@@ -49,7 +52,7 @@ const randomGripAdjustment = async () => {
   if (getRandomBoolean()) {
     tightenGrip();
   } else {
-    losenGrip();
+    loosenGrip();
   }
 };
 randomGripAdjustment.label = "Random Grip Adjustment";

@@ -21,6 +21,7 @@ import TaskList from "containers/TaskList";
 import { GripStrengthEnum, GripStrengthString } from "game/enums/GripStrength";
 import copyToClipboard from "utils/copyToClipboard";
 import connect from "hoc/connect";
+import { getStrokeStyleName, StrokeStyleArray, StrokeStyleEnum, StrokeStyleString } from "game/enums/StrokeStyle";
 
 const styles = theme => ({
   control: {
@@ -124,10 +125,39 @@ class ConfigPage extends React.Component {
           ) {
             errors.finialOrgasm = "Must select at least one value";
           }
+
           break;
         }
-        // TODO: Why has maximumOrgasms to be at least 1? why not 0? The inputProps does specify a min of 1 ...
+        case "allowedProbability":
+        case "deniedProbability":
+        case "ruinedProbability": {
+          delete errors[name];
+          value = parseInt(value, 10);
+          if (isNaN(value) || value < 0 || value > 100) {
+            errors[name] = "Please insert a valid number between 0 and 100";
+          }
+          break;
+        }
+        case "finalOrgasmRandom": {
+          delete errors.finalOrgasmRandom;
+          const {
+            config: {
+              allowedProbability,
+              deniedProbability,
+              ruinedProbability,
+            }
+          } = store;
+          if (parseInt(deniedProbability, 10) + parseInt(ruinedProbability, 10) + parseInt(allowedProbability, 10) !== 100) {
+            errors.finalOrgasmRandom = "The probabilities have to sum up to 100%"
+          }
+          break;
+        }
+
+        // TODO: Why has maximumOrgasms to be at least 1? why not can't it be 0 what would logically be possible?
+        // TODO: The inputProps does specify a min of 1 ...
         case "maximumOrgasms": {
+          delete errors[name];
+          value = parseInt(value, 10);
           if (!value) {
             errors[name] = "Please specify a value";
           } else if (value < 0) {
@@ -220,6 +250,14 @@ class ConfigPage extends React.Component {
           }
           break;
         }
+        case "defaultStrokeStyle": { // New UI makes this error never happen :)
+          delete errors[name];
+          if (!store.config.tasks[StrokeStyleArray[value][0]]) {
+            errors[name] = "You disabled '" + StrokeStyleString[value] + "' below. " +
+              "Only active Styles can be set as default Style!";
+          }
+          break;
+        }
         default: {
         }
       }
@@ -228,8 +266,71 @@ class ConfigPage extends React.Component {
     return errors;
   };
 
-  handleChange = name => event => {
+  handleChange = (name, cast) => event => {
+    store.config[name] = (cast || String)(event.target.value);
+    this.setState({ errors: this.validateConfig() });
+  };
+
+  handleFinalOrgasmGroupCheck = name => event => {
     store.config[name] = event.target.value;
+    this.setState({ errors: this.validateConfig() });
+  };
+
+  handleFinalOrgasmGroupCheckChange = name => (event, checked) => {
+    store.config[name] = checked;
+
+    const {
+      config: {
+        finalOrgasmAllowed,
+        finalOrgasmDenied,
+        finalOrgasmRuined,
+        finalOrgasmRandom
+      }
+    } = store;
+
+    if (finalOrgasmRandom) {
+      let options = [];
+      if (finalOrgasmAllowed) {
+        options.push("allowedProbability");
+      } else {
+        store.config.allowedProbability = 0;
+      }
+      if (finalOrgasmDenied) {
+        options.push("deniedProbability");
+      } else {
+        store.config.deniedProbability = 0;
+      }
+      if (finalOrgasmRuined) {
+        options.push("ruinedProbability");
+      } else {
+        store.config.ruinedProbability = 0;
+      }
+      // equalize share of options
+      let sum = 0;
+      for (let i = 1; i < options.length; i++) {
+        let o = options[i];
+        store.config[o] = Math.floor(100 / options.length);
+        sum += store.config[o];
+      }
+      store.config[options[0]] = 100 - sum;
+    }
+    else if (finalOrgasmAllowed) {
+      store.config.allowedProbability = 100;
+      store.config.deniedProbability = 0;
+      store.config.ruinedProbability = 0;
+    } else if (finalOrgasmDenied) {
+      store.config.allowedProbability = 100;
+      store.config.allowedProbability = 0;
+      store.config.deniedProbability = 100;
+      store.config.ruinedProbability = 0;
+    } else if (finalOrgasmRuined) {
+      store.config.allowedProbability = 100;
+      store.config.allowedProbability = 0;
+      store.config.deniedProbability = 0;
+      store.config.ruinedProbability = 100;
+
+    }
+
     this.setState({ errors: this.validateConfig() });
   };
 
@@ -238,9 +339,11 @@ class ConfigPage extends React.Component {
     this.setState({ errors: this.validateConfig() });
   };
 
-  handleTaskRandomize = event => {
+  handleTaskRandomize = except => event => {
     Object.keys(store.config.tasks).forEach(task => {
-      store.config.tasks[task] = getRandomBoolean();
+      if (!except.includes(task)) {
+        store.config.tasks[task] = getRandomBoolean();
+      }
     });
 
     event.stopPropagation();
@@ -349,7 +452,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="slideDuration"
                       value={store.config.slideDuration}
-                      onChange={this.handleChange("slideDuration")}
+                      onChange={this.handleChange("slideDuration", Number)}
                       type="number"
                       inputProps={{ step: "1", min: "3" }}
                       endAdornment={
@@ -410,7 +513,7 @@ class ConfigPage extends React.Component {
               </Grid>
             </Group>
             <Group title="Time">
-              <Grid container>
+              <Grid container spacing={16}>
                 <Grid item xs={12} md={6}>
                   <FormControl
                     className={classes.control}
@@ -422,7 +525,7 @@ class ConfigPage extends React.Component {
                       id="minimumGameTime"
                       value={store.config.minimumGameTime}
                       required
-                      onChange={this.handleChange("minimumGameTime")}
+                      onChange={this.handleChange("minimumGameTime", Number)}
                       type="number"
                       inputProps={{ step: "1", min: "3" }}
                       endAdornment={
@@ -443,7 +546,7 @@ class ConfigPage extends React.Component {
                       id="maximumGameTime"
                       value={store.config.maximumGameTime}
                       required
-                      onChange={this.handleChange("maximumGameTime")}
+                      onChange={this.handleChange("maximumGameTime", Number)}
                       type="number"
                       inputProps={{ step: "1", min: "5" }}
                       endAdornment={
@@ -466,65 +569,158 @@ class ConfigPage extends React.Component {
               <Grid container>
                 <Grid item xs={12}>
                   <FormControl
+                    fullWidth
                     component="fieldset"
                     required
-                    error={!!errors.finialOrgasm}
+                    error={!!errors.finialOrgasm || !!errors.finalOrgasmRandom}
                   >
                     <FormLabel component="legend">Final Orgasm</FormLabel>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={store.config.finalOrgasmAllowed}
-                            onChange={this.handleCheckChange(
-                              "finalOrgasmAllowed"
-                            )}
-                            value="finalOrgasmAllowed"
+                    <Grid container xs={12} direction={"row"} alignItems={"center"}>
+
+                      <Grid container xs={12} md={3} direction={"column"}>
+                        <Grid item xs={10}>
+                          <FormControlLabel
+                            title={"Whether you will be allowed to have a full orgasm in the end"}
+                            control={
+                              <Switch
+                                checked={store.config.finalOrgasmAllowed}
+                                onChange={this.handleFinalOrgasmGroupCheckChange("finalOrgasmAllowed")}
+                                value="finalOrgasmAllowed"
+                              />
+                            }
+                            label="Allowed"
                           />
-                        }
-                        label="Allowed"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={store.config.finalOrgasmDenied}
-                            onChange={this.handleCheckChange(
-                              "finalOrgasmDenied"
-                            )}
-                            value="finalOrgasmDenied"
+                        </Grid>
+                        <Grid item xs={10}>
+                          <FormControl
+                            className={classes.control}
+                            required={!!store.config.finalOrgasmRandom}
+                            error={!!errors.allowedProbability || (!!store.config.finalOrgasmRandom && !!errors.finialOrgasm)}
+                          >
+                            <InputLabel>Probability</InputLabel>
+                            <Input
+                              id="allowedProbability"
+                              value={store.config.allowedProbability}
+                              onChange={this.handleFinalOrgasmGroupCheck("allowedProbability")}
+                              disabled={!store.config.finalOrgasmRandom || !store.config.finalOrgasmAllowed}
+                              endAdornment={
+                                <InputAdornment position="end">%</InputAdornment>
+                              }
+                            />
+                          </FormControl>
+                          <FormHelperText>{errors.allowedProbability}</FormHelperText>
+                        </Grid>
+                      </Grid>
+                      <Grid container xs={12} md={3} direction={"column"}>
+                        <Grid item xs={10}>
+                          <FormControlLabel
+                            title={"Whether you will be denied in the end"}
+                            control={
+                              <Switch
+                                checked={store.config.finalOrgasmDenied}
+                                onChange={this.handleFinalOrgasmGroupCheckChange("finalOrgasmDenied")}
+                                value="finalOrgasmDenied"
+                              />
+                            }
+                            label="Denied"
                           />
-                        }
-                        label="Denied"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={store.config.finalOrgasmRuined}
-                            onChange={this.handleCheckChange(
-                              "finalOrgasmRuined"
-                            )}
-                            value="finalOrgasmRuined"
+                        </Grid>
+                        <Grid item xs={10}>
+                          <FormControl
+                            className={classes.control}
+                            required={!!store.config.finalOrgasmRandom}
+                            error={!!errors.deniedProbability || (!!store.config.finalOrgasmRandom && !!errors.finialOrgasm)}
+                          >
+                            <InputLabel>Probability</InputLabel>
+                            <Input
+                              id="deniedProbability"
+                              value={store.config.deniedProbability}
+                              onChange={this.handleFinalOrgasmGroupCheck("deniedProbability")}
+                              disabled={!store.config.finalOrgasmRandom || !store.config.finalOrgasmDenied}
+                              endAdornment={
+                                <InputAdornment position="end">%</InputAdornment>
+                              }
+                            />
+                            <FormHelperText>{errors.deniedProbability}</FormHelperText>
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                      <Grid container xs={12} md={3} direction={"column"}>
+                        <Grid item xs={10}>
+                          <FormControlLabel
+                            title={"Whether you will be asked to ruin in the end"}
+                            control={
+                              <Switch
+                                checked={store.config.finalOrgasmRuined}
+                                onChange={this.handleFinalOrgasmGroupCheckChange("finalOrgasmRuined")}
+                                value="finalOrgasmRuined"
+                              />
+                            }
+                            label="Ruined"
                           />
-                        }
-                        label="Ruined"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={store.config.finalOrgasmRandom}
-                            onChange={this.handleCheckChange(
-                              "finalOrgasmRandom"
-                            )}
-                            value="finalOrgasmRandom"
-                          />
-                        }
-                        label="Random (applies to selected)"
-                      />
-                    </FormGroup>
-                    <FormHelperText>{errors.finialOrgasm}</FormHelperText>
+                        </Grid>
+                        <Grid item xs={10}>
+                          <FormControl
+                            className={classes.control}
+                            required={!!store.config.finalOrgasmRandom}
+                            error={!!errors.ruinedProbability || (!!store.config.finalOrgasmRandom && !!errors.finialOrgasm)}
+                          >
+                            <InputLabel>Probability</InputLabel>
+                            <Input
+                              id="ruinedProbability"
+                              value={store.config.ruinedProbability}
+                              onChange={this.handleFinalOrgasmGroupCheck("ruinedProbability")}
+                              disabled={!store.config.finalOrgasmRandom || !store.config.finalOrgasmRuined}
+                              endAdornment={
+                                <InputAdornment position="end">%</InputAdornment>
+                              }
+                            />
+                            <FormHelperText>{errors.ruinedProbability}</FormHelperText>
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} md={3}>
+                        <FormControlLabel
+                          title={"Chooses at random from the left hand side selected game ends"}
+                          control={
+                            <Switch
+                              checked={store.config.finalOrgasmRandom}
+                              onChange={this.handleFinalOrgasmGroupCheckChange(
+                                "finalOrgasmRandom"
+                              )}
+                              value="finalOrgasmRandom"
+                            />
+                          }
+                          label={"Random (applies to selected)"}
+                        />
+                      </Grid>
+                      {errors.finalOrgasmRandom ?
+                        <FormHelperText>{errors.finalOrgasmRandom}</FormHelperText>
+                        :
+                        <FormHelperText>{errors.finialOrgasm}</FormHelperText>
+                      }
+                    </Grid>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={12}>
+              </Grid>
+              <Grid container spacing={16}>
+                <Grid item xs={12} md={4}>
+                  <FormControlLabel
+                    title={"Makes the game ending more challenging by: \n" +
+                    "   - enabling more advanced orgasm tasks, like a time limit to orgasm in or \n" +
+                    "     a specific stroke style and speed that may not be changed to orgasm.\n" +
+                    "   - invoking a chance to be denied in the end if failing on 'Advanced Edge' tasks"}
+                    control={
+                      <Switch
+                        checked={store.config.advancedOrgasm}
+                        onChange={this.handleCheckChange("advancedOrgasm")}
+                        value="advancedOrgasm"
+                      />
+                    }
+                    label="Advanced Orgasm"
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
                   <FormControl
                     className={classes.control}
                     required
@@ -534,7 +730,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="maximumOrgasms"
                       value={store.config.maximumOrgasms}
-                      onChange={this.handleChange("maximumOrgasms")}
+                      onChange={this.handleChange("maximumOrgasms", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "1" }}
@@ -543,12 +739,16 @@ class ConfigPage extends React.Component {
                       <FormHelperText>{errors.maximumOrgasms}</FormHelperText>
                     ) : (
                       <FormHelperText>
-                        The number of Orgasms that may occur at max during the game
+                        The number of Orgasms that will occur at max during the game
                       </FormHelperText>
                     )}
                   </FormControl>
+
                 </Grid>
-                <Grid item xs={12}>
+
+              </Grid>
+              <Grid container spacing={16}>
+                <Grid item xs={12} md={4}>
                   <FormControlLabel
                     control={
                       <Switch
@@ -571,7 +771,8 @@ class ConfigPage extends React.Component {
                       id="postOrgasmTortureMinimumTime"
                       value={store.config.postOrgasmTortureMinimumTime}
                       onChange={this.handleChange(
-                        "postOrgasmTortureMinimumTime"
+                        "postOrgasmTortureMinimumTime",
+                        Number
                       )}
                       fullWidth
                       type="number"
@@ -596,7 +797,8 @@ class ConfigPage extends React.Component {
                       id="postOrgasmTortureMaximumTime"
                       value={store.config.postOrgasmTortureMaximumTime}
                       onChange={this.handleChange(
-                        "postOrgasmTortureMaximumTime"
+                        "postOrgasmTortureMaximumTime",
+                        Number
                       )}
                       fullWidth
                       type="number"
@@ -610,64 +812,6 @@ class ConfigPage extends React.Component {
                     </FormHelperText>
                   </FormControl>
                 </Grid>
-                <Grid item xs />
-                <Grid item xs={12} md={4}>
-                  <FormControl
-                    className={classes.control}
-                    error={!!errors.minimumEdges}
-                  >
-                    <InputLabel>Minimum Edges</InputLabel>
-                    <Input
-                      id="minimumEdges"
-                      value={store.config.minimumEdges}
-                      onChange={this.handleChange("minimumEdges")}
-                      fullWidth
-                      type="number"
-                      inputProps={{ step: "1", min: "0" }}
-                    />
-                    <FormHelperText>{errors.minimumEdges}</FormHelperText>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <FormControl
-                    className={classes.control}
-                    error={!!errors.edgeCooldown}
-                  >
-                    <InputLabel>Edge Cooldown</InputLabel>
-                    <Input
-                      id="edgeCooldown"
-                      value={store.config.edgeCooldown}
-                      onChange={this.handleChange("edgeCooldown")}
-                      fullWidth
-                      type="number"
-                      inputProps={{ step: "1", min: "0" }}
-                      endAdornment={
-                        <InputAdornment position="end">seconds</InputAdornment>
-                      }
-                    />
-                    <FormHelperText>{errors.edgeCooldown}</FormHelperText>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={4}>
-                  <FormControl
-                    className={classes.control}
-                    error={!!errors.edgeFrequency}
-                  >
-                    <InputLabel>Increase Edge Frequency</InputLabel>
-                    <Input
-                      id="edgeFrequency"
-                      value={store.config.edgeFrequency}
-                      onChange={this.handleChange("edgeFrequency")}
-                      fullWidth
-                      type="number"
-                      inputProps={{ step: "1", min: "0" }}
-                      endAdornment={
-                        <InputAdornment position="end">%</InputAdornment>
-                      }
-                    />
-                    <FormHelperText>{errors.edgeFrequency}</FormHelperText>
-                  </FormControl>
-                </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl
                     className={classes.control}
@@ -677,7 +821,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="minimumRuinedOrgasms"
                       value={store.config.minimumRuinedOrgasms}
-                      onChange={this.handleChange("minimumRuinedOrgasms")}
+                      onChange={this.handleChange("minimumRuinedOrgasms", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "0" }}
@@ -696,7 +840,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="maximumRuinedOrgasms"
                       value={store.config.maximumRuinedOrgasms}
-                      onChange={this.handleChange("maximumRuinedOrgasms")}
+                      onChange={this.handleChange("maximumRuinedOrgasms", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "0" }}
@@ -715,7 +859,7 @@ class ConfigPage extends React.Component {
                     <Input
                       id="ruinCooldown"
                       value={store.config.ruinCooldown}
-                      onChange={this.handleChange("ruinCooldown")}
+                      onChange={this.handleChange("ruinCooldown", Number)}
                       fullWidth
                       type="number"
                       inputProps={{ step: "1", min: "0" }}
@@ -728,49 +872,109 @@ class ConfigPage extends React.Component {
                 </Grid>
               </Grid>
             </Group>
+            <Group title="Edging">
+              <Grid container spacing={16}>
+                <Grid item xs={12} md={3}>
+                  <FormControlLabel
+                    title={"Makes edging more interesting. If this is active, there is a chance for harder " +
+                    "edging tasks. This does not affect the other edging options like frequency, minimum edges " +
+                    "and cooldown."}
+                    control={
+                      <Switch
+                        checked={store.config.advancedEdging}
+                        onChange={this.handleCheckChange("advancedEdging")}
+                        value="advancedEdging"
+                      />
+                    }
+                    label="Advanced Edging"
+                  />
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <FormControl
+                    className={classes.control}
+                    error={!!errors.minimumEdges}
+                    title={"Specify how many edges you will have to fulfill before the game may end"}
+                  >
+                    <InputLabel>Minimum Edges</InputLabel>
+                    <Input
+                      id="minimumEdges"
+                      value={store.config.minimumEdges}
+                      onChange={this.handleChange("minimumEdges", Number)}
+                      fullWidth
+                      type="number"
+                      inputProps={{ step: "1", min: "0" }}
+                    />
+                    <FormHelperText>{errors.minimumEdges}</FormHelperText>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <FormControl
+                    className={classes.control}
+                    error={!!errors.edgeCooldown}
+                  >
+                    <InputLabel>Edge Cooldown</InputLabel>
+                    <Input
+                      id="edgeCooldown"
+                      value={store.config.edgeCooldown}
+                      onChange={this.handleChange("edgeCooldown", Number)}
+                      fullWidth
+                      type="number"
+                      inputProps={{ step: "1", min: "0" }}
+                      endAdornment={
+                        <InputAdornment position="end">seconds</InputAdornment>
+                      }
+                    />
+                    <FormHelperText>{errors.edgeCooldown}</FormHelperText>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <FormControl
+                    className={classes.control}
+                    error={!!errors.edgeFrequency}
+                  >
+                    <InputLabel>Increase Edge Frequency</InputLabel>
+                    <Input
+                      id="edgeFrequency"
+                      value={store.config.edgeFrequency}
+                      onChange={this.handleChange("edgeFrequency", Number)}
+                      fullWidth
+                      type="number"
+                      inputProps={{ step: "1", min: "0" }}
+                      endAdornment={
+                        <InputAdornment position="end">%</InputAdornment>
+                      }
+                    />
+                    <FormHelperText>{errors.edgeFrequency}</FormHelperText>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </Group>
             <Group title="Stroke">
-              <Grid container>
-                <Grid item xs={12} md={4}>
+              <Grid container spacing={16}>
+                <Grid item xs={12} md={3}>
                   <FormControl
                     className={classes.control}
-                    error={!!errors.slowestStrokeSpeed}
+                    error={!!errors.defaultStrokeStyle}
+                    title={"Select the most occurring stroke style during this game. Only active Stroke Styles " +
+                    "can be chosen. 'Hands Off' can not be chosen."}
                   >
-                    <InputLabel>Slowest Stroke Speed</InputLabel>
-                    <Input
-                      id="slowestStrokeSpeed"
-                      value={store.config.slowestStrokeSpeed}
-                      onChange={this.handleChange("slowestStrokeSpeed")}
-                      fullWidth
-                      type="number"
-                      inputProps={{ step: "0.25", min: "0.25", max: "6" }}
-                      endAdornment={
-                        <InputAdornment position="end">seconds</InputAdornment>
-                      }
-                    />
-                    <FormHelperText>{errors.slowestStrokeSpeed}</FormHelperText>
+                    <InputLabel>Default Stroke Style</InputLabel>
+                    <Select
+                      value={store.config.defaultStrokeStyle}
+                      onChange={this.handleChange("defaultStrokeStyle")}
+                    >
+                      {Object.keys(StrokeStyleEnum).map(key => (
+                        <MenuItem key={key} value={StrokeStyleEnum[key]}
+                                  disabled={
+                                    !store.config.tasks[key] || key === "handsOff"}>
+                          {StrokeStyleString[StrokeStyleEnum[key]]}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText>{errors.defaultStrokeStyle}</FormHelperText>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={4}>
-                  <FormControl
-                    className={classes.control}
-                    error={!!errors.fastestStrokeSpeed}
-                  >
-                    <InputLabel>Fastest Stroke Speed</InputLabel>
-                    <Input
-                      id="fastestStrokeSpeed"
-                      value={store.config.fastestStrokeSpeed}
-                      onChange={this.handleChange("fastestStrokeSpeed")}
-                      fullWidth
-                      type="number"
-                      inputProps={{ step: "0.25", min: "0.25", max: "6" }}
-                      endAdornment={
-                        <InputAdornment position="end">seconds</InputAdornment>
-                      }
-                    />
-                    <FormHelperText>{errors.fastestStrokeSpeed}</FormHelperText>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={3}>
                   <FormControl className={classes.control}>
                     <InputLabel>Initial Grip Strength</InputLabel>
                     <Select
@@ -785,16 +989,58 @@ class ConfigPage extends React.Component {
                     </Select>
                   </FormControl>
                 </Grid>
+                <Grid item xs={12} md={3}>
+                  <FormControl
+                    className={classes.control}
+                    error={!!errors.slowestStrokeSpeed}
+                  >
+                    <InputLabel>Slowest Stroke Speed</InputLabel>
+                    <Input
+                      id="slowestStrokeSpeed"
+                      value={store.config.slowestStrokeSpeed}
+                      onChange={this.handleChange("slowestStrokeSpeed", Number)}
+                      fullWidth
+                      type="number"
+                      inputProps={{ step: "0.25", min: "0.25", max: "6" }}
+                      endAdornment={
+                        <InputAdornment position="end">seconds</InputAdornment>
+                      }
+                    />
+                    <FormHelperText>{errors.slowestStrokeSpeed}</FormHelperText>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <FormControl
+                    className={classes.control}
+                    error={!!errors.fastestStrokeSpeed}
+                  >
+                    <InputLabel>Fastest Stroke Speed</InputLabel>
+                    <Input
+                      id="fastestStrokeSpeed"
+                      value={store.config.fastestStrokeSpeed}
+                      onChange={this.handleChange("fastestStrokeSpeed", Number)}
+                      fullWidth
+                      type="number"
+                      inputProps={{ step: "0.25", min: "0.25", max: "6" }}
+                      endAdornment={
+                        <InputAdornment position="end">seconds</InputAdornment>
+                      }
+                    />
+                    <FormHelperText>{errors.fastestStrokeSpeed}</FormHelperText>
+                  </FormControl>
+                </Grid>
               </Grid>
             </Group>
             <Group title="Tasks">
               <ExpansionPanel defaultExpanded>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}
+                                       title={"Chooses from all options below at random."}
+                >
                   <Button
                     variant="raised"
                     color="primary"
                     className={classes.button}
-                    onClick={this.handleTaskRandomize}
+                    onClick={this.handleTaskRandomize([getStrokeStyleName(store.config.defaultStrokeStyle)])}
                   >
                     Randomize
                   </Button>
@@ -802,34 +1048,50 @@ class ConfigPage extends React.Component {
                 <ExpansionPanelDetails>
                   <Grid container>
                     <Grid item xs={12} sm={6} md={4}>
-                      <TaskList
-                        title="Speed"
-                        tasks={{
-                          doubleStrokes: "Double Strokes",
-                          halvedStrokes: "Halved Strokes",
-                          teasingStrokes: "Teasing Strokes",
-                          accelerationCycles: "Acceleration Cycles",
-                          randomBeat: "Random Beats",
-                          randomStrokeSpeed: "Random Stroke Speed",
-                          redLightGreenLight: "Red Light Green Light",
-                          clusterStrokes: "Cluster Strokes",
-                          handsOff: "Hands Off"
-                        }}
-                      />
+                      <FormControl
+                        className={classes.control}
+                        error={!!errors.speed}
+                      >
+                        <TaskList
+                          title="Speed"
+                          error={errors.speed}
+                          tasks={{
+                            doubleStrokes: "Double Strokes",
+                            halvedStrokes: "Halved Strokes",
+                            teasingStrokes: "Teasing Strokes",
+                            accelerationCycles: "Acceleration Cycles",
+                            randomBeat: "Random Beats",
+                            randomStrokeSpeed: "Random Stroke Speed",
+                            redLightGreenLight: "Red Light Green Light",
+                            clusterStrokes: "Cluster Strokes",
+                          }}
+                        />
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                      <TaskList
-                        title="Style"
-                        tasks={{
-                          dominant: "Dominant",
-                          nondominant: "Nondominant",
-                          headOnly: "Head Only",
-                          shaftOnly: "Shaft Only",
-                          gripAdjustments: "Grip Adjustments",
-                          overhandGrip: "Overhand Grip",
-                          bothHands: "Both Hands"
-                        }}
-                      />
+                      <FormControl
+                        className={classes.button}
+                        error={!!errors.style}
+                        title={"Select the Stroking Styles that shall appear during the game here. \n" +
+                        "At least the default Stroke Style has to be active. \n" +
+                        "You can change the default Stroke Style above. Only active Styles can be chosen."}
+                      >
+                        <TaskList
+                          title="Style"
+                          error={errors.style}
+                          except={[getStrokeStyleName(store.config.defaultStrokeStyle)]}
+                          tasks={{
+                            dominant: "Dominant",
+                            nondominant: "Nondominant",
+                            headOnly: "Head Only",
+                            shaftOnly: "Shaft Only",
+                            gripAdjustments: "Grip Adjustments",
+                            overhandGrip: "Overhand Grip",
+                            bothHands: "Both Hands",
+                            handsOff: "Hands Off"
+                          }}
+                        />
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                       <TaskList

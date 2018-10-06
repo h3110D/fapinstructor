@@ -1,5 +1,5 @@
 import store from "store";
-import orgasm, { doRuin, doOrgasm, doDenied, end, skip, determineOrgasm } from "../orgasm";
+import { determineOrgasm, doDenied, doOrgasm, doRuin, end, skip } from "../orgasm";
 
 const setDefaultStore = () => {
   store = {};

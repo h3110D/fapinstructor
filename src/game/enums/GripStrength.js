@@ -6,7 +6,7 @@ const GripStrengthString = {
   4: "Tight",
   5: "Very Tight",
   6: "Death Grip"
-}
+};
 
 const GripStrengthEnum = {
   BarelyTouching: 0,
@@ -16,6 +16,6 @@ const GripStrengthEnum = {
   Tight: 4,
   VeryTight: 5,
   DeathGrip: 6
-}
+};
 
 export { GripStrengthString, GripStrengthEnum }
