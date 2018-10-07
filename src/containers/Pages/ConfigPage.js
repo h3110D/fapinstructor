@@ -269,6 +269,17 @@ class ConfigPage extends React.Component {
     return errors;
   };
 
+  /**
+   * handles most changes by the user that can happen on the ConfigPage.
+   * It either casts the value to the specified type or does not cast anything if no cast type is specified.
+   *
+   * After every single change the complete Page is validated.
+   *
+   * @param name
+   *    the name of the variable in the location  **store.config.name**
+   * @param cast
+   *    the type the value should be stored in
+   */
   handleChange = (name, cast) => event => {
     if (cast) {
       store.config[name] = (cast)(event.target.value);
@@ -962,7 +973,7 @@ class ConfigPage extends React.Component {
                     <InputLabel>Default Stroke Style</InputLabel>
                     <Select
                       value={store.config.defaultStrokeStyle}
-                      onChange={this.handleChange("defaultStrokeStyle")}
+                      onChange={this.handleChange("defaultStrokeStyle", Number)}
                     >
                       {Object.keys(StrokeStyleEnum).map(key => (
                         <MenuItem key={key} value={StrokeStyleEnum[key]}
@@ -980,7 +991,7 @@ class ConfigPage extends React.Component {
                     <InputLabel>Initial Grip Strength</InputLabel>
                     <Select
                       value={store.config.initialGripStrength}
-                      onChange={this.handleChange("initialGripStrength")}
+                      onChange={this.handleChange("initialGripStrength", Number)}
                     >
                       {Object.keys(GripStrengthEnum).map(key => (
                         <MenuItem key={key} value={GripStrengthEnum[key]}>
