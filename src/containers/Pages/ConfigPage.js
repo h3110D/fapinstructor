@@ -271,14 +271,14 @@ class ConfigPage extends React.Component {
 
   /**
    * handles most changes by the user that can happen on the ConfigPage.
-   * It either casts the value to the specified type or does not cast anything if no cast type is specified.
+   * It either casts the value by useing the specified function or does not cast anything if no cast function is specified.
    *
    * After every single change the complete Page is validated.
    *
    * @param name
    *    the name of the variable in the location  **store.config.name**
    * @param cast
-   *    the type the value should be stored in
+   *    a function that converts the input field's value to its intended type (e.g. Number, String, ...)
    */
   handleChange = (name, cast) => event => {
     if (cast) {
