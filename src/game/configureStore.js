@@ -1,6 +1,7 @@
 import store from "store";
 import moment from "moment";
 import { getRandomStrokeSpeed } from "game/utils/strokeSpeed";
+import { getRandomInclusiveInteger } from "utils/math";
 
 export default () => {
   store.game = {
@@ -10,6 +11,7 @@ export default () => {
     mediaPlayerUrl: null,
     mediaFrozen: false,
     strokeSpeed: getRandomStrokeSpeed(),
+    actualGameTime: getRandomInclusiveInteger(store.config.minimumGameTime, store.config.maximumGameTime),
     bookmarks: [],
     gripStrength: store.config.initialGripStrength,
     rubberBands: 0,

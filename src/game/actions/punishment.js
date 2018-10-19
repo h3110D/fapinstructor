@@ -23,6 +23,7 @@ import delay from "utils/delay"
 import { getCurrentStrokeStyle, setStrokeStyleHandsOff, setStrokeStyleQuiet } from "game/enums/StrokeStyle";
 import { getRandomStrokeSpeed, setStrokeSpeed } from "game/utils/strokeSpeed";
 
+const SECONDS_IN_MILLI_SECONDS = 1000;  // Factor
 
 /**
  * Fetches one of all activated punishments.
@@ -57,13 +58,15 @@ const punishment = async () => {
   await setStrokeStyleHandsOff();
   setStrokeSpeed(0);
 
-  await delay(6000);
+  await delay(6 * SECONDS_IN_MILLI_SECONDS);
 
   await executeAction(punish);
 
   await setStrokeStyleQuiet(strokeStyle);
-  setStrokeSpeed(getRandomStrokeSpeed()); //since not every punishment does this ... it may happen twice sometimes.
-  await delay(1000);
+
+  await setStrokeSpeed(getRandomStrokeSpeed()); //since not every punishment does this ... it may happen twice
+                                                // sometimes.
+  await delay(SECONDS_IN_MILLI_SECONDS);
 
 };
 punishment.label = "Punishment";
@@ -96,7 +99,7 @@ export const initializePunishments = (taskConfigs = store.config.tasks) =>
     taskConfigs.scratching && createProbability(scratchThighs, 10),
     taskConfigs.scratching && createProbability(scratchShoulders, 5),
     taskConfigs.flicking && createProbability(flickCockHead, 40),
-    createProbability(flickNipples, 50),  // is also always included
+    createProbability(flickNipples, 33),  // is also always included
     taskConfigs.cbtIce && createProbability(rubIceOnBalls, 33),
     // anal
     taskConfigs.buttplug && (!store.game.buttPlugInserted) && createProbability(insertButtPlug, 45),
