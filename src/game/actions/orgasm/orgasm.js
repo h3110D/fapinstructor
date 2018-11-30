@@ -230,10 +230,9 @@ skip.label = "Skip & Add Time";
 export const end = async () => {
   const { maximumOrgasms } = store.config;
   strokerRemoteControl.pause();
-  store.game.orgasms++;
 
   // should continue?
-  if (parseInt(store.game.orgasms, 10) < parseInt(maximumOrgasms, 10)) {
+  if (parseInt(store.game.orgasms, 10) + 1 < parseInt(maximumOrgasms, 10)) {
     setStrokeSpeed(getRandomStrokeSpeed());
     strokerRemoteControl.play();
     createNotification("Start stroking again");
@@ -242,9 +241,10 @@ export const end = async () => {
   } else {
     setStrokeSpeed(0);
     createNotification(getRandom_youDidGood_message(), { autoDismiss: false });
-    await delay(6 * SECONDS_IN_MILLI_SECONDS);
+    await delay(15 * SECONDS_IN_MILLI_SECONDS);
     stopGame();
   }
+  store.game.orgasms++; //has to be done last as the GamePage will turn as soon as this is increased.
 };
 
 /**
