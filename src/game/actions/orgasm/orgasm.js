@@ -17,6 +17,7 @@ import {
 } from "game/texts/messages";
 import createProbability from "game/utils/createProbability";
 import { applyProbability } from "game/actions/generateAction";
+import { getRandom_youDidGood_message } from "../../texts/teasing_messages";
 
 const SIXTY_SECONDS = 60;  // That's what makes one minute
 const FINAL_EDGE_MIN = 15; // Seconds
@@ -240,6 +241,8 @@ export const end = async () => {
     await delay(3 * SECONDS_IN_MILLI_SECONDS);
   } else {
     setStrokeSpeed(0);
+    createNotification(getRandom_youDidGood_message(), { autoDismiss: false });
+    await delay(6 * SECONDS_IN_MILLI_SECONDS);
     stopGame();
   }
 };
