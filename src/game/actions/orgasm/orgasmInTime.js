@@ -200,7 +200,7 @@ export const doOrgasmCountdown = async () => {
     dismissNotification(nID3);
 
     const cumTime = getRandomInclusiveInteger(8, 55);
-    const nID4 = createNotification("0 !     Cum! Now!", { time: cumTime * 1000 });
+  createNotification("0 !     Cum! Now!", { time: cumTime * 1000 });
     if (store.config.enableVoice) {
       play(getRandomAudioVariation("Orgasm"));
     }
