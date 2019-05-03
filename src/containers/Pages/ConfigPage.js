@@ -271,7 +271,8 @@ class ConfigPage extends React.Component {
 
   /**
    * handles most changes by the user that can happen on the ConfigPage.
-   * It either casts the value by useing the specified function or does not cast anything if no cast function is specified.
+   * It either casts the value by useing the specified function or does not cast anything if no cast function is
+   * specified.
    *
    * After every single change the complete Page is validated.
    *
@@ -587,7 +588,7 @@ class ConfigPage extends React.Component {
               <Grid container>
                 <Grid item xs={12}>
                   <FormControl
-                    fullWidth
+                    className={classes.control}
                     component="fieldset"
                     required
                     error={!!errors.finialOrgasm || !!errors.finalOrgasmRandom}
