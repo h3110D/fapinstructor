@@ -739,9 +739,9 @@ class ConfigPage extends React.Component {
               <Grid container spacing={16}>
                 <Grid item xs={12} md={4}>
                   <FormControlLabel
-                    title={"Makes the game ending more challenging by: \n" +
-                    "   - enabling more advanced orgasm tasks, like a time limit to orgasm in or \n" +
-                    "     a specific stroke style and speed that may not be changed to orgasm.\n" +
+                    title={"Makes the game ending more challenging by:" +
+                    "   - enabling more advanced orgasm tasks, like a time limit to orgasm in or" +
+                    "     a specific stroke style and speed that may not be changed to orgasm." +
                     "   - invoking a chance to be denied in the end if failing on 'Advanced Edge' tasks"}
                     control={
                       <Switch
@@ -1186,7 +1186,8 @@ class ConfigPage extends React.Component {
               </Button>
               <Tooltip
                 id="generate-link-tooltip"
-                title="Copied to Clipboard; Feel free to share your preset on Reddit"
+                title={"Copied to Clipboard " +
+                "Feel free to share your preset on Reddit <3"}
                 leaveDelay={3000}
                 open={copyToolTipOpen}
                 onClose={() => {
@@ -1197,7 +1198,8 @@ class ConfigPage extends React.Component {
                 placement="bottom"
               >
                 <Button
-                  title={"Generates a Link that saves the preset for you. Share it on Reddit if you like!"}
+                  title={"Generates a Link that saves the preset for you. " +
+                  "Share it on Reddit if you like!"}
                   variant="raised"
                   color="secondary"
                   className={classes.button}
