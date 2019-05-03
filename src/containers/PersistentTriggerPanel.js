@@ -62,7 +62,6 @@ class PersistentTriggerPanel extends React.Component {
           onClick={() => {
             this.setState({ edgeDisabled: true });
             store.game.edges++;
-            classes.root.Button.Edge.edgeDisabled = false;
             executeAction(punishment, true).then(() => {
               this.setState({ edgeDisabled: false });
             });
