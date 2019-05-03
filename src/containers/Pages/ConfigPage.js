@@ -1175,6 +1175,7 @@ class ConfigPage extends React.Component {
             </Group>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Button
+                title={"Starts the game."}
                 variant="raised"
                 color="primary"
                 className={classes.button}
@@ -1185,8 +1186,8 @@ class ConfigPage extends React.Component {
               </Button>
               <Tooltip
                 id="generate-link-tooltip"
-                title="Copied to Clipboard"
-                leaveDelay={2000}
+                title="Copied to Clipboard; Feel free to share your preset on Reddit"
+                leaveDelay={3000}
                 open={copyToolTipOpen}
                 onClose={() => {
                   this.setState({
@@ -1196,6 +1197,7 @@ class ConfigPage extends React.Component {
                 placement="bottom"
               >
                 <Button
+                  title={"Generates a Link that saves the preset for you. Share it on Reddit if you like!"}
                   variant="raised"
                   color="secondary"
                   className={classes.button}
@@ -1206,6 +1208,7 @@ class ConfigPage extends React.Component {
                 </Button>
               </Tooltip>
               <FormControlLabel
+                title={"If this is switched on anyone you share the link with can edit it afterwards"}
                 control={
                   <Switch
                     checked={store.config.allowConfigEdit}
