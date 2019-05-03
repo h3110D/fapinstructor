@@ -156,8 +156,10 @@ class ConfigPage extends React.Component {
           break;
         }
 
-        // TODO: Why has maximumOrgasms to be at least 1? why not can't it be 0 what would logically be possible?
-        // TODO: The inputProps does specify a min of 1 ...
+        // Why has maximumOrgasms to be at least 1?
+        //   - It stands for maximumGameEnds and there has to be at least 1 gameEnd
+        // why not can't it be 0 what would logically be possible?
+        //   - this also is the reason why it can not be 0
         case "maximumOrgasms": {
           delete errors[name];
           value = parseInt(value, 10);
@@ -271,7 +273,7 @@ class ConfigPage extends React.Component {
 
   /**
    * handles most changes by the user that can happen on the ConfigPage.
-   * It either casts the value by useing the specified function or does not cast anything if no cast function is
+   * It either casts the value by using the specified function or does not cast anything if no cast function is
    * specified.
    *
    * After every single change the complete Page is validated.
@@ -741,11 +743,12 @@ class ConfigPage extends React.Component {
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl
+                    title={"Allowed, Denied and Ruined all count as \"Game End\" at this point"}
                     className={classes.control}
                     required
                     error={!!errors.maximumOrgasms}
                   >
-                    <InputLabel>Maximum Number of Orgasms</InputLabel>
+                    <InputLabel>Number of Game Ends</InputLabel>
                     <Input
                       id="maximumOrgasms"
                       value={store.config.maximumOrgasms}
@@ -758,7 +761,7 @@ class ConfigPage extends React.Component {
                       <FormHelperText>{errors.maximumOrgasms}</FormHelperText>
                     ) : (
                       <FormHelperText>
-                        The number of Orgasms that will occur at max during the game
+                        The number of Game Ends that will occur at max during one game
                       </FormHelperText>
                     )}
                   </FormControl>
@@ -827,10 +830,11 @@ class ConfigPage extends React.Component {
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl
+                    title={"specify a number of ruins you will have to reach before the Game End"}
                     className={classes.control}
                     error={!!errors.minimumRuinedOrgasms}
                   >
-                    <InputLabel>Minimum Ruined Orgasms</InputLabel>
+                    <InputLabel>Minimum additional Ruined Orgasms</InputLabel>
                     <Input
                       id="minimumRuinedOrgasms"
                       value={store.config.minimumRuinedOrgasms}
@@ -846,6 +850,7 @@ class ConfigPage extends React.Component {
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl
+                    title={"specify a number of ruins you may have to reach before the Game End"}
                     className={classes.control}
                     error={!!errors.maximumRuinedOrgasms}
                   >
