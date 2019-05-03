@@ -156,8 +156,10 @@ class ConfigPage extends React.Component {
           break;
         }
 
-        // TODO: Why has maximumOrgasms to be at least 1? why not can't it be 0 what would logically be possible?
-        // TODO: The inputProps does specify a min of 1 ...
+        // Why has maximumOrgasms to be at least 1?
+        //   - It stands for maximumGameEnds and there has to be at least 1 gameEnd
+        // why not can't it be 0 what would logically be possible?
+        //   - this also is the reason why it can not be 0
         case "maximumOrgasms": {
           delete errors[name];
           value = parseInt(value, 10);
@@ -271,7 +273,8 @@ class ConfigPage extends React.Component {
 
   /**
    * handles most changes by the user that can happen on the ConfigPage.
-   * It either casts the value by useing the specified function or does not cast anything if no cast function is specified.
+   * It either casts the value by using the specified function or does not cast anything if no cast function is
+   * specified.
    *
    * After every single change the complete Page is validated.
    *
@@ -599,7 +602,7 @@ class ConfigPage extends React.Component {
               <Grid container>
                 <Grid item xs={12}>
                   <FormControl
-                    fullWidth
+                    className={classes.control}
                     component="fieldset"
                     required
                     error={!!errors.finialOrgasm || !!errors.finalOrgasmRandom}
@@ -736,9 +739,9 @@ class ConfigPage extends React.Component {
               <Grid container spacing={16}>
                 <Grid item xs={12} md={4}>
                   <FormControlLabel
-                    title={"Makes the game ending more challenging by: \n" +
-                    "   - enabling more advanced orgasm tasks, like a time limit to orgasm in or \n" +
-                    "     a specific stroke style and speed that may not be changed to orgasm.\n" +
+                    title={"Makes the game ending more challenging by:" +
+                    "   - enabling more advanced orgasm tasks, like a time limit to orgasm in or" +
+                    "     a specific stroke style and speed that may not be changed to orgasm." +
                     "   - invoking a chance to be denied in the end if failing on 'Advanced Edge' tasks"}
                     control={
                       <Switch
@@ -752,11 +755,12 @@ class ConfigPage extends React.Component {
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl
+                    title={"Allowed, Denied and Ruined all count as \"Game End\" at this point"}
                     className={classes.control}
                     required
                     error={!!errors.maximumOrgasms}
                   >
-                    <InputLabel>Maximum Number of Orgasms</InputLabel>
+                    <InputLabel>Number of Game Ends</InputLabel>
                     <Input
                       id="maximumOrgasms"
                       value={store.config.maximumOrgasms}
@@ -769,7 +773,7 @@ class ConfigPage extends React.Component {
                       <FormHelperText>{errors.maximumOrgasms}</FormHelperText>
                     ) : (
                       <FormHelperText>
-                        The number of Orgasms that will occur at max during the game
+                        The number of Game Ends that will occur at max during one game
                       </FormHelperText>
                     )}
                   </FormControl>
@@ -838,10 +842,11 @@ class ConfigPage extends React.Component {
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl
+                    title={"specify a number of ruins you will have to reach before the Game End"}
                     className={classes.control}
                     error={!!errors.minimumRuinedOrgasms}
                   >
-                    <InputLabel>Minimum Ruined Orgasms</InputLabel>
+                    <InputLabel>Minimum additional Ruined Orgasms</InputLabel>
                     <Input
                       id="minimumRuinedOrgasms"
                       value={store.config.minimumRuinedOrgasms}
@@ -857,6 +862,7 @@ class ConfigPage extends React.Component {
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl
+                    title={"specify a number of ruins you may have to reach before the Game End"}
                     className={classes.control}
                     error={!!errors.maximumRuinedOrgasms}
                   >
@@ -1169,6 +1175,7 @@ class ConfigPage extends React.Component {
             </Group>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Button
+                title={"Starts the game."}
                 variant="raised"
                 color="primary"
                 className={classes.button}
@@ -1179,8 +1186,9 @@ class ConfigPage extends React.Component {
               </Button>
               <Tooltip
                 id="generate-link-tooltip"
-                title="Copied to Clipboard"
-                leaveDelay={2000}
+                title={"Copied to Clipboard " +
+                "Feel free to share your preset on Reddit <3"}
+                leaveDelay={3000}
                 open={copyToolTipOpen}
                 onClose={() => {
                   this.setState({
@@ -1190,6 +1198,8 @@ class ConfigPage extends React.Component {
                 placement="bottom"
               >
                 <Button
+                  title={"Generates a Link that saves the preset for you. " +
+                  "Share it on Reddit if you like!"}
                   variant="raised"
                   color="secondary"
                   className={classes.button}
@@ -1200,6 +1210,7 @@ class ConfigPage extends React.Component {
                 </Button>
               </Tooltip>
               <FormControlLabel
+                title={"If this is switched on anyone you share the link with can edit it afterwards"}
                 control={
                   <Switch
                     checked={store.config.allowConfigEdit}
