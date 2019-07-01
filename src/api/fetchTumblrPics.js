@@ -2,30 +2,38 @@ import fetchJsonp from "fetch-jsonp";
 import store from "store";
 import createNotification from "engine/createNotification";
 
-const limit = 50;
+/**
+ * @todo Add Tumblr API key
+ */
+const apiKey = "";
+
+const limit = 20;
 let offset = {};
 const fetchTumblrPics = tumblrId => {
   const { pictures, gifs, videos } = store.config;
 
-  var tagsRegex = /\[(.*?)\]/g;
-  var tagMatch = tagsRegex.exec(tumblrId);
-  var tag = "";
+  let tagsRegex = /\[(.*?)\]/g;
+  let tagMatch = tagsRegex.exec(tumblrId);
+  let tag = "";
   while (tagMatch != null) {
     tag = tagMatch[1];
     tumblrId = tumblrId.replace(tagsRegex, "");
     tagMatch = tagsRegex.exec(tumblrId);
   }
-
   tag.replace(" ", "+");
 
+  let postType = "";
+  if ((pictures || gifs) && !videos) postType = "photo";
+  else if (videos && !pictures && !gifs) postType = "video";
+
   return fetchJsonp(
-    `https://${encodeURIComponent(
+    `https://api.tumblr.com/v2/blog/${encodeURIComponent(
       tumblrId
-    )}.tumblr.com/api/read/json?num=${limit}&start=${offset[tumblrId] || ""}&tagged=${tag}`
+    )}/posts/${postType}?api_key=${apiKey}${tag ? "&tag=" + tag : ""}&limit=${limit}&offset=${offset[tumblrId] || 0}`
   )
     .then(response => response.json())
-    .then(({ posts }) => {
-      offset[tumblrId] += 50;
+    .then(({ response: { posts } }) => {
+      offset[tumblrId] += limit;
 
       const images = posts
         .map(post => {
@@ -34,9 +42,20 @@ const fetchTumblrPics = tumblrId => {
           switch (post.type) {
             case "video":
               if (videos) {
-                const src = /src="([^"]+)/.exec(post["video-player-500"])[1];
+                // Find video source closest to the window width
+                let closestDeltaWidth = Infinity;
+                let bestVideoSource = null;
+                post.player.forEach((source) => {
+                  const deltaWidth = Math.abs(window.innerWidth - source.width);
+                  if (deltaWidth < closestDeltaWidth) {
+                    closestDeltaWidth = deltaWidth;
+                    bestVideoSource = source;
+                  }
+                });
+
+                const src = /src="([^"]+)/.exec(bestVideoSource.embed_code)[1];
                 const extension = /type="([^"]+)/
-                  .exec(post["video-player-500"])[1]
+                  .exec(bestVideoSource.embed_code)[1]
                   .split("/")
                   .pop();
 
@@ -44,15 +63,27 @@ const fetchTumblrPics = tumblrId => {
               }
               break;
             case "photo":
-              const url = post["photo-url-1280"];
+              post.photos.forEach((photo) => {
+                // Find photo of a size closest to the window width
+                let closestDeltaWidth = Infinity;
+                let bestSizePhoto = null;
+                photo.alt_sizes.forEach((option) => {
+                  const deltaWidth = Math.abs(window.innerWidth - option.width);
+                  if (deltaWidth < closestDeltaWidth) {
+                    closestDeltaWidth = deltaWidth;
+                    bestSizePhoto = option;
+                  }
+                });
 
-              if (url.endsWith(".gif")) {
-                if (gifs) {
+                const url = bestSizePhoto.url;
+                if (url.endsWith(".gif")) {
+                  if (gifs) {
+                    result = url;
+                  }
+                } else if (pictures) {
                   result = url;
                 }
-              } else if (pictures) {
-                result = url;
-              }
+              });
               break;
             default:
               result = null;
