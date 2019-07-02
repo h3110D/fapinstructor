@@ -23,7 +23,6 @@ import copyToClipboard from "utils/copyToClipboard";
 import connect from "hoc/connect";
 import { getStrokeStyleName, StrokeStyleArray, StrokeStyleEnum, StrokeStyleString } from "game/enums/StrokeStyle";
 
-
 const ONE_HUNDRED_PERCENT = 100;  // Maximum Percentage that Can be achieved
 
 const styles = theme => ({
@@ -56,6 +55,12 @@ const styles = theme => ({
     marginBottom: 20,
     width: "90vw",
     backgroundColor: "rgba(255, 255, 255, 0.9)"
+  },
+  form2: {
+    padding: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "90vw",
   }
 });
 
@@ -418,7 +423,7 @@ class ConfigPage extends React.Component {
           <Feedback iconWidth={20} />
         </div>
         <div className={classes.formContainer}>
-          <Paper className={classes.form}>
+          <Paper elevation={10} className={classes.form}>
             <Group title="Media">
               <Grid container>
                 <Grid item xs={12}>
@@ -650,10 +655,11 @@ class ConfigPage extends React.Component {
               </Grid>
             </Group>
             <Group title="Orgasm">
-              <Grid container>
-                <Grid item xs={12}>
+              <Paper elevation={2}>
+                <Grid container spacing={16}>
+                  <Grid item />
                   <FormControl
-                    className={classes.control}
+                    className={classes.form2}
                     component="fieldset"
                     required
                     error={!!errors.finialOrgasm || !!errors.finalOrgasmRandom}
@@ -786,13 +792,13 @@ class ConfigPage extends React.Component {
                     </Grid>
                   </FormControl>
                 </Grid>
-              </Grid>
+              </Paper>
               <Grid container spacing={16}>
                 <Grid item xs={12} md={4}>
                   <FormControlLabel
-                    title={"Makes the game ending more challenging by:" +
-                    "   - enabling more advanced orgasm tasks, like a time limit to orgasm in or" +
-                    "     a specific stroke style and speed that may not be changed to orgasm." +
+                    title={"Makes the game ending more challenging by: \n" +
+                    "   - enabling more advanced orgasm tasks, like a time limit to orgasm in or \n" +
+                    "     a specific stroke style and speed that may not be changed to orgasm. \n" +
                     "   - invoking a chance to be denied in the end if failing on 'Advanced Edge' tasks"}
                     control={
                       <Switch
@@ -1113,7 +1119,7 @@ class ConfigPage extends React.Component {
               </Grid>
             </Group>
             <Group title="Tasks">
-              <ExpansionPanel defaultExpanded>
+              <ExpansionPanel elevation={2} defaultExpanded>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}
                                        title={"Chooses from all options below at random."}
                 >
@@ -1237,7 +1243,7 @@ class ConfigPage extends React.Component {
               </Button>
               <Tooltip
                 id="generate-link-tooltip"
-                title={"Copied to Clipboard " +
+                title={"Copied to Clipboard \n" +
                 "Feel free to share your preset on Reddit <3"}
                 leaveDelay={3000}
                 open={copyToolTipOpen}
@@ -1249,7 +1255,7 @@ class ConfigPage extends React.Component {
                 placement="bottom"
               >
                 <Button
-                  title={"Generates a Link that saves the preset for you. " +
+                  title={"Generates a Link that saves the preset for you. \n" +
                   "Share it on Reddit if you like!"}
                   variant="raised"
                   color="secondary"
