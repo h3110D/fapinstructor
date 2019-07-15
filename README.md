@@ -99,6 +99,6 @@ const defaultConfig = {
 # Other Stuff
 
 ### Currently working on:
-
+ 
 
 [Project Management](https://github.com/fapinstructor/fapinstructor/projects/1)
