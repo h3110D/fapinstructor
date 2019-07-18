@@ -22,6 +22,7 @@ const defaultConfig = {
   slideDuration: 10, // sec
   loopShortVideos: false,
   order: OrderEnum.Random,
+  enableSpotify: false,
   enableVoice: true,
   enableMoans: true,
   videoMuted: false,
