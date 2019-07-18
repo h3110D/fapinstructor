@@ -6,6 +6,7 @@ import remoteControl from "./remoteControl";
 let lastStroke = 0;
 
 export const strokerRemoteControl = Object.create(remoteControl);
+window.remote = strokerRemoteControl;
 
 const strokerLoop = progress => {
   if (!strokerRemoteControl.paused) {
@@ -13,10 +14,9 @@ const strokerLoop = progress => {
 
     if (strokeSpeed > 0) {
       if (lastStroke > 1 / strokeSpeed * 1000) {
-        if (!playTick(strokeSpeed)) {
+        if (!store.config.enableSpotify && !playTick(strokeSpeed)) {
           play(audioLibrary.Tick);
         }
-        store.game.strokeWave.push(lastStroke);
         store.game.strokes++;
         lastStroke = 0;
       } else {

@@ -20,6 +20,7 @@ const defaultConfig = {
   videos: true,
   slideDuration: 10, // sec
   loopShortVideos: false,
+  enableSpotify: false,
   enableVoice: true,
   enableMoans: true,
   videoMuted: false,

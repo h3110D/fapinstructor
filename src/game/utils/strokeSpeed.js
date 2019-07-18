@@ -1,5 +1,7 @@
 import store from "store";
 import { clamp, getRandomArbitrary } from "utils/math";
+import remoteControl from "game/loops/remoteControl";
+import * as spotify from 'api/spotify';
 
 /**
  * Generates a random stroke speed
@@ -47,6 +49,8 @@ export const setStrokeSpeed = newSpeed => {
     speed = clamp(newSpeed, slowestStrokeSpeed, fastestStrokeSpeed);
   }
   store.game.strokeSpeed = speed;
+
+  if (store.config.enableSpotify) spotify.findPlaySync();
 };
 
 export const getAverageStrokeSpeed = () =>

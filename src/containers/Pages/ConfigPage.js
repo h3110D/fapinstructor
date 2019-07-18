@@ -22,6 +22,7 @@ import { GripStrengthEnum, GripStrengthString } from "game/enums/GripStrength";
 import copyToClipboard from "utils/copyToClipboard";
 import connect from "hoc/connect";
 import { getStrokeStyleName, StrokeStyleArray, StrokeStyleEnum, StrokeStyleString } from "game/enums/StrokeStyle";
+import * as spotify from "api/spotify";
 
 const ONE_HUNDRED_PERCENT = 100;  // Maximum Percentage that Can be achieved
 
@@ -379,6 +380,11 @@ class ConfigPage extends React.Component {
     event.stopPropagation();
   };
 
+  handleEnableSpotifyChange = (event, checked) => {
+    this.handleCheckChange("enableSpotify")(event, checked);
+    if (store.config.enableSpotify) spotify.authorize();
+  };
+
   generateLink(isAbsolute = true) {
     const encodedValues = Base64.encodeURI(JSON.stringify(store.config));
 
@@ -597,6 +603,28 @@ class ConfigPage extends React.Component {
                       />
                     </FormGroup>
                     <FormHelperText>{errors.imageType}</FormHelperText>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl
+                    className={classes.control}
+                    error={!!errors.enableSpotify}
+                    title={"Order in which media is loaded."}
+                  >
+                    <FormControlLabel
+                        control={
+                          <Switch
+                            checked={store.config.enableSpotify}
+                            onChange={this.handleEnableSpotifyChange}
+                            value="enableSpotify"
+                          />
+                        }
+                        label="Enable Spotify"
+                      />
+                      <FormHelperText>
+                        Time your stroke with music from your favorite artists instead of metronome
+                      </FormHelperText>
+                    <FormHelperText>{errors.enableSpotify}</FormHelperText>
                   </FormControl>
                 </Grid>
               </Grid>
