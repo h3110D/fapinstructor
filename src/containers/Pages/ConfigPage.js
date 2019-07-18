@@ -22,6 +22,7 @@ import { GripStrengthEnum, GripStrengthString } from "game/enums/GripStrength";
 import copyToClipboard from "utils/copyToClipboard";
 import connect from "hoc/connect";
 import { getStrokeStyleName, StrokeStyleArray, StrokeStyleEnum, StrokeStyleString } from "game/enums/StrokeStyle";
+import { OrderEnum, OrderString } from "game/enums/Order";
 
 const ONE_HUNDRED_PERCENT = 100;  // Maximum Percentage that Can be achieved
 
@@ -597,6 +598,26 @@ class ConfigPage extends React.Component {
                       />
                     </FormGroup>
                     <FormHelperText>{errors.imageType}</FormHelperText>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl
+                    className={classes.control}
+                    error={!!errors.order}
+                    title={"Order in which media is loaded."}
+                  >
+                    <InputLabel>Order</InputLabel>
+                    <Select
+                      value={store.config.order}
+                      onChange={this.handleChange("order", Number)}
+                    >
+                      {Object.keys(OrderEnum).map(key => (
+                        <MenuItem key={key} value={OrderEnum[key]}>
+                          {OrderString[OrderEnum[key]]}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText>{errors.order}</FormHelperText>
                   </FormControl>
                 </Grid>
               </Grid>

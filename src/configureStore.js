@@ -1,6 +1,7 @@
 import store from "store";
 import { GripStrengthEnum } from "game/enums/GripStrength";
 import { StrokeStyleEnum } from "./game/enums/StrokeStyle";
+import { OrderEnum } from "game/enums/Order";
 
 /**
  * A big enum containing all setup information of the game.
@@ -20,6 +21,7 @@ const defaultConfig = {
   videos: true,
   slideDuration: 10, // sec
   loopShortVideos: false,
+  order: OrderEnum.Random,
   enableVoice: true,
   enableMoans: true,
   videoMuted: false,
