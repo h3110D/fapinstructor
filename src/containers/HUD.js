@@ -4,6 +4,7 @@ import { withStyles } from "material-ui/styles";
 import StatusPanel from "containers/StatusPanel";
 import TriggerPanel from "containers/TriggerPanel";
 import PersistentTriggerPanel from "containers/PersistentTriggerPanel";
+import BeatMeter from "containers/BeatMeter";
 import NotificationManager from "containers/NotificationManager";
 // import SineWave from "containers/SineWave";
 
@@ -44,8 +45,8 @@ const HUD = ({ classes }) => (
       </div>
     </div>
     <div className={classes.middle} />
-    {/*<SineWave />*/}
     <div>
+      <BeatMeter />
       <TriggerPanel />
     </div>
   </div>

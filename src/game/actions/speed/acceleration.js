@@ -13,11 +13,12 @@ const acceleration = async () => {
   });
 
   setStrokeSpeed(slowestStrokeSpeed);
+  store.game.strokeAcceleration = 0.05;
 
   let audioPlayed = false;
 
   while (store.game.strokeSpeed < fastestStrokeSpeed) {
-    setStrokeSpeed(store.game.strokeSpeed * 1.05);
+    setStrokeSpeed(store.game.strokeSpeed * (1 + store.game.strokeAcceleration));
     await delay(1000);
 
     if (!audioPlayed && store.game.strokeSpeed > fastestStrokeSpeed / 3) {
@@ -31,6 +32,7 @@ const acceleration = async () => {
 
   dismissNotification(nid);
   setStrokeSpeed(getRandomStrokeSpeed());
+  store.game.strokeAcceleration = 0;
   await delay(5 * 1000);
 };
 acceleration.label = "Acceleration Strokes";
