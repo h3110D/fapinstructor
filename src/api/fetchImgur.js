@@ -29,7 +29,7 @@ const fetchImgurDirectLink = async (url) => {
                 else resolve(finalUrl);
             });
             img.addEventListener('error', ()=>{
-                resolve();
+                reject();
             });
             img.src = finalUrl;
         });
@@ -54,11 +54,11 @@ const fetchImgurAlbum = async (url) => {
                     resolve();
                 }
             } catch (ex) {
-                resolve();
+                reject();
             }
         });
         xhr.addEventListener('error', ()=>{
-            resolve();
+            reject();
         });
         xhr.send();
     });
@@ -75,13 +75,14 @@ const fetchImgurPage = async (url) => {
         xhr.addEventListener('load', ()=>{
             try {
                 let data = JSON.parse(xhr.responseText);
-                resolve(fetchImgurDirectLink(data.data.link));
+                if (!data.data.link) reject('Imagur link not found');
+                else resolve(fetchImgurDirectLink(data.data.link));
             } catch (ex) {
-                resolve();
+                reject(ex);
             }
         });
         xhr.addEventListener('error', ()=>{
-            resolve();
+            reject();
         });
         xhr.send();
     });

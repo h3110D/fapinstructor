@@ -8,10 +8,10 @@ const fetchGfycat = async (url) => {
                 let data = JSON.parse(xhr.responseText);
                 resolve(data.gfyItem.webmUrl);
             } catch (ex) {
-                resolve();
+                reject();
             }
         });
-        xhr.addEventListener('error', ()=>resolve());
+        xhr.addEventListener('error', ()=>reject());
         xhr.send();
     });
 };

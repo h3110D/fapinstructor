@@ -5,6 +5,11 @@ import fetchTumblrPics from "api/fetchTumblrPics";
 import fetchRedditPics from "api/fetchRedditPics";
 import {fetchHumblrPicsByTag, fetchHumblrPicsByUser} from "api/fetchHumblrPics";
 
+/**
+ * Maximum limit of picture to fetch in one call of fetchPictures.
+ */
+const totalFetchLimit = 50;
+
 export const nextSlide = async () => {
   if (store.game.mediaFrozen) {
     return;
@@ -55,24 +60,31 @@ const fetchPictures = async () => {
     });
   }
 
+  const sourceCount =
+    (tumblrIds && tumblrIds.length) +
+    (redditIds && redditIds.length) +
+    (humblrTags && humblrTags.length) +
+    (humblrUsers && humblrUsers.length);
+  const limit = Math.floor(totalFetchLimit / sourceCount) || 1;
+
   let fetches = [];
 
   if (tumblrIds) {
-    fetches = fetches.concat(tumblrIds.map((id, index) => fetchTumblrPics(id)));
+    fetches = fetches.concat(tumblrIds.map((id, index) => fetchTumblrPics(id, limit)));
   }
   if (redditIds) {
     fetches = fetches.concat(
-      redditIds.map((id, index) => fetchRedditPics(id))
+      redditIds.map((id, index) => fetchRedditPics(id, limit))
     );
   }
   if (humblrTags) {
     fetches = fetches.concat(
-      humblrTags.map((tag, index) => fetchHumblrPicsByTag(tag))
+      humblrTags.map((tag, index) => fetchHumblrPicsByTag(tag, limit))
     );
   }
   if (humblrUsers) {
     fetches = fetches.concat(
-      humblrUsers.map((tag, index) => fetchHumblrPicsByUser(tag))
+      humblrUsers.map((tag, index) => fetchHumblrPicsByUser(tag, limit))
     );
   }
 

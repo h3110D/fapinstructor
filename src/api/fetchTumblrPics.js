@@ -3,10 +3,9 @@ import store from "store";
 import createNotification from "engine/createNotification";
 import { OrderEnum } from "game/enums/Order";
 
-const limit = 50;
-let count = [];;
+let count = {};
 let offset = {};
-const fetchTumblrPics = tumblrId => {
+const fetchTumblrPics = (tumblrId, limit) => {
   const { order, pictures, gifs, videos } = store.config;
 
   const tagsRegex = /\[(.*?)\]/g;
@@ -25,8 +24,10 @@ const fetchTumblrPics = tumblrId => {
 
   let nextOffset;
   if (order === OrderEnum.Random) {
-    if (count[tumblrId] === undefined) {
+    if (!(offset[tumblrId] instanceof Array)) {
       offset[tumblrId] = [];
+    }
+    if (count[tumblrId] === undefined) {
       return fetchJsonp(
         `https://${encodeURIComponent(
           tumblrId
@@ -34,8 +35,8 @@ const fetchTumblrPics = tumblrId => {
       )
         .then(response => response.json())
         .then(({ 'posts-total': total }) => {
-          count[tumblrId] = total;
-          return fetchTumblrPics(tumblrId);
+          count[tumblrId] = parseInt(total);
+          return fetchTumblrPics(tumblrId, limit);
         });
     }
 

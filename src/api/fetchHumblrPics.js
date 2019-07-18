@@ -9,9 +9,8 @@ import store from "store";
 */
 const humblrClientToken = "2d3545ff64750211858384914ce2ce551af347f563ce82b97603c1f019554001";
 
-const fetchHumblrPicsByTag = async (tag) => {
+const fetchHumblrPicsByTag = async (tag, limit) => {
   const { pictures, gifs, videos } = store.config;
-  const limit = 20;
   // just fetch images by tag, no auth token necessary
   return fetch(
     `https://humblr.social/api/v1/timelines/tag/${encodeURIComponent(tag)}?only_media=true&limit=${limit}`
@@ -35,9 +34,8 @@ const fetchHumblrPicsByTag = async (tag) => {
     })
   }
 
-const fetchHumblrPicsByUser = async (user) => {
+const fetchHumblrPicsByUser = async (user, limit) => {
   const { pictures, gifs, videos} = store.config;
-  const limit = 20;
 
   // first fetch user ID by name. We need an Auth Token for this
   let userId = await fetch(
